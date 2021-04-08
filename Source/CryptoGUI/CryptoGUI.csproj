@@ -6,4 +6,20 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Remove="external-content.duckduckgo.com.jpg" />
+      <None Remove="logo01.png" />
+      <None Remove="logo02.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CryptoAPI\CryptoAPI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="external-content.duckduckgo.com.jpg" />
+      <Resource Include="logo01.png" />
+      <Resource Include="logo02.png" />
+    </ItemGroup>
+
 </Project>
