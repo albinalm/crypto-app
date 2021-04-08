@@ -142,15 +142,15 @@ namespace CryptoGUI
 
                 if (fileCount == 0)
                 {
-                    EncryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_encrypted.ca";
+                    EncryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_encrypted" + System.IO.Path.GetExtension(EncryptionData.SourceFileName);
                 }
                 else
                 {
-                    EncryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_encrypted_" + fileCount.ToString() + ".ca";
+                    EncryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_encrypted_" + fileCount.ToString() + System.IO.Path.GetExtension(EncryptionData.SourceFileName);
                 }
                 this.Dispatcher.Invoke(() =>
                 {
-                    MessageBox.Show(EncryptionData.DestinationFileName);
+                   
                     lbl_destination_path.Content = EncryptionData.DestinationFileName.Replace("_", "__"); //avoid mnemonics 
                 });
                 Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));

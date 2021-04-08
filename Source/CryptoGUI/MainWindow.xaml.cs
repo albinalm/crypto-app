@@ -34,25 +34,68 @@ namespace CryptoGUI
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var args = Environment.GetCommandLineArgs();
-            if(args.Length > 2)
+   
+            if(args.Length > 3)
             {
-                foreach(var file in args)
+                
+                if(args.Contains("CryptoApp_CommandArgs_Encrypt"))
                 {
-                    if(!file.StartsWith("CryptoGUI.dll"))
-                        if(!file.StartsWith("Crypto_CommandArg"))
-                        EncryptionData.Sources.Add(file);
+                  try
+                    {
+                        foreach (var file in args)
+                        {
+                            if (!file.EndsWith("CryptoGUI.dll") && file != "CryptoApp_CommandArgs_Encrypt")
+                            {
+                                EncryptionData.Sources.Add(file);
+                            }
+                        }
+                        EncryptorArray encryptorArray = new EncryptorArray();
+                        Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
+                        encryptorArray.Show();
+                        this.Hide();
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("MainWindow is faulty! " + ex.ToString());
+                    }
+                 
+                  
+                  
+                }
+                else if(args.Contains("CryptoApp_CommandArgs_Decrypt"))
+                {
+                    foreach (var file in args)
+                    {
+                        if (!file.StartsWith("CryptoGUI.dll"))
+                        {
+                            if (!file.StartsWith("CryptoApp_CommandArgs"))
+                            {
+                                EncryptionData.Sources.Add(file);
+                                //Run array window
+                            }
+                        }
+                    }
                 }
             }
-            else if(args.Length == 2)
+            else if(args.Length == 3)
             {
-                EncryptionData.SourceFileName = args[1];
-                DecryptionData.SourceFileName = args[1];
-                this.Hide();
-                Encryptor encryptor = new Encryptor();
-                encryptor.Show(); 
-                Decryptor decryptor = new Decryptor();
+            
+                if(args[1] == "CryptoApp_CommandArgs_Encrypt")
+                {
+                    EncryptionData.SourceFileName = args[2];
+                    Encryptor encryptor = new Encryptor();
+                    Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
+                    encryptor.Show();
+                    this.Hide();
+                }
+               else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
+                {
+                    DecryptionData.SourceFileName = args[2];
+                    this.Hide();
+                    Decryptor decryptor = new Decryptor();
+                    decryptor.Show();
+                }
             }
-          
           
         }
   

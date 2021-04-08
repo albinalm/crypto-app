@@ -138,7 +138,6 @@ namespace CryptoGUI
                         fileCount++;
                     }
                 }
-
                 if (fileCount == 0)
                 {
                     DecryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_decrypted" + System.IO.Path.GetExtension(DecryptionData.SourceFileName);
@@ -147,9 +146,11 @@ namespace CryptoGUI
                 {
                     DecryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_decrypted_" + fileCount.ToString() + System.IO.Path.GetExtension(DecryptionData.SourceFileName);
                 }
+               
+         
                 this.Dispatcher.Invoke(() =>
                 {
-                    MessageBox.Show(DecryptionData.DestinationFileName);
+                   
                     lbl_destination_path.Content = DecryptionData.DestinationFileName.Replace("_", "__"); //avoid mnemonics 
                 });
                 Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
