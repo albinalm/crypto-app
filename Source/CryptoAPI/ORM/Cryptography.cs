@@ -69,7 +69,7 @@ namespace CryptoAPI.ORM
                                 int bytesRead = 0;
                                 while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
                                 {
-                                    if (bytesRead != 16)
+                                    if (bytesRead != chunkSize)
                                     {
                                         for (int x = bytesRead - 1; x < chunkSize; x++)
                                         {

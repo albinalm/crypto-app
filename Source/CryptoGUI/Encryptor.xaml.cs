@@ -105,6 +105,22 @@ namespace CryptoGUI
                 {
                     lbl_title.Content = "Encrypting";
                 }
+                else if (lbl_title.Content.ToString() == "Finishing up")
+                {
+                    lbl_title.Content = "Finishing up.";
+                }
+                else if (lbl_title.Content.ToString() == "Finishing up.")
+                {
+                    lbl_title.Content = "Finishing up..";
+                }
+                else if (lbl_title.Content.ToString() == "Finishing up..")
+                {
+                    lbl_title.Content = "Finishing up...";
+                }
+                else if (lbl_title.Content.ToString() == "Finishing up...")
+                {
+                    lbl_title.Content = "Finishing up";
+                }
             });
 
         }
@@ -126,11 +142,11 @@ namespace CryptoGUI
 
                 if (fileCount == 0)
                 {
-                    EncryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_encrypted" + System.IO.Path.GetExtension(EncryptionData.SourceFileName);
+                    EncryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_encrypted.ca";
                 }
                 else
                 {
-                    EncryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_encrypted_" + fileCount.ToString() + System.IO.Path.GetExtension(EncryptionData.SourceFileName);
+                    EncryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_encrypted_" + fileCount.ToString() + ".ca";
                 }
                 this.Dispatcher.Invoke(() =>
                 {
@@ -170,9 +186,13 @@ namespace CryptoGUI
                         this.Dispatcher.Invoke(() =>
                         {
                             pb_progress.Value = Math.Round(((double)finf.Length / 1048576), 0);
-                            this.lbl_percentage.Content = Math.Round((pb_progress.Value / pb_progress.Maximum) * 100, 0).ToString() + "%";
+                            lbl_percentage.Content = Math.Round((pb_progress.Value / pb_progress.Maximum) * 100, 0).ToString() + "%";
                             if (pb_progress.Value == pb_progress.Maximum)
                             {
+                                Speed_LabelUpdater.Stop();
+                                lbl_speed.Content = "Speed: --";
+                                lbl_percentage.Content = "Finalizing file...";
+                                lbl_title.Content = "Finishing up...";
                                 runloop = false;
                             }
                         });

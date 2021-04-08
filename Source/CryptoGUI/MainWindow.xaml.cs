@@ -39,21 +39,18 @@ namespace CryptoGUI
                 foreach(var file in args)
                 {
                     if(!file.StartsWith("CryptoGUI.dll"))
+                        if(!file.StartsWith("Crypto_CommandArg"))
                         EncryptionData.Sources.Add(file);
                 }
             }
             else if(args.Length == 2)
             {
-         //       File.WriteAllBytes(@"C:\users\albin\desktop\key.key", Cryptography.GenerateEncryptionKey(Cryptography.Encryption.HashPassword("ost123")));
                 EncryptionData.SourceFileName = args[1];
                 DecryptionData.SourceFileName = args[1];
                 this.Hide();
-                
                 Encryptor encryptor = new Encryptor();
-              //  encryptor.Show();
-                
+                encryptor.Show(); 
                 Decryptor decryptor = new Decryptor();
-               decryptor.Show();
             }
           
           
