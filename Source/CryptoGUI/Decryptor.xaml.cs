@@ -136,7 +136,7 @@ namespace CryptoGUI
                     MessageBox.Show(DecryptionData.DestinationFileName);
                     lbl_destination_path.Content = DecryptionData.DestinationFileName.Replace("_", "__"); //avoid mnemonics 
                 });
-                File.WriteAllBytes(@"C:\users\albin\desktop\key.key", Cryptography.GenerateEncryptionKey(Cryptography.Encryption.HashPassword("ost123")));
+                Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
                 Speed_LabelUpdater.Start();
                 Cryptography.Decryption.DecryptFile(DecryptionData.SourceFileName, DecryptionData.DestinationFileName, 1024);
                 Environment.Exit(0);
