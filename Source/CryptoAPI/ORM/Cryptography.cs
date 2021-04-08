@@ -48,31 +48,45 @@ namespace CryptoAPI.ORM
         {
             public static void EncryptFile(string inputFile, string outputFile, long chunkSize)
             {
-                FileStream fsOutput = File.OpenWrite(outputFile);
-                FileStream fsInput = File.OpenRead(inputFile);
-                RijndaelManaged symmetricKey = new RijndaelManaged()
+               using(FileStream fsOutput = File.OpenWrite(outputFile))
                 {
-                    KeySize = 256,
-                    BlockSize = 128,
-                    Key = Key,
-                    IV = IV,
-                    Mode = CipherMode.CBC,
-                    Padding = PaddingMode.Zeros
-
-                };
-                using var cryptoStream = new CryptoStream(fsOutput, symmetricKey.CreateEncryptor(), CryptoStreamMode.Write);
-
-                for (long i = 0; i < fsInput.Length; i += chunkSize)
-                {
-                    byte[] chunkData = new byte[chunkSize];
-                    fsInput.Read(chunkData, 0, (int)chunkSize);
-                    cryptoStream.Write(chunkData, 0, chunkData.Length);
+                    using(FileStream fsInput = File.OpenRead(inputFile))
+                    {
+                        RijndaelManaged symmetricKey = new RijndaelManaged()
+                        {
+                            KeySize = 256,
+                            BlockSize = 128,
+                            Key = Key,
+                            IV = IV,
+                            Mode = CipherMode.CBC,
+                            Padding = PaddingMode.ANSIX923
+                        };
+                        using (var cryptoStream = new CryptoStream(fsOutput, symmetricKey.CreateEncryptor(), CryptoStreamMode.Write))
+                        {
+                            for (long i = 0; i < fsInput.Length; i += chunkSize)
+                            {
+                                byte[] chunkData = new byte[chunkSize];
+                                int bytesRead = 0;
+                                while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
+                                {
+                                    if (bytesRead != 16)
+                                    {
+                                        for (int x = bytesRead - 1; x < chunkSize; x++)
+                                        {
+                                            chunkData[x] = 0;
+                                        }
+                                    }
+                                    cryptoStream.Write(chunkData, 0, (int)chunkSize);
+                                }
+                            }
+                            cryptoStream.FlushFinalBlock();
+                            cryptoStream.Close();
+                            fsInput.Close();
+                            fsInput.Dispose();
+                            cryptoStream.Dispose();
+                        }
+                    }
                 }
-                cryptoStream.FlushFinalBlock();
-                cryptoStream.Close();
-                fsInput.Close();
-                fsInput.Dispose();
-                cryptoStream.Dispose();
             }
            
 
@@ -110,32 +124,39 @@ namespace CryptoAPI.ORM
             }
             public static void DecryptFile(string inputFile, string outputFile, long chunkSize)
             {
-                FileStream fsOutput = File.OpenWrite(outputFile);
-                FileStream fsInput = File.OpenRead(inputFile);
-                RijndaelManaged symmetricKey = new RijndaelManaged()
+                using (FileStream fsInput = File.OpenRead(inputFile))
                 {
-                    KeySize = 256,
-                    BlockSize = 128,
-                    Key = Key,
-                    IV = IV,
-                    Mode = CipherMode.CBC,
-                    Padding = PaddingMode.Zeros
-                };
-                using var cryptoStream = new CryptoStream(fsOutput, symmetricKey.CreateDecryptor(), CryptoStreamMode.Write);
-
-                for (long i = 0; i < fsInput.Length; i += chunkSize)
-                {
-                    byte[] chunkData = new byte[chunkSize];
-                    int bytesRead = 0;
-                    while((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
+                    using (FileStream fsOutput = File.OpenWrite(outputFile))
                     {
-                        cryptoStream.Write(chunkData, 0, bytesRead);
+                        RijndaelManaged symmetricKey = new RijndaelManaged()
+                        {
+                            KeySize = 256,
+                            BlockSize = 128,
+                            Key = Key,
+                            IV = IV,
+                            Mode = CipherMode.CBC,
+                            Padding = PaddingMode.ANSIX923
+                        };
+                        using (var cryptoStream = new CryptoStream(fsOutput, symmetricKey.CreateDecryptor(), CryptoStreamMode.Write))
+                        {
+                            for (long i = 0; i < fsInput.Length; i += chunkSize)
+                            {
+                                byte[] chunkData = new byte[chunkSize];
+                                int bytesRead = 0;
+                                while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
+                                {
+                                    cryptoStream.Write(chunkData, 0, bytesRead);
+                                }
+                            }
+                            cryptoStream.Close();
+                            fsInput.Close();
+                            fsInput.Dispose();
+                            cryptoStream.Dispose();
+                        }
+
                     }
+
                 }
-                cryptoStream.Close();
-                fsInput.Close();
-                fsInput.Dispose();
-                cryptoStream.Dispose();
             }
         }
     }

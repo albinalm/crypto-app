@@ -23,12 +23,12 @@ namespace CryptoTerminal
             Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
             Console.WriteLine("Finished");
             Console.WriteLine("Writing File Stream");
-            Cryptography.Encryption.EncryptFile(@"C:\Users\Albin\Downloads\Downloads.7z", @"C:\users\albin\desktop\encrypted", 2048 * 2048);
+            Cryptography.Encryption.EncryptFile(@"C:\Users\Albin\Downloads\Downloads.7z", @"C:\users\albin\desktop\encrypted", 1024);
             Console.WriteLine("Finished encrypting. Press any key to decrypt");
             Console.ReadKey();
             Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
             Console.WriteLine("Writing File");
-            Cryptography.Decryption.DecryptFile(@"C:\users\albin\desktop\encrypted", @"C:\users\albin\desktop\decrypted.7z", 2048 * 2048);
+            Cryptography.Decryption.DecryptFile(@"C:\users\albin\desktop\encrypted", @"C:\users\albin\desktop\decrypted.7z", 1024);
             Console.WriteLine("Finished decrypting");
         }
         static void tracker()

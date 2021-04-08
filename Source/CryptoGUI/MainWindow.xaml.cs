@@ -44,11 +44,12 @@ namespace CryptoGUI
             }
             else if(args.Length == 2)
             {
+                EncryptionData.SourceFileName = args[1];
                 DecryptionData.SourceFileName = args[1];
                 this.Hide();
                 
-             //   Encryptor encryptor = new Encryptor();
-             //   encryptor.Show();
+          //      Encryptor encryptor = new Encryptor();
+           //     encryptor.Show();
                 
                 Decryptor decryptor = new Decryptor();
                 decryptor.Show();

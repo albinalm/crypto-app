@@ -138,7 +138,7 @@ namespace CryptoGUI
                 });
                 File.WriteAllBytes(@"C:\users\albin\desktop\key.key", Cryptography.GenerateEncryptionKey(Cryptography.Encryption.HashPassword("ost123")));
                 Speed_LabelUpdater.Start();
-                Cryptography.Decryption.DecryptFile(DecryptionData.SourceFileName, DecryptionData.DestinationFileName, 2048 * 2048);
+                Cryptography.Decryption.DecryptFile(DecryptionData.SourceFileName, DecryptionData.DestinationFileName, 1024);
                 Environment.Exit(0);
             }
             catch (Exception ex)
