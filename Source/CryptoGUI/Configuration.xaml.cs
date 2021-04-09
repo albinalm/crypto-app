@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Win32;
 
 namespace CryptoGUI
@@ -12,6 +13,7 @@ namespace CryptoGUI
     /// </summary>
     public partial class Configuration : Window
     {
+        private byte[] _keyBytes;
         public Configuration()
         {
             InitializeComponent();
@@ -21,6 +23,7 @@ namespace CryptoGUI
             txt_pwHash.IsReadOnly = true;
             txt_keyData.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             Loaded += Configuration_Loaded;
+         
         }
 
         private void Configuration_Loaded(object sender, RoutedEventArgs e)
@@ -47,8 +50,7 @@ namespace CryptoGUI
                     txt_pwHash.Text = hashReader.ReadLine();
                     File.Encrypt(Environment.CurrentDirectory + @"\credential");
                     txt_key.Text = keyPath;
-                    var bytes = File.ReadAllBytes(txt_key.Text);
-                    txt_keyData.Text = BitConverter.ToString(bytes);
+                    _keyBytes = File.ReadAllBytes(txt_key.Text);
                     keyReader.Close();
                     hashReader.Close();
                 }
@@ -62,18 +64,15 @@ namespace CryptoGUI
                         txt_pwHash.Text = hashReader.ReadLine();
                         File.Encrypt(Environment.CurrentDirectory + @"\credential");
                         txt_key.Text = keyPath;
-                        var bytes = File.ReadAllBytes(txt_key.Text);
-                        txt_keyData.Text = BitConverter.ToString(bytes);
+                        _keyBytes = File.ReadAllBytes(txt_key.Text);
                         keyReader.Close();
                         hashReader.Close();
                         if (MessageBox.Show("Do you wish to save the path to the key file?", "Save path?",
-                            MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                        {
-                            var writer = new StreamWriter(Environment.CurrentDirectory + @"\config.ini");
-                            writer.WriteLine(dlg.FileName);
-                            writer.Flush();
-                            writer.Close();
-                        }
+                            MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes) return;
+                        var writer = new StreamWriter(Environment.CurrentDirectory + @"\config.ini");
+                        writer.WriteLine(dlg.FileName);
+                        writer.Flush();
+                        writer.Close();
                     }
                     else
                     {
@@ -87,6 +86,7 @@ namespace CryptoGUI
             }
         }
 
+    
         private void btn_generateKey_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show(
@@ -95,13 +95,19 @@ namespace CryptoGUI
                 MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
             var updateKeyDlg = new KeyUpdateDialog();
             var dialogResult = updateKeyDlg.ShowDialog();
-
+           
             switch (dialogResult)
             {
                 case true:
                     ReadData();
                     break;
             }
+        }
+
+        private void btn_view_data_Click(object sender, RoutedEventArgs e)
+        {
+            txt_keyData.Text = BitConverter.ToString(_keyBytes);
+            btn_view_data.Visibility = Visibility.Hidden;
         }
     }
 }
