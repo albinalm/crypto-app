@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using CryptoGUI.DataModel;
+using Microsoft.Win32;
 
 namespace CryptoGUI
 {
@@ -28,19 +29,19 @@ namespace CryptoGUI
         public MainWindow()
         {
             InitializeComponent();
-           
+
             Loaded += MainWindow_Loaded;
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var args = Environment.GetCommandLineArgs();
-   
-            if(args.Length > 3)
+
+            if (args.Length > 3)
             {
-                
-                if(args.Contains("CryptoApp_CommandArgs_Encrypt"))
+
+                if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
                 {
-                  try
+                    try
                     {
                         foreach (var file in args)
                         {
@@ -50,19 +51,19 @@ namespace CryptoGUI
                             }
                         }
                         EncryptorArray encryptorArray = new EncryptorArray();
-                        Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
+                        InitCryptography();
                         encryptorArray.Show();
-                        this.Hide();
+                   
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show("MainWindow is faulty! " + ex.ToString());
                     }
-                 
-                  
-                  
+
+
+
                 }
-                else if(args.Contains("CryptoApp_CommandArgs_Decrypt"))
+                else if (args.Contains("CryptoApp_CommandArgs_Decrypt"))
                 {
                     try
                     {
@@ -74,9 +75,10 @@ namespace CryptoGUI
                             }
                         }
                         DecryptorArray decryptorArray = new DecryptorArray();
-                        Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
+                        InitCryptography();
+                        
                         decryptorArray.Show();
-                        this.Hide();
+                     
                     }
                     catch (Exception ex)
                     {
@@ -84,28 +86,117 @@ namespace CryptoGUI
                     }
                 }
             }
-            else if(args.Length == 3)
+            else if (args.Length == 3)
             {
-            
-                if(args[1] == "CryptoApp_CommandArgs_Encrypt")
+
+                if (args[1] == "CryptoApp_CommandArgs_Encrypt")
                 {
                     EncryptionData.SourceFileName = args[2];
                     Encryptor encryptor = new Encryptor();
-                    Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
+                    InitCryptography();
                     encryptor.Show();
-                    this.Hide();
+                
                 }
-               else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
+                else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
                 {
                     DecryptionData.SourceFileName = args[2];
-                    this.Hide();
                     Decryptor decryptor = new Decryptor();
-                    decryptor.Show();
+                    InitCryptography();
+                    decryptor.Show();  
+      
                 }
             }
-            MessageBox.Show("Invalid input args.");
-            Environment.Exit(0);
+            else
+            {
+                this.Hide();
+                Configuration conf = new Configuration();
+                conf.Show();
+           
+            }
+
         }
-  
+        private void InitCryptography()
+        {
+            
+            Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            if (File.Exists(Environment.CurrentDirectory + @"\credential"))
+            {
+                File.Decrypt(Environment.CurrentDirectory + @"\credential");
+                StreamReader keyReader = new StreamReader(Environment.CurrentDirectory + @"\config.ini");
+                StreamReader hashReader = new StreamReader(Environment.CurrentDirectory + @"\credential");
+                var keyPath = keyReader.ReadLine();
+                var hash = hashReader.ReadLine();
+                if (File.Exists(keyPath))
+                {
+                    this.Hide();
+                    var pwDiag = new PasswordDialogue(hash);
+                    var dialogueResult = pwDiag.ShowDialog();
+
+                    switch (dialogueResult)
+                    {
+                        case true:
+                            Cryptography.ReadEncryptionKey(pwDiag.OutputPW, File.ReadAllBytes(keyPath));
+                            keyReader.Close();
+                            hashReader.Close();
+                            File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                            break;
+                        case false:
+                            MessageBox.Show("Incorrect credentials");
+                            File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            MessageBox.Show("Incorrect credentials");
+                            File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                            Environment.Exit(0);
+                            break;
+                    }
+                }
+                else
+                {
+                    this.Hide();
+                    var dlg = new OpenFileDialog();
+                    dlg.Filter = "Encryption key file|*.ekey";
+                    if(dlg.ShowDialog() == true)
+                    {
+                        keyPath = dlg.FileName;
+                        var pwDiag = new PasswordDialogue(hash);
+                        var dialogueResult = pwDiag.ShowDialog();
+                        switch (dialogueResult)
+                        {
+                            case true:
+                                Cryptography.ReadEncryptionKey(pwDiag.OutputPW, File.ReadAllBytes(keyPath));
+                                keyReader.Close();
+                                hashReader.Close();
+                                File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                                break;
+                            case false:
+                                MessageBox.Show("Incorrect credentials");
+                                File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                                Environment.Exit(0);
+                                break;
+                            default:
+                                MessageBox.Show("Incorrect credentials");
+                                File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                                Environment.Exit(0);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        this.Show();
+                        MessageBox.Show("Interrupted");
+                        Environment.Exit(0);
+
+                    }
+                    
+                }
+            }
+            else
+            {
+                MessageBox.Show("Did not find data files");
+                Environment.Exit(0);
+            }
+        }
     }
 }

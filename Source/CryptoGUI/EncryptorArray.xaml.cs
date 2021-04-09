@@ -164,7 +164,7 @@ namespace CryptoGUI
                         lbl_destination_path.Content = safeDirName;
 
                     });
-                    Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
+                    
 
                     Speed_LabelUpdater.Start();
                     this.Dispatcher.Invoke(() =>
