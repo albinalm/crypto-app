@@ -1,28 +1,16 @@
-﻿using CryptoAPI.ORM;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.ComponentModel;
+using CryptoAPI.ORM;
 using CryptoGUI.DataModel;
 using Microsoft.Win32;
 
 namespace CryptoGUI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -32,110 +20,88 @@ namespace CryptoGUI
 
             Loaded += MainWindow_Loaded;
         }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var args = Environment.GetCommandLineArgs();
 
             if (args.Length > 3)
             {
-
                 if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
-                {
                     try
                     {
                         foreach (var file in args)
-                        {
                             if (!file.EndsWith("CryptoGUI.dll") && file != "CryptoApp_CommandArgs_Encrypt")
-                            {
                                 EncryptionData.Sources.Add(file);
-                            }
-                        }
-                        EncryptorArray encryptorArray = new EncryptorArray();
+                        var encryptorArray = new EncryptorArray();
                         InitCryptography();
                         encryptorArray.Show();
-                   
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("MainWindow is faulty! " + ex.ToString());
+                        MessageBox.Show("MainWindow is faulty! " + ex);
                     }
-
-
-
-                }
                 else if (args.Contains("CryptoApp_CommandArgs_Decrypt"))
-                {
                     try
                     {
                         foreach (var file in args)
-                        {
                             if (!file.EndsWith("CryptoGUI.dll") && file != "CryptoApp_CommandArgs_Decrypt")
-                            {
                                 DecryptionData.Sources.Add(file);
-                            }
-                        }
-                        DecryptorArray decryptorArray = new DecryptorArray();
+                        var decryptorArray = new DecryptorArray();
                         InitCryptography();
-                        
+
                         decryptorArray.Show();
-                     
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("MainWindow is faulty! " + ex.ToString());
+                        MessageBox.Show("MainWindow is faulty! " + ex);
                     }
-                }
             }
             else if (args.Length == 3)
             {
-
                 if (args[1] == "CryptoApp_CommandArgs_Encrypt")
                 {
                     EncryptionData.SourceFileName = args[2];
-                    Encryptor encryptor = new Encryptor();
+                    var encryptor = new Encryptor();
                     InitCryptography();
                     encryptor.Show();
-                
                 }
                 else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
                 {
                     DecryptionData.SourceFileName = args[2];
-                    Decryptor decryptor = new Decryptor();
+                    var decryptor = new Decryptor();
                     InitCryptography();
-                    decryptor.Show();  
-      
+                    decryptor.Show();
                 }
             }
             else
             {
-                this.Hide();
-                Configuration conf = new Configuration();
+                Hide();
+                var conf = new Configuration();
                 conf.Show();
-           
             }
-
         }
+
         private void InitCryptography()
         {
-            
-            Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (File.Exists(Environment.CurrentDirectory + @"\credential"))
             {
                 File.Decrypt(Environment.CurrentDirectory + @"\credential");
-                StreamReader keyReader = new StreamReader(Environment.CurrentDirectory + @"\config.ini");
-                StreamReader hashReader = new StreamReader(Environment.CurrentDirectory + @"\credential");
+                var keyReader = new StreamReader(Environment.CurrentDirectory + @"\config.ini");
+                var hashReader = new StreamReader(Environment.CurrentDirectory + @"\credential");
                 var keyPath = keyReader.ReadLine();
                 var hash = hashReader.ReadLine();
                 if (File.Exists(keyPath))
                 {
-                    this.Hide();
+                    Hide();
                     var pwDiag = new PasswordDialogue(hash);
                     var dialogueResult = pwDiag.ShowDialog();
 
                     switch (dialogueResult)
                     {
                         case true:
-                            Cryptography.ReadEncryptionKey(pwDiag.OutputPW, File.ReadAllBytes(keyPath));
+                            Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(keyPath));
                             keyReader.Close();
                             hashReader.Close();
                             File.Encrypt(Environment.CurrentDirectory + @"\credential");
@@ -154,10 +120,9 @@ namespace CryptoGUI
                 }
                 else
                 {
-                    this.Hide();
-                    var dlg = new OpenFileDialog();
-                    dlg.Filter = "Encryption key file|*.ekey";
-                    if(dlg.ShowDialog() == true)
+                    Hide();
+                    var dlg = new OpenFileDialog {Filter = "Encryption key file|*.ekey"};
+                    if (dlg.ShowDialog() == true)
                     {
                         keyPath = dlg.FileName;
                         var pwDiag = new PasswordDialogue(hash);
@@ -165,7 +130,7 @@ namespace CryptoGUI
                         switch (dialogueResult)
                         {
                             case true:
-                                Cryptography.ReadEncryptionKey(pwDiag.OutputPW, File.ReadAllBytes(keyPath));
+                                Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(keyPath));
                                 keyReader.Close();
                                 hashReader.Close();
                                 File.Encrypt(Environment.CurrentDirectory + @"\credential");
@@ -184,12 +149,10 @@ namespace CryptoGUI
                     }
                     else
                     {
-                        this.Show();
+                        Show();
                         MessageBox.Show("Interrupted");
                         Environment.Exit(0);
-
                     }
-                    
                 }
             }
             else

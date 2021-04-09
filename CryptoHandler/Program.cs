@@ -1,22 +1,15 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace CryptoHandler
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            
-            ProcessStartInfo pinf = new ProcessStartInfo(@"E:\Skolarbete\Rider Projekt\crypto-app\Source\CryptoGUI\bin\Debug\net5.0-windows\CryptoGUI.exe");
-            for (int i = 0; i <= args.Length - 1; i++)
-            {
-                pinf.ArgumentList.Add(args[i]);
-            }
+            var pinf = new ProcessStartInfo(
+                @"E:\Skolarbete\Rider Projekt\crypto-app\Source\CryptoGUI\bin\Debug\net5.0-windows\CryptoGUI.exe");
+            for (var i = 0; i <= args.Length - 1; i++) pinf.ArgumentList.Add(args[i]);
             Process.Start(pinf);
         }
-     
     }
 }

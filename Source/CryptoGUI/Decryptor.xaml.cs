@@ -1,35 +1,26 @@
-﻿using CryptoAPI.ORM;
-using CryptoGUI.DataModel;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using CryptoAPI.ORM;
+using CryptoGUI.DataModel;
 
 namespace CryptoGUI
 {
     /// <summary>
-    /// Interaction logic for Decryptor.xaml
+    ///     Interaction logic for Decryptor.xaml
     /// </summary>
     public partial class Decryptor : Window
     {
-        private readonly System.Timers.Timer Title_LabelUpdater;
-        private readonly System.Timers.Timer Speed_LabelUpdater;
-        private int SpeedCalculator_Increment = 0;
+        private readonly BackgroundWorker ProgressUpdater;
+        private readonly Timer Speed_LabelUpdater;
+        private readonly Timer Title_LabelUpdater;
 
         private readonly BackgroundWorker workHorse;
-        private readonly BackgroundWorker ProgressUpdater;
+        private int SpeedCalculator_Increment;
+
         public Decryptor()
         {
             InitializeComponent();
@@ -38,17 +29,16 @@ namespace CryptoGUI
 
             #region Declaration and Event assigns
 
-            Title_LabelUpdater = new()
+            Title_LabelUpdater = new Timer
             {
                 Interval = 500
             };
             Title_LabelUpdater.Elapsed += Title_LabelUpdater_Elapsed;
-            Speed_LabelUpdater = new()
+            Speed_LabelUpdater = new Timer
             {
                 Interval = 200
             };
             Speed_LabelUpdater.Elapsed += Speed_LabelUpdater_Elapsed;
-
 
 
             workHorse = new BackgroundWorker();
@@ -58,13 +48,14 @@ namespace CryptoGUI
 
             #endregion
         }
+
         private void Decryptor_Loaded(object sender, RoutedEventArgs e)
         {
             Title_LabelUpdater.Start();
             lbl_source.Content = "Source:";
             lbl_source_path.Content = DecryptionData.SourceFileName;
             lbl_destination.Content = "Destination:";
-            this.Title = @"Decrypting: " + DecryptionData.SourceFileName;
+            Title = @"Decrypting: " + DecryptionData.SourceFileName;
             ProgressUpdater.RunWorkerAsync();
             workHorse.RunWorkerAsync();
         }
@@ -73,131 +64,98 @@ namespace CryptoGUI
         {
             Environment.Exit(0);
         }
+
         private void Speed_LabelUpdater_Elapsed(object sender, ElapsedEventArgs e)
         {
-
             SpeedCalculator_Increment++;
-            this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
             {
-                double sizeDiff = pb_progress.Value / SpeedCalculator_Increment;
+                var sizeDiff = pb_progress.Value / SpeedCalculator_Increment;
                 lbl_speed.Content = $"Speed: {Math.Round(sizeDiff * 5, 1)} MB/s";
             });
-
         }
+
         private void Title_LabelUpdater_Elapsed(object sender, ElapsedEventArgs e)
         {
-            this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
             {
-                if (lbl_title.Content.ToString() == "Decrypting")
+                lbl_title.Content = lbl_title.Content.ToString() switch
                 {
-                    lbl_title.Content = "Decrypting.";
-                }
-                else if (lbl_title.Content.ToString() == "Decrypting.")
-                {
-                    lbl_title.Content = "Decrypting..";
-                }
-                else if (lbl_title.Content.ToString() == "Decrypting..")
-                {
-                    lbl_title.Content = "Decrypting...";
-                }
-                else if (lbl_title.Content.ToString() == "Decrypting...")
-                {
-                    lbl_title.Content = "Decrypting";
-                }
-                else if (lbl_title.Content.ToString() == "Finishing up")
-                {
-                    lbl_title.Content = "Finishing up.";
-                }
-                else if (lbl_title.Content.ToString() == "Finishing up.")
-                {
-                    lbl_title.Content = "Finishing up..";
-                }
-                else if (lbl_title.Content.ToString() == "Finishing up..")
-                {
-                    lbl_title.Content = "Finishing up...";
-                }
-                else if (lbl_title.Content.ToString() == "Finishing up...")
-                {
-                    lbl_title.Content = "Finishing up";
-                }
+                    "Decrypting" => "Decrypting.",
+                    "Decrypting." => "Decrypting..",
+                    "Decrypting.." => "Decrypting...",
+                    "Decrypting..." => "Decrypting",
+                    "Finishing up" => "Finishing up.",
+                    "Finishing up." => "Finishing up..",
+                    "Finishing up.." => "Finishing up...",
+                    "Finishing up..." => "Finishing up",
+                    _ => lbl_title.Content
+                };
             });
-
         }
+
         private void workHorse_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
-                string safeFileName = System.IO.Path.GetFileNameWithoutExtension(DecryptionData.SourceFileName);
-                string safeDirName = DecryptionData.SourceFileName.Remove(DecryptionData.SourceFileName.Length - (safeFileName.Length + System.IO.Path.GetExtension(DecryptionData.SourceFileName).Length + 1), (safeFileName.Length + System.IO.Path.GetExtension(DecryptionData.SourceFileName).Length + 1));
-                int fileCount = 0;
+                var safeFileName = Path.GetFileNameWithoutExtension(DecryptionData.SourceFileName);
+                var safeDirName = DecryptionData.SourceFileName.Remove(
+                    DecryptionData.SourceFileName.Length - (safeFileName.Length +
+                                                            Path.GetExtension(DecryptionData.SourceFileName).Length +
+                                                            1),
+                    safeFileName.Length + Path.GetExtension(DecryptionData.SourceFileName).Length + 1);
+                var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => 
+                    finf.Name.StartsWith(Path.GetFileNameWithoutExtension(DecryptionData.SourceFileName) + "_decrypted"));
 
-                foreach (var finf in new DirectoryInfo(safeDirName).GetFiles())
-                {
-                    if (finf.Name.StartsWith(System.IO.Path.GetFileNameWithoutExtension(DecryptionData.SourceFileName) + "_decrypted"))
-                    {
-                        fileCount++;
-                    }
-                }
                 if (fileCount == 0)
-                {
-                    DecryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_decrypted" + System.IO.Path.GetExtension(DecryptionData.SourceFileName);
-                }
+                    DecryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_decrypted" +
+                                                         Path.GetExtension(DecryptionData.SourceFileName);
                 else
+                    DecryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_decrypted_" + fileCount +
+                                                         Path.GetExtension(DecryptionData.SourceFileName);
+
+
+                Dispatcher.Invoke(() =>
                 {
-                    DecryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_decrypted_" + fileCount.ToString() + System.IO.Path.GetExtension(DecryptionData.SourceFileName);
-                }
-               
-         
-                this.Dispatcher.Invoke(() =>
-                {
-                   
-                    lbl_destination_path.Content = DecryptionData.DestinationFileName.Replace("_", "__"); //avoid mnemonics 
+                    lbl_destination_path.Content =
+                        DecryptionData.DestinationFileName.Replace("_", "__"); //avoid mnemonics 
                 });
-                
+
                 Speed_LabelUpdater.Start();
-                Cryptography.Decryption.DecryptFile(DecryptionData.SourceFileName, DecryptionData.DestinationFileName, 1024);
+                Cryptography.Decryption.DecryptFile(DecryptionData.SourceFileName, DecryptionData.DestinationFileName,
+                    1024);
                 Environment.Exit(0);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-
         }
+
         private void ProgressUpdater_DoWork(object sender, DoWorkEventArgs e)
         {
-
             try
             {
-
-                double fileLength = Math.Round((double)new FileInfo(DecryptionData.SourceFileName).Length / 1048576, 0);
-                bool runloop = true;
-                this.Dispatcher.Invoke(() =>
-                {
-
-                    pb_progress.Maximum = fileLength;
-                });
+                var fileLength = Math.Round((double) new FileInfo(DecryptionData.SourceFileName).Length / 1048576, 0);
+                var runloop = true;
+                Dispatcher.Invoke(() => { pb_progress.Maximum = fileLength; });
                 while (runloop)
-                {
                     if (File.Exists(DecryptionData.DestinationFileName))
                     {
                         Title_LabelUpdater.Start();
                         FileInfo finf = new(DecryptionData.DestinationFileName);
-                        this.Dispatcher.Invoke(() =>
+                        Dispatcher.Invoke(() =>
                         {
-                            pb_progress.Value = Math.Round(((double)finf.Length / 1048576), 0);
-                            lbl_percentage.Content = Math.Round((pb_progress.Value / pb_progress.Maximum) * 100, 0).ToString() + "%";
-                            if (pb_progress.Value == pb_progress.Maximum)
-                            {
-                                Speed_LabelUpdater.Stop();
-                                lbl_speed.Content = "Speed: --";
-                                lbl_percentage.Content = "Finalizing file...";
-                                lbl_title.Content = "Finishing up...";
-                                runloop = false;
-                            }
+                            pb_progress.Value = Math.Round((double) finf.Length / 1048576, 0);
+                            lbl_percentage.Content = Math.Round(pb_progress.Value / pb_progress.Maximum * 100, 0) + "%";
+                            if (pb_progress.Value != pb_progress.Maximum) return;
+                            Speed_LabelUpdater.Stop();
+                            lbl_speed.Content = "Speed: --";
+                            lbl_percentage.Content = "Finalizing file...";
+                            lbl_title.Content = "Finishing up...";
+                            runloop = false;
                         });
                     }
-                }
             }
             catch (Exception ex)
             {
