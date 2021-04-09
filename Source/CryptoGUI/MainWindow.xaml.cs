@@ -16,15 +16,7 @@ namespace CryptoGUI
     {
         public MainWindow()
         {
-            InitializeComponent();
-
-            Loaded += MainWindow_Loaded;
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            var args = Environment.GetCommandLineArgs();
-
+                var args = Environment.GetCommandLineArgs();
             if (args.Length > 3)
             {
                 if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
@@ -80,6 +72,12 @@ namespace CryptoGUI
                 var conf = new Configuration();
                 conf.Show();
             }
+            InitializeComponent();
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+        
         }
 
         private void InitCryptography()
