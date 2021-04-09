@@ -9,8 +9,7 @@ namespace CryptoAPI.ORM
 {
     public static class Cryptography
     {
-     
-        public static byte[] Key { get; private set; }
+        private static byte[] Key { get; set; }
         private static byte[] IV { get; set; }
        
        
@@ -48,45 +47,39 @@ namespace CryptoAPI.ORM
         {
             public static void EncryptFile(string inputFile, string outputFile, long chunkSize)
             {
-               using(FileStream fsOutput = File.OpenWrite(outputFile))
+                var fsOutput = File.OpenWrite(outputFile);
+                var fsInput = File.OpenRead(inputFile);
+                var symmetricKey = new RijndaelManaged()
                 {
-                    using(FileStream fsInput = File.OpenRead(inputFile))
+                    KeySize = 256,
+                    BlockSize = 128,
+                    Key = Key,
+                    IV = IV,
+                    Mode = CipherMode.CBC,
+                    Padding = PaddingMode.ANSIX923
+                };
+                var cryptoStream = new CryptoStream(fsOutput, symmetricKey.CreateEncryptor(), CryptoStreamMode.Write);
+                for (long i = 0; i < fsInput.Length; i += chunkSize)
+                {
+                    var chunkData = new byte[chunkSize];
+                    var bytesRead = 0;
+                    while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
                     {
-                        RijndaelManaged symmetricKey = new RijndaelManaged()
+                        if (bytesRead != chunkSize)
                         {
-                            KeySize = 256,
-                            BlockSize = 128,
-                            Key = Key,
-                            IV = IV,
-                            Mode = CipherMode.CBC,
-                            Padding = PaddingMode.ANSIX923
-                        };
-                        using (var cryptoStream = new CryptoStream(fsOutput, symmetricKey.CreateEncryptor(), CryptoStreamMode.Write))
-                        {
-                            for (long i = 0; i < fsInput.Length; i += chunkSize)
+                            for (var x = bytesRead - 1; x < chunkSize; x++)
                             {
-                                byte[] chunkData = new byte[chunkSize];
-                                int bytesRead = 0;
-                                while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
-                                {
-                                    if (bytesRead != chunkSize)
-                                    {
-                                        for (int x = bytesRead - 1; x < chunkSize; x++)
-                                        {
-                                            chunkData[x] = 0;
-                                        }
-                                    }
-                                    cryptoStream.Write(chunkData, 0, (int)chunkSize);
-                                }
+                                chunkData[x] = 0;
                             }
-                            cryptoStream.FlushFinalBlock();
-                            cryptoStream.Close();
-                            fsInput.Close();
-                            fsInput.Dispose();
-                            cryptoStream.Dispose();
                         }
+                        cryptoStream.Write(chunkData, 0, (int)chunkSize);
                     }
                 }
+                cryptoStream.FlushFinalBlock();
+                cryptoStream.Close();
+                fsInput.Close();
+                fsInput.Dispose();
+                cryptoStream.Dispose();
             }
            
 
@@ -104,7 +97,7 @@ namespace CryptoAPI.ORM
         ///<para>Static Decryption-class containing methods to handle encryption</para>
         public static class Decryption
         { 
-            public static void DecryptFile_deprecated(string inputFile, string outputFile)
+            private static void DecryptFile_deprecated(string inputFile, string outputFile)
             {
                 var inputBytes = File.ReadAllBytes(inputFile);
                 var ms = new MemoryStream();
@@ -124,39 +117,31 @@ namespace CryptoAPI.ORM
             }
             public static void DecryptFile(string inputFile, string outputFile, long chunkSize)
             {
-                using (FileStream fsInput = File.OpenRead(inputFile))
+                var fsInput = File.OpenRead(inputFile);
+                var fsOutput = File.OpenWrite(outputFile);
+                var symmetricKey = new RijndaelManaged()
                 {
-                    using (FileStream fsOutput = File.OpenWrite(outputFile))
+                    KeySize = 256,
+                    BlockSize = 128,
+                    Key = Key,
+                    IV = IV,
+                    Mode = CipherMode.CBC,
+                    Padding = PaddingMode.ANSIX923
+                };
+                var cryptoStream = new CryptoStream(fsOutput, symmetricKey.CreateDecryptor(), CryptoStreamMode.Write);
+                for (long i = 0; i < fsInput.Length; i += chunkSize)
+                {
+                    var chunkData = new byte[chunkSize];
+                    var bytesRead = 0;
+                    while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
                     {
-                        RijndaelManaged symmetricKey = new RijndaelManaged()
-                        {
-                            KeySize = 256,
-                            BlockSize = 128,
-                            Key = Key,
-                            IV = IV,
-                            Mode = CipherMode.CBC,
-                            Padding = PaddingMode.ANSIX923
-                        };
-                        using (var cryptoStream = new CryptoStream(fsOutput, symmetricKey.CreateDecryptor(), CryptoStreamMode.Write))
-                        {
-                            for (long i = 0; i < fsInput.Length; i += chunkSize)
-                            {
-                                byte[] chunkData = new byte[chunkSize];
-                                int bytesRead = 0;
-                                while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
-                                {
-                                    cryptoStream.Write(chunkData, 0, bytesRead);
-                                }
-                            }
-                            cryptoStream.Close();
-                            fsInput.Close();
-                            fsInput.Dispose();
-                            cryptoStream.Dispose();
-                        }
-
+                        cryptoStream.Write(chunkData, 0, bytesRead);
                     }
-
                 }
+                cryptoStream.Close();
+                fsInput.Close();
+                fsInput.Dispose();
+                cryptoStream.Dispose();
             }
         }
     }

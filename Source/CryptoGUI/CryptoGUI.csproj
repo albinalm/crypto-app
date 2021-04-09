@@ -17,9 +17,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Resource Include="external-content.duckduckgo.com.jpg" />
-      <Resource Include="logo01.png" />
-      <Resource Include="logo02.png" />
+      <Resource Include="Resources\external-content.duckduckgo.com.jpg" />
+      <Resource Include="Resources\logo01.png" />
+      <Resource Include="Resources\logo02.png" />
     </ItemGroup>
 
 </Project>
