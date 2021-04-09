@@ -64,16 +64,23 @@ namespace CryptoGUI
                 }
                 else if(args.Contains("CryptoApp_CommandArgs_Decrypt"))
                 {
-                    foreach (var file in args)
+                    try
                     {
-                        if (!file.StartsWith("CryptoGUI.dll"))
+                        foreach (var file in args)
                         {
-                            if (!file.StartsWith("CryptoApp_CommandArgs"))
+                            if (!file.EndsWith("CryptoGUI.dll") && file != "CryptoApp_CommandArgs_Decrypt")
                             {
-                                EncryptionData.Sources.Add(file);
-                                //Run array window
+                                DecryptionData.Sources.Add(file);
                             }
                         }
+                        DecryptorArray decryptorArray = new DecryptorArray();
+                        Cryptography.ReadEncryptionKey(Cryptography.Encryption.HashPassword("ost123"), File.ReadAllBytes(@"C:\users\albin\desktop\key.key"));
+                        decryptorArray.Show();
+                        this.Hide();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("MainWindow is faulty! " + ex.ToString());
                     }
                 }
             }
@@ -96,7 +103,8 @@ namespace CryptoGUI
                     decryptor.Show();
                 }
             }
-          
+            MessageBox.Show("Invalid input args.");
+            Environment.Exit(0);
         }
   
     }

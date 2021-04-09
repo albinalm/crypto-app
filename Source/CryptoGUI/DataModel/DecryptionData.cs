@@ -12,5 +12,9 @@ namespace CryptoGUI.DataModel
         public static string DestinationFileName { get; set; }
         public static List<string> Sources { get; set; }
         public static List<string> Destinations { get; set; }
+        static DecryptionData()
+        {
+            Sources = new List<string>();
+        }
     }
 }
