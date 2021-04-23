@@ -16,7 +16,7 @@
         <Label Content="Data value: " HorizontalAlignment="Left" Margin="23,0,0,116" VerticalAlignment="Bottom" />
         <TextBox x:Name="txt_keyData" HorizontalAlignment="Left" Margin="114,0,0,48" TextWrapping="Wrap"
                  VerticalAlignment="Bottom" Width="350" Background="#FFDEDEDE" Height="88" Grid.ColumnSpan="2" />
-        <Button x:Name="btn_generateKey" Content="Generate new key" HorizontalAlignment="Left" Margin="23,0,0,8"
+        <Button Content="Generate new key" HorizontalAlignment="Left" Margin="23,0,0,8"
                 VerticalAlignment="Bottom" Click="btn_generateKey_Click" Height="23" Width="105" Grid.ColumnSpan="2" />
         <Label Content="Password hash: " HorizontalAlignment="Left" Margin="21,73,0,0" VerticalAlignment="Top"
                RenderTransformOrigin="-0.368,0.695" />
