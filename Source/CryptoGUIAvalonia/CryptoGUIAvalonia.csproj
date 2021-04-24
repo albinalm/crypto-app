@@ -15,4 +15,7 @@
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\CryptoAPI\CryptoAPI.csproj" />
+    </ItemGroup>
 </Project>

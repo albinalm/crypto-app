@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -8,7 +9,7 @@ namespace CryptoGUIAvalonia.GUI.Dialogues.MessageBox
 {
     public class MessageBoxWindow : Window
     {
-        public MessageBoxResult DialogResult { get; set; }
+        private MessageBoxResult DialogResult { get; set; } //Waiting to implement this
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
@@ -59,15 +60,21 @@ namespace CryptoGUIAvalonia.GUI.Dialogues.MessageBox
         public MessageBoxWindow(string message)
         {
             InitializeComponent();
-            
-            #if DEBUG
-            this.AttachDevTools();
-            #endif
             this.Get<Label>("TitleLabel").IsVisible = false;
             this.Get<Label>("MessageLabel").Content = message;
             Title = message;
             this.Get<Button>("BtnOk").IsVisible = true;
+            #if DEBUG
+            this.AttachDevTools();
+            #endif
+            
         }
+
+        private void OnClosing(object? sender, CancelEventArgs e)
+        {
+            DialogResult = MessageBoxResult.Yes;
+        }
+
         public MessageBoxWindow()
         {
             InitializeComponent();
