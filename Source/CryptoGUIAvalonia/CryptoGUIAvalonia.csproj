@@ -1,21 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.0" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Update="GUI\Dialogues\MessageBox\MessageBoxWindow.axaml.cs">
-        <DependentUpon>MessageBox.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\CryptoAPI\CryptoAPI.csproj" />
-    </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="0.10.0" />
+		<PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
+		<PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="GUI\Dialogues\MessageBox\MessageBoxWindow.axaml.cs">
+			<DependentUpon>MessageBox.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Encryptor.axaml.cs">
+			<DependentUpon>Encryptor.axaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CryptoAPI\CryptoAPI.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\external-content.duckduckgo.com.jpg" />
+		<Resource Include="Resources\logo01.png" />
+		<Resource Include="Resources\logo02.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Resources\logo01.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Resources\logo02.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 </Project>

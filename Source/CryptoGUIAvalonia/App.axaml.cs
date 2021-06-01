@@ -21,7 +21,7 @@ namespace CryptoGUIAvalonia
                  *     desktop.MainWindow = new MessageBox("Insufficent diskspace", "Insufficent disk space",
                     "The disk space has run out\nPlease retry after cleaning up!", MessageBox.MessageBoxButtons.Ok);
                  */
-                desktop.MainWindow = new MainWindow();
+                desktop.MainWindow = new Encryptor();
             }
 
             base.OnFrameworkInitializationCompleted();
