@@ -16,7 +16,7 @@ namespace CryptoGUI
     {
         public MainWindow()
         {
-                var args = Environment.GetCommandLineArgs();
+            var args = Environment.GetCommandLineArgs();
             if (args.Length > 3)
             {
                 if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
@@ -77,7 +77,6 @@ namespace CryptoGUI
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-        
         }
 
         private void InitCryptography()
@@ -104,11 +103,13 @@ namespace CryptoGUI
                             hashReader.Close();
                             File.Encrypt(Environment.CurrentDirectory + @"\credential");
                             break;
+
                         case false:
                             MessageBox.Show("Incorrect credentials");
                             File.Encrypt(Environment.CurrentDirectory + @"\credential");
                             Environment.Exit(0);
                             break;
+
                         default:
                             MessageBox.Show("Incorrect credentials");
                             File.Encrypt(Environment.CurrentDirectory + @"\credential");
@@ -119,7 +120,7 @@ namespace CryptoGUI
                 else
                 {
                     Hide();
-                    var dlg = new OpenFileDialog {Filter = "Encryption key file|*.ekey"};
+                    var dlg = new OpenFileDialog { Filter = "Encryption key file|*.ekey" };
                     if (dlg.ShowDialog() == true)
                     {
                         keyPath = dlg.FileName;
@@ -133,11 +134,13 @@ namespace CryptoGUI
                                 hashReader.Close();
                                 File.Encrypt(Environment.CurrentDirectory + @"\credential");
                                 break;
+
                             case false:
                                 MessageBox.Show("Incorrect credentials");
                                 File.Encrypt(Environment.CurrentDirectory + @"\credential");
                                 Environment.Exit(0);
                                 break;
+
                             default:
                                 MessageBox.Show("Incorrect credentials");
                                 File.Encrypt(Environment.CurrentDirectory + @"\credential");

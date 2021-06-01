@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
+        x:Class="CryptoGUIAvalonia.KeyUpdateDialog"
+        Title="CryptoGUIAvalonia" Height="221" Width="247" CanResize="False">
+	<Grid Height="195" VerticalAlignment="Top">
+		<Label Content="Old password: " HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" />
+		<TextBox x:Name="txt_oldPw" HorizontalAlignment="Left" Margin="10,30,0,0"
+                     VerticalAlignment="Top" Width="212" PasswordChar="•" />
+		<Label Content="New password:" HorizontalAlignment="Left" Margin="7,65,0,0" VerticalAlignment="Top" />
+		<TextBox x:Name="txt_newPw" HorizontalAlignment="Left" VerticalAlignment="Top" Width="212" Height="20"
+                     Margin="10,90,0,0" PasswordChar="•" />
+		<Label Content="Repeat:" HorizontalAlignment="Left" Margin="7,122,0,0" VerticalAlignment="Top" />
+		<TextBox x:Name="txt_repeat" HorizontalAlignment="Left" Margin="10,147,0,0"
+                     VerticalAlignment="Top" Width="212" PasswordChar="•" />
+		<Button Content="Confirm" HorizontalAlignment="Left" Margin="71,0, 0,-22" VerticalAlignment="Bottom" Width="90" />
+	</Grid>
+</Window>

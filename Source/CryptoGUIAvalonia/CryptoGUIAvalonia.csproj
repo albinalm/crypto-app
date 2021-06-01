@@ -10,6 +10,24 @@
 		<PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Update="PasswordDialogue.axaml.cs">
+			<DependentUpon>PasswordDialogue.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Decryptor.axaml.cs">
+			<DependentUpon>Decryptor.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="DecryptorArray.axaml.cs">
+			<DependentUpon>DecryptorArray.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Configuration.axaml.cs">
+			<DependentUpon>Configuration.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="KeyUpdateDialog.axaml.cs">
+			<DependentUpon>KeyUpdateDialog.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="EncryptorArray.axaml.cs">
+			<DependentUpon>EncryptorArray.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="GUI\Dialogues\MessageBox\MessageBoxWindow.axaml.cs">
 			<DependentUpon>MessageBox.axaml</DependentUpon>
 			<SubType>Code</SubType>

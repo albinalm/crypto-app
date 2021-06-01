@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CryptoGUIAvalonia.MainWindow"
         Title="CryptoGUIAvalonia">
-        <Grid>
-            <Button Content="Show message!" Click="ShowMessage_Click"/>
-                </Grid>
+	<Grid>
+		<Button Content="Show message!" Click="ShowMessage_Click" />
+	</Grid>
 </Window>
