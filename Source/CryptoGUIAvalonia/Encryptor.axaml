@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
         x:Class="CryptoGUIAvalonia.Encryptor"
-        Title="CryptoGUIAvalonia" Height="245" Width="505">
+        Title="CryptoGUIAvalonia" Height="245" Width="505" CanResize="False">
 	<Grid Margin="10,0,10,9">
 		<ProgressBar x:Name="pb_progress" HorizontalAlignment="Stretch" Height="15" Margin="0,0,0,0"
 					   VerticalAlignment="Bottom" />
@@ -25,7 +25,7 @@
 		<Label x:Name="lbl_destination_path" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
                RenderTransformOrigin="0.684,-0.079" Margin="10,105,0,0" FontWeight="Normal" FontStyle="Normal"
                FontFamily="Segoe UI Light" />
-		<Image Name="img_icon" HorizontalAlignment="Right" Margin="0,2,0,0"
+		<Image x:Name="img_icon" HorizontalAlignment="Right" Margin="0,2,0,0"
                VerticalAlignment="Top" Width="222" Height="95" Stretch="Uniform" />
 		<Label x:Name="lbl_percentage" Content="0%" HorizontalAlignment="Left" Margin="0,0,0,18"
                VerticalAlignment="Bottom" RenderTransformOrigin="0.684,-0.079" />
