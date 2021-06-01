@@ -40,7 +40,7 @@ namespace CryptoGUIAvalonia
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("MainWindow is faulty! " + ex);
+                        MessageBox.Show(this, "MainWindow is faulty! " + ex, "Error in MainWindow", MessageBox.MessageBoxButtons.Ok);
                     }
                 else if (args.Contains("CryptoApp_CommandArgs_Decrypt"))
                     try
@@ -55,7 +55,7 @@ namespace CryptoGUIAvalonia
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("MainWindow is faulty! " + ex);
+                        MessageBox.Show(this, "MainWindow is faulty! " + ex, "Error in MainWindow", MessageBox.MessageBoxButtons.Ok);
                     }
             }
             else if (args.Length == 3)
@@ -79,7 +79,7 @@ namespace CryptoGUIAvalonia
             {
                 var conf = new Configuration();
                 conf.Show();
-          //      this.Hide();
+                //      this.Hide();
             }
             InitializeComponent();
 #if DEBUG
@@ -113,7 +113,7 @@ namespace CryptoGUIAvalonia
                 var hash = hashReader.ReadLine();
                 if (File.Exists(keyPath))
                 {
-                  //  Hide();
+                    //  Hide();
                     var pwDiag = new PasswordDialogue(hash);
                     switch (pwDiag.Valid)
                     {
@@ -125,7 +125,7 @@ namespace CryptoGUIAvalonia
                             break;
 
                         case false:
-                            MessageBox.Show("Incorrect credentials");
+                            await MessageBox.Show(this, "Incorrect credentials", "Incorrect credentials", MessageBox.MessageBoxButtons.Ok);
                             File.Encrypt(Environment.CurrentDirectory + @"\credential");
                             Environment.Exit(0);
                             break;
@@ -135,7 +135,7 @@ namespace CryptoGUIAvalonia
                 }
                 else
                 {
-                   // Hide();
+                    // Hide();
                     var dlg = new OpenFileDialog();
                     var filter = new FileDialogFilter
                     {
@@ -169,13 +169,13 @@ namespace CryptoGUIAvalonia
                                 break;
 
                             case false:
-                                MessageBox.Show("Incorrect credentials");
+                                await MessageBox.Show(this, "Incorrect credentials", "Incorrect credentials", MessageBox.MessageBoxButtons.Ok);
                                 File.Encrypt(Environment.CurrentDirectory + @"\credential");
                                 Environment.Exit(0);
                                 break;
 
                             default:
-                                MessageBox.Show("Incorrect credentials");
+                                await MessageBox.Show(this, "Incorrect credentials", "Incorrect credentials", MessageBox.MessageBoxButtons.Ok);
                                 File.Encrypt(Environment.CurrentDirectory + @"\credential");
                                 Environment.Exit(0);
                                 break;
@@ -184,14 +184,14 @@ namespace CryptoGUIAvalonia
                     else
                     {
                         Show();
-                        MessageBox.Show("Interrupted");
+                        await MessageBox.Show(this, "Interrupted", "Interrupted", MessageBox.MessageBoxButtons.Ok);
                         Environment.Exit(0);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Did not find data files");
+                await MessageBox.Show(this, "Did not find data files", "Did not find data files", MessageBox.MessageBoxButtons.Ok);
                 Environment.Exit(0);
             }
         }

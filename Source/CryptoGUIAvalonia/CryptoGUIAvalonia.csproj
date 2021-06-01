@@ -28,7 +28,7 @@
 		<Compile Update="EncryptorArray.axaml.cs">
 			<DependentUpon>EncryptorArray.axaml</DependentUpon>
 		</Compile>
-		<Compile Update="GUI\Dialogues\MessageBox\MessageBoxWindow.axaml.cs">
+		<Compile Update="GUI\Dialogues\MessageBox\MessageBox.axaml.cs">
 			<DependentUpon>MessageBox.axaml</DependentUpon>
 			<SubType>Code</SubType>
 		</Compile>

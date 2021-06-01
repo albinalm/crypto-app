@@ -30,7 +30,7 @@ namespace CryptoGUI
                         File.WriteAllText(Cryptography.Encryption.HashPassword(txt_newPw.Password),
                             Environment.CurrentDirectory + @"\credential");
                         File.Encrypt(Environment.CurrentDirectory + @"\credential");
-                        var dlg = new SaveFileDialog {Filter = "Encryption key file|*.ekey"};
+                        var dlg = new SaveFileDialog { Filter = "Encryption key file|*.ekey" };
                         if (dlg.ShowDialog() == true)
                         {
                             File.WriteAllBytes(dlg.FileName,
@@ -69,7 +69,7 @@ namespace CryptoGUI
                     writer.Close();
 
                     File.Encrypt(Environment.CurrentDirectory + @"\credential");
-                    var dlg = new SaveFileDialog {Filter = "Encryption key file|*.ekey"};
+                    var dlg = new SaveFileDialog { Filter = "Encryption key file|*.ekey" };
                     if (dlg.ShowDialog() == true)
                     {
                         File.WriteAllBytes(dlg.FileName,
@@ -95,7 +95,6 @@ namespace CryptoGUI
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             WriteConfiguration();
-            ;
         }
     }
 }

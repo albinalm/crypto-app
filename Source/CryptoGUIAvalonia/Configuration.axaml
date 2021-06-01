@@ -20,7 +20,7 @@
 		<TextBox x:Name="txt_keyData" HorizontalAlignment="Left" Margin="114,0,0,48" TextWrapping="Wrap"
                  VerticalAlignment="Bottom" Width="350" Background="#FFDEDEDE" Height="88" Grid.ColumnSpan="2" IsEnabled="false" />
 		<Button Content="Generate new key" HorizontalAlignment="Left" Margin="23,0,0,8"
-                VerticalAlignment="Bottom" Height="30" Width="115" Grid.ColumnSpan="2" />
+                VerticalAlignment="Bottom" Height="30" Width="115" Grid.ColumnSpan="2" Click="btn_generateKey_Click" />
 		<Label Content="Security management" HorizontalAlignment="Left" Margin="23,6,0,0" VerticalAlignment="Top"
                FontSize="15" FontWeight="Bold" Grid.ColumnSpan="2" />
 		<Button x:Name="btn_view_data" Content="View data" Grid.Column="1" HorizontalAlignment="Left" Margin="119,173,0,0" VerticalAlignment="Top" Height="30" Width="85" />
