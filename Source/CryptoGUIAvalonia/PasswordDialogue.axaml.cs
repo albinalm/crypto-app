@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -15,8 +16,8 @@ namespace CryptoGUIAvalonia
 {
     public class PasswordDialogue : Window
     {
-        private readonly string _inputHash;
-        private readonly DataShareInstance _dsInstance;
+        private string _inputHash;
+        public bool Valid = false;
         public string OutputPw = "";
         private TextBox txt_pw { get; set; }
 
@@ -27,21 +28,16 @@ namespace CryptoGUIAvalonia
 
         public PasswordDialogue()
         {
-            InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
-        public PasswordDialogue(DataShareInstance dsInstance)
+        public PasswordDialogue(string input)
         {
             InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
 #endif
-            _dsInstance = dsInstance;
-            _inputHash = "";
             txt_pw = this.Get<TextBox>("txt_pw");
+            _inputHash = input;
             var logoImage = this.Get<Image>("img_icon");
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo02.png");
@@ -52,11 +48,12 @@ namespace CryptoGUIAvalonia
             if (Cryptography.Encryption.HashPassword(txt_pw.Text) == _inputHash)
             {
                 OutputPw = txt_pw.Text;
-
+                Valid = true;
                 Close();
             }
             else
             {
+                Valid = false;
                 Close();
             }
         }
