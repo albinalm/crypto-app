@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CryptoGUIAvalonia
@@ -24,8 +25,17 @@ namespace CryptoGUIAvalonia
 
         public MainWindow()
         {
-            Debug.WriteLine("Fired!");
-            var args = Environment.GetCommandLineArgs();
+          
+              Initialized += window_initialized;
+               Activated += window_activated;
+            
+           
+            InitializeComponent();
+
+#if DEBUG
+            this.AttachDevTools();
+#endif
+           var args = Environment.GetCommandLineArgs();
             if (args.Length > 3)
             {
                 if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
@@ -77,20 +87,28 @@ namespace CryptoGUIAvalonia
             }
             else
             {
+               
                 var conf = new Configuration();
                 conf.Show();
-                //      this.Hide();
+                    //  this.Hide();
             }
-            InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
-            Activated += window_activated;
+        }
+
+        private void window_lostFocus(object? sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void window_initialized(object? sender, EventArgs e)
+        {
+            
+       
         }
 
         private void window_activated(object? sender, EventArgs e)
         {
-            Hide();
+     //       
+            //Hide();
         }
 
         private void window_finishedInit(object? sender, EventArgs e)
@@ -99,14 +117,29 @@ namespace CryptoGUIAvalonia
 
         private void ShowMessage_Click(object sender, RoutedEventArgs e)
         {
+             sfdlg();
         }
 
+        public async Task sfdlg()
+        {
+            var dlg = new SaveFileDialog();
+            var filter = new FileDialogFilter
+            {
+                Name = "Encryption key file",
+            };
+            filter.Extensions.Add("ekey");
+            dlg.Filters.Add(filter);
+            var _dlg =  await dlg.ShowAsync(this);
+            var result = false;
+            var fileRes = "";
+            fileRes = _dlg;
+        }
         private async Task InitCryptography()
         {
             Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (File.Exists(Environment.CurrentDirectory + @"\credential"))
             {
-                File.Decrypt(Environment.CurrentDirectory + @"\credential");
+          //      File.Decrypt(Environment.CurrentDirectory + @"\credential");
                 var keyReader = new StreamReader(Environment.CurrentDirectory + @"\config.ini");
                 var hashReader = new StreamReader(Environment.CurrentDirectory + @"\credential");
                 var keyPath = keyReader.ReadLine();
@@ -121,12 +154,12 @@ namespace CryptoGUIAvalonia
                             Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(keyPath));
                             keyReader.Close();
                             hashReader.Close();
-                            File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                       //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
                             break;
 
                         case false:
                             await MessageBox.Show(this, "Incorrect credentials", "Incorrect credentials", MessageBox.MessageBoxButtons.Ok);
-                            File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                       //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
                             Environment.Exit(0);
                             break;
 
@@ -165,12 +198,12 @@ namespace CryptoGUIAvalonia
                                 Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(keyPath));
                                 keyReader.Close();
                                 hashReader.Close();
-                                File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                          //      File.Encrypt(Environment.CurrentDirectory + @"\credential");
                                 break;
 
                             case false:
                                 await MessageBox.Show(this, "Incorrect credentials", "Incorrect credentials", MessageBox.MessageBoxButtons.Ok);
-                                File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                           //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
                                 Environment.Exit(0);
                                 break;
 

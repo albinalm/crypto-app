@@ -39,8 +39,13 @@ namespace CryptoGUIAvalonia
             txt_key = this.Get<TextBox>("txt_key");
             txt_pwHash = this.Get<TextBox>("txt_pwHash");
             txt_keyData = this.Get<TextBox>("txt_keyData");
+            MaxHeight = 295;
+            MaxWidth = 488;
+            Width = MaxWidth +1;
+            Height = MaxHeight;
             btn_view_data = this.Get<Button>("btn_view_data");
             ReadData();
+            
         }
 
         private void Configuration_Closing(object? sender, CancelEventArgs e)
@@ -54,17 +59,17 @@ namespace CryptoGUIAvalonia
 
         private async Task ReadData()
         {
-            if (File.Exists(Environment.CurrentDirectory + @"\credential") &&
-                File.Exists(Environment.CurrentDirectory + @"\config.ini"))
+            if (File.Exists(Environment.CurrentDirectory + @"/credential") &&
+                File.Exists(Environment.CurrentDirectory + @"/config.ini"))
             {
-                File.Decrypt(Environment.CurrentDirectory + @"\credential");
-                var keyReader = new StreamReader(Environment.CurrentDirectory + @"\config.ini");
-                var hashReader = new StreamReader(Environment.CurrentDirectory + @"\credential");
+           //     File.Decrypt(Environment.CurrentDirectory + @"/credential");
+                var keyReader = new StreamReader(Environment.CurrentDirectory + @"/config.ini");
+                var hashReader = new StreamReader(Environment.CurrentDirectory + @"/credential");
                 var keyPath = keyReader.ReadLine();
                 if (File.Exists(keyPath))
                 {
                     txt_pwHash.Text = hashReader.ReadLine();
-                    File.Encrypt(Environment.CurrentDirectory + @"\credential");
+             //       File.Encrypt(Environment.CurrentDirectory + @"/credential");
                     txt_key.Text = keyPath;
                     _keyBytes = File.ReadAllBytes(txt_key.Text);
                     keyReader.Close();
@@ -94,14 +99,14 @@ namespace CryptoGUIAvalonia
                     {
                         keyPath = fileRes;
                         txt_pwHash.Text = hashReader.ReadLine();
-                        File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                     //   File.Encrypt(Environment.CurrentDirectory + @"/credential");
                         txt_key.Text = keyPath;
                         _keyBytes = File.ReadAllBytes(txt_key.Text);
                         keyReader.Close();
                         hashReader.Close();
                         await MessageBox.Show(this, "Do you wish to save the path to the key file?", "Save path?", MessageBox.MessageBoxButtons.YesNo);
 
-                        var writer = new StreamWriter(Environment.CurrentDirectory + @"\config.ini");
+                        var writer = new StreamWriter(Environment.CurrentDirectory + @"/config.ini");
                         writer.WriteLine(fileRes);
                         writer.Flush();
                         writer.Close();
@@ -135,7 +140,7 @@ namespace CryptoGUIAvalonia
             switch (updateKeyDlg.isDone)
             {
                 case true:
-                    ReadData();
+                    await ReadData();
                     break;
             }
         }

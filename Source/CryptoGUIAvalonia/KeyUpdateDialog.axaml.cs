@@ -32,6 +32,7 @@ namespace CryptoGUIAvalonia
             txt_newPw = this.Get<TextBox>("txt_newPw");
             txt_oldPw = this.Get<TextBox>("txt_oldPw");
             txt_repeat = this.Get<TextBox>("txt_repeat");
+          
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -41,18 +42,18 @@ namespace CryptoGUIAvalonia
 
         private async Task WriteConfiguration()
         {
-            if (File.Exists(Environment.CurrentDirectory + @"\credential"))
+            if (File.Exists(Environment.CurrentDirectory + @"/credential"))
             {
-                File.Decrypt(Environment.CurrentDirectory + @"\credential");
-                var passwordHash = File.ReadAllText(Environment.CurrentDirectory + @"\credential");
+            //    File.Decrypt(Environment.CurrentDirectory + @"/credential");
+                var passwordHash = File.ReadAllText(Environment.CurrentDirectory + @"/credential");
                 if (Cryptography.Encryption.HashPassword(txt_oldPw.Text) == passwordHash)
                 {
                     if (txt_newPw.Text == txt_repeat.Text)
                     {
-                        File.Delete(Environment.CurrentDirectory + @"\credential");
+                        File.Delete(Environment.CurrentDirectory + @"/credential");
                         File.WriteAllText(Cryptography.Encryption.HashPassword(txt_newPw.Text),
-                            Environment.CurrentDirectory + @"\credential");
-                        File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                            Environment.CurrentDirectory + @"/credential");
+                 //       File.Encrypt(Environment.CurrentDirectory + @"/credential");
 
                         var dlg = new SaveFileDialog();
                         var filter = new FileDialogFilter
@@ -71,7 +72,7 @@ namespace CryptoGUIAvalonia
                             File.WriteAllBytes(fileRes,
                                 Cryptography.GenerateEncryptionKey(
                                     Cryptography.Encryption.HashPassword(txt_newPw.Text)));
-                            var writer = new StreamWriter(Environment.CurrentDirectory + @"\config.ini");
+                            var writer = new StreamWriter(Environment.CurrentDirectory + @"/config.ini");
                             writer.WriteLine(fileRes);
                             writer.Flush();
                             writer.Close();
@@ -94,19 +95,22 @@ namespace CryptoGUIAvalonia
                 await MessageBox.Show(this, "Credential file not found. Will do new password without since this might be first time alpha usage", "Credential file not found", MessageBox.MessageBoxButtons.Ok);
                 if (txt_newPw.Text == txt_repeat.Text)
                 {
-                    var writer = new StreamWriter(Environment.CurrentDirectory + @"\credential");
+              //      Console.WriteLine("First section");
+                    var writer = new StreamWriter(Environment.CurrentDirectory + @"/credential");
                     writer.WriteLine(Cryptography.Encryption.HashPassword(txt_newPw.Text));
                     writer.Flush();
                     writer.Close();
-
-                    File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                //    File.Encrypt(Environment.CurrentDirectory + @"/credential");
+                 //   Console.WriteLine("Second2 section");
                     var dlg = new SaveFileDialog();
+                    Console.WriteLine("Third section");
                     var filter = new FileDialogFilter
                     {
                         Name = "Encryption key file",
                     };
                     filter.Extensions.Add("ekey");
                     dlg.Filters.Add(filter);
+                    Console.WriteLine("Showing dlg");
                     var _dlg = await dlg.ShowAsync(this);
                     var result = false;
                     var fileRes = "";
@@ -116,7 +120,7 @@ namespace CryptoGUIAvalonia
                         File.WriteAllBytes(fileRes,
                             Cryptography.GenerateEncryptionKey(
                                 Cryptography.Encryption.HashPassword(txt_newPw.Text)));
-                        writer = new StreamWriter(Environment.CurrentDirectory + @"\config.ini");
+                        writer = new StreamWriter(Environment.CurrentDirectory + @"/config.ini");
                         writer.WriteLine(fileRes);
                         writer.Flush();
                         writer.Close();

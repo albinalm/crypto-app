@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CryptoGUIAvalonia.GUI.Dialogues.MessageBox
 {
@@ -29,6 +30,7 @@ namespace CryptoGUIAvalonia.GUI.Dialogues.MessageBox
         public MessageBox()
         {
             AvaloniaXamlLoader.Load(this);
+
         }
 
         public static Task<MessageBoxResult> Show(Window parent, string text, string title, MessageBoxButtons buttons)
@@ -36,6 +38,7 @@ namespace CryptoGUIAvalonia.GUI.Dialogues.MessageBox
             var msgbox = new MessageBox()
             {
                 Title = title
+                
             };
             msgbox.FindControl<TextBlock>("Text").Text = text;
             var buttonPanel = msgbox.FindControl<StackPanel>("Buttons");

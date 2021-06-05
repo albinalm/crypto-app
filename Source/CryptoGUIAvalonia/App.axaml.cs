@@ -1,7 +1,12 @@
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using CryptoGUIAvalonia.GUI.Dialogues;
+using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
 
 namespace CryptoGUIAvalonia
 {
@@ -11,7 +16,6 @@ namespace CryptoGUIAvalonia
         {
             AvaloniaXamlLoader.Load(this);
         }
-
         public override void OnFrameworkInitializationCompleted()
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -21,10 +25,13 @@ namespace CryptoGUIAvalonia
                  *     desktop.MainWindow = new MessageBox("Insufficent diskspace", "Insufficent disk space",
                     "The disk space has run out\nPlease retry after cleaning up!", MessageBox.MessageBoxButtons.Ok);
                  */
-                desktop.MainWindow = new MainWindow();
+               
+               desktop.MainWindow = new MainWindow();
             }
 
+         
             base.OnFrameworkInitializationCompleted();
         }
+
     }
 }
