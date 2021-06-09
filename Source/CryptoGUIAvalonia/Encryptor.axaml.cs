@@ -119,7 +119,6 @@ namespace CryptoGUIAvalonia
                 {
                     pb_progress.Maximum = fileLength;
                 });
-           //     ExecuteAsync_GuiUpdater();
                 while (runloop)
                     if (File.Exists(EncryptionData.DestinationFileName))
                     {
@@ -131,7 +130,7 @@ namespace CryptoGUIAvalonia
                             pb_progress.Value = Math.Round((double) finf.Length / 1048576, 0);
                             lbl_percentage.Content = Math.Round(pb_progress.Value / pb_progress.Maximum * 100, 0) + "%";
                             if (pb_progress.Value != pb_progress.Maximum) return;
-                        //    CalculateSpeed = false;
+                            CalculateSpeed = false;
                             lbl_speed.Content = "Speed: --";
                             lbl_percentage.Content = "Finalizing file...";
                             lbl_title.Content = "Finishing up...";
@@ -210,7 +209,7 @@ namespace CryptoGUIAvalonia
             lbl_source_path.Content = EncryptionData.SourceFileName;
             lbl_destination.Content = "Destination:";
             Title = @"Encrypting: " + EncryptionData.SourceFileName;
-   //        EncryptionData.SourceFileName = "/home/albin/RiderProjects/crypto-app/Source/CryptoGUIAvalonia/bin/Any CPU/Debug/net5.0/linux-x64/CryptoAPI.pdb";
+  
            ExecuteAsync_TrackProgress();
             ExecuteAsync_Worker();
         }

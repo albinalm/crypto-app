@@ -94,9 +94,9 @@ namespace CryptoGUIAvalonia
                 }
                 else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
                 {
+                    await InitCryptography();
                     DecryptionData.SourceFileName = args[2];
                     var decryptor = new Decryptor();
-                    await InitCryptography();
                     decryptor.Show();
                 }
             }
