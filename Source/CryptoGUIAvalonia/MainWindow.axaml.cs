@@ -51,7 +51,7 @@ namespace CryptoGUIAvalonia
                     DecryptionData.Sources.Add(Environment.GetCommandLineArgs()[i]);
             }
         }
-        private void InitializeStartup()
+        private async Task InitializeStartup()
         {
                    var args = Environment.GetCommandLineArgs();
             if (args.Length > 3)
@@ -73,7 +73,7 @@ namespace CryptoGUIAvalonia
                     {
                         AddSources(true);
                         var decryptorArray = new DecryptorArray();
-                        InitCryptography();
+                        await InitCryptography();
 
                         decryptorArray.Show();
                     }
@@ -86,16 +86,17 @@ namespace CryptoGUIAvalonia
             {
                 if (args[1] == "CryptoApp_CommandArgs_Encrypt")
                 {
-                    AddSources(false);
+                    await InitCryptography();
+                    EncryptionData.SourceFileName = args[2];
                     var encryptor = new Encryptor();
-                    InitCryptography();
+                   
                     encryptor.Show();
                 }
                 else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
                 {
-                    AddSources(true);
+                    DecryptionData.SourceFileName = args[2];
                     var decryptor = new Decryptor();
-                    InitCryptography();
+                    await InitCryptography();
                     decryptor.Show();
                 }
             }
@@ -149,18 +150,21 @@ namespace CryptoGUIAvalonia
         }
         private async Task InitCryptography()
         {
-            Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            if (File.Exists(Environment.CurrentDirectory + @"\credential"))
+            if(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) != null)
+                Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+          //  MessageBox.Show(this, Environment.CurrentDirectory, "", MessageBox.MessageBoxButtons.Ok);
+            if (File.Exists(Environment.CurrentDirectory + @"/credential"))
             {
           //      File.Decrypt(Environment.CurrentDirectory + @"\credential");
-                var keyReader = new StreamReader(Environment.CurrentDirectory + @"\config.ini");
-                var hashReader = new StreamReader(Environment.CurrentDirectory + @"\credential");
+                var keyReader = new StreamReader(Environment.CurrentDirectory + @"/config.ini");
+                var hashReader = new StreamReader(Environment.CurrentDirectory + @"/credential");
                 var keyPath = keyReader.ReadLine();
                 var hash = hashReader.ReadLine();
                 if (File.Exists(keyPath))
                 {
                     //  Hide();
                     var pwDiag = new PasswordDialogue(hash);
+                    await pwDiag.ShowDialog(this);
                     switch (pwDiag.Valid)
                     {
                         case true:
