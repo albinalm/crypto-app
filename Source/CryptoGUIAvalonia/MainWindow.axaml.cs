@@ -35,15 +35,31 @@ namespace CryptoGUIAvalonia
 #if DEBUG
             this.AttachDevTools();
 #endif
-           var args = Environment.GetCommandLineArgs();
+            InitializeStartup();
+        }
+
+        private void AddSources(bool decryption)
+        {
+            for (var i = 0; i <= Environment.GetCommandLineArgs().Length - 1; i++)
+            {
+                var arg = Environment.GetCommandLineArgs()[i];
+                if (i == 0 || arg is "CryptoApp_CommandArgs_Encrypt" or "CryptoApp_CommandArgs_Decrypt")
+                    continue;
+                if(!decryption)
+                    EncryptionData.Sources.Add(Environment.GetCommandLineArgs()[i]);
+                else 
+                    DecryptionData.Sources.Add(Environment.GetCommandLineArgs()[i]);
+            }
+        }
+        private void InitializeStartup()
+        {
+                   var args = Environment.GetCommandLineArgs();
             if (args.Length > 3)
             {
                 if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
                     try
                     {
-                        foreach (var file in args)
-                            if (!file.EndsWith("CryptoGUI.dll") && file != "CryptoApp_CommandArgs_Encrypt")
-                                EncryptionData.Sources.Add(file);
+                        AddSources(false); 
                         var encryptorArray = new EncryptorArray();
                         InitCryptography();
                         encryptorArray.Show();
@@ -55,9 +71,7 @@ namespace CryptoGUIAvalonia
                 else if (args.Contains("CryptoApp_CommandArgs_Decrypt"))
                     try
                     {
-                        foreach (var file in args)
-                            if (!file.EndsWith("CryptoGUI.dll") && file != "CryptoApp_CommandArgs_Decrypt")
-                                DecryptionData.Sources.Add(file);
+                        AddSources(true);
                         var decryptorArray = new DecryptorArray();
                         InitCryptography();
 
@@ -72,14 +86,14 @@ namespace CryptoGUIAvalonia
             {
                 if (args[1] == "CryptoApp_CommandArgs_Encrypt")
                 {
-                    EncryptionData.SourceFileName = args[2];
+                    AddSources(false);
                     var encryptor = new Encryptor();
                     InitCryptography();
                     encryptor.Show();
                 }
                 else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
                 {
-                    DecryptionData.SourceFileName = args[2];
+                    AddSources(true);
                     var decryptor = new Decryptor();
                     InitCryptography();
                     decryptor.Show();
@@ -93,7 +107,6 @@ namespace CryptoGUIAvalonia
                     //  this.Hide();
             }
         }
-
         private void window_lostFocus(object? sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();

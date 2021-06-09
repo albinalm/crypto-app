@@ -1,0 +1,16 @@
+[Desktop Action encrypt]
+
+Exec="/home/albin/RiderProjects/crypto-app/Source/CryptoGUIAvalonia/bin/Any CPU/Debug/net5.0/linux-x64/CryptoGUIAvalonia" CryptoApp_CommandArgs_Encrypt
+
+Name=Encrypt with CryptoApp
+Icon=document-send
+
+[Desktop Entry]
+Actions=encrypt
+ServiceTypes=KonqPopupMenu/Plugin,inode/directory,all/allfiles
+Type=Service
+X-KDE-Priority=TopLevel 
+
+
+----------------------------------
+Service path: /home/albin/.local/share/kservices5/ServiceMenus/encrypt.desktop
