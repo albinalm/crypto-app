@@ -25,11 +25,9 @@ namespace CryptoGUIAvalonia
 
         public MainWindow()
         {
-          
-              Initialized += window_initialized;
-               Activated += window_activated;
-            
-           
+            Initialized += window_initialized;
+            Activated += window_activated;
+
             InitializeComponent();
 
 #if DEBUG
@@ -45,28 +43,29 @@ namespace CryptoGUIAvalonia
                 var arg = Environment.GetCommandLineArgs()[i];
                 if (i == 0 || arg is "CryptoApp_CommandArgs_Encrypt" or "CryptoApp_CommandArgs_Decrypt")
                     continue;
-                if(!decryption)
+                if (!decryption)
                     EncryptionData.Sources.Add(Environment.GetCommandLineArgs()[i]);
-                else 
+                else
                     DecryptionData.Sources.Add(Environment.GetCommandLineArgs()[i]);
             }
         }
+
         private async Task InitializeStartup()
         {
-                   var args = Environment.GetCommandLineArgs();
+            var args = Environment.GetCommandLineArgs();
             if (args.Length > 3)
             {
                 if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
                     try
                     {
-                        AddSources(false); 
+                        await InitCryptography();
+                        AddSources(false);
                         var encryptorArray = new EncryptorArray();
-                        InitCryptography();
                         encryptorArray.Show();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(this, "MainWindow is faulty! " + ex, "Error in MainWindow", MessageBox.MessageBoxButtons.Ok);
+                        await MessageBox.Show(this, "MainWindow is faulty! " + ex, "Error in MainWindow", MessageBox.MessageBoxButtons.Ok);
                     }
                 else if (args.Contains("CryptoApp_CommandArgs_Decrypt"))
                     try
@@ -89,7 +88,7 @@ namespace CryptoGUIAvalonia
                     await InitCryptography();
                     EncryptionData.SourceFileName = args[2];
                     var encryptor = new Encryptor();
-                   
+
                     encryptor.Show();
                 }
                 else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
@@ -102,12 +101,12 @@ namespace CryptoGUIAvalonia
             }
             else
             {
-               
                 var conf = new Configuration();
                 conf.Show();
-                    //  this.Hide();
+                //  this.Hide();
             }
         }
+
         private void window_lostFocus(object? sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
@@ -115,13 +114,11 @@ namespace CryptoGUIAvalonia
 
         private void window_initialized(object? sender, EventArgs e)
         {
-            
-       
         }
 
         private void window_activated(object? sender, EventArgs e)
         {
-     //       
+            //
             //Hide();
         }
 
@@ -131,7 +128,7 @@ namespace CryptoGUIAvalonia
 
         private void ShowMessage_Click(object sender, RoutedEventArgs e)
         {
-             sfdlg();
+            sfdlg();
         }
 
         public async Task sfdlg()
@@ -143,19 +140,20 @@ namespace CryptoGUIAvalonia
             };
             filter.Extensions.Add("ekey");
             dlg.Filters.Add(filter);
-            var _dlg =  await dlg.ShowAsync(this);
+            var _dlg = await dlg.ShowAsync(this);
             var result = false;
             var fileRes = "";
             fileRes = _dlg;
         }
+
         private async Task InitCryptography()
         {
-            if(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) != null)
+            if (Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) != null)
                 Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-          //  MessageBox.Show(this, Environment.CurrentDirectory, "", MessageBox.MessageBoxButtons.Ok);
+            //  MessageBox.Show(this, Environment.CurrentDirectory, "", MessageBox.MessageBoxButtons.Ok);
             if (File.Exists(Environment.CurrentDirectory + @"/credential"))
             {
-          //      File.Decrypt(Environment.CurrentDirectory + @"\credential");
+                //      File.Decrypt(Environment.CurrentDirectory + @"\credential");
                 var keyReader = new StreamReader(Environment.CurrentDirectory + @"/config.ini");
                 var hashReader = new StreamReader(Environment.CurrentDirectory + @"/credential");
                 var keyPath = keyReader.ReadLine();
@@ -171,12 +169,12 @@ namespace CryptoGUIAvalonia
                             Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(keyPath));
                             keyReader.Close();
                             hashReader.Close();
-                       //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                            //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
                             break;
 
                         case false:
                             await MessageBox.Show(this, "Incorrect credentials", "Incorrect credentials", MessageBox.MessageBoxButtons.Ok);
-                       //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                            //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
                             Environment.Exit(0);
                             break;
 
@@ -215,12 +213,12 @@ namespace CryptoGUIAvalonia
                                 Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(keyPath));
                                 keyReader.Close();
                                 hashReader.Close();
-                          //      File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                                //      File.Encrypt(Environment.CurrentDirectory + @"\credential");
                                 break;
 
                             case false:
                                 await MessageBox.Show(this, "Incorrect credentials", "Incorrect credentials", MessageBox.MessageBoxButtons.Ok);
-                           //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
+                                //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
                                 Environment.Exit(0);
                                 break;
 
