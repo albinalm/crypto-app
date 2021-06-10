@@ -70,15 +70,14 @@ namespace CryptoGUIAvalonia
                 else if (args.Contains("CryptoApp_CommandArgs_Decrypt"))
                     try
                     {
+                        await InitCryptography();
                         AddSources(true);
                         var decryptorArray = new DecryptorArray();
-                        await InitCryptography();
-
                         decryptorArray.Show();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(this, "MainWindow is faulty! " + ex, "Error in MainWindow", MessageBox.MessageBoxButtons.Ok);
+                        await MessageBox.Show(this, "MainWindow is faulty! " + ex, "Error in MainWindow", MessageBox.MessageBoxButtons.Ok);
                     }
             }
             else if (args.Length == 3)
@@ -88,7 +87,6 @@ namespace CryptoGUIAvalonia
                     await InitCryptography();
                     EncryptionData.SourceFileName = args[2];
                     var encryptor = new Encryptor();
-
                     encryptor.Show();
                 }
                 else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
@@ -154,8 +152,8 @@ namespace CryptoGUIAvalonia
             if (File.Exists(Environment.CurrentDirectory + @"/credential"))
             {
                 //      File.Decrypt(Environment.CurrentDirectory + @"\credential");
-                var keyReader = new StreamReader(Environment.CurrentDirectory + @"/config.ini");
-                var hashReader = new StreamReader(Environment.CurrentDirectory + @"/credential");
+                var keyReader = new StreamReader(Environment.CurrentDirectory + "/config.ini");
+                var hashReader = new StreamReader(Environment.CurrentDirectory + "/credential");
                 var keyPath = keyReader.ReadLine();
                 var hash = hashReader.ReadLine();
                 if (File.Exists(keyPath))

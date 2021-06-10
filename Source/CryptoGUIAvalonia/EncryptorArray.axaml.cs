@@ -61,10 +61,10 @@ namespace CryptoGUIAvalonia
             lbl_currentFile = this.Get<Label>("lbl_currentFile");
             txtblock_destination_path = this.Get<TextBlock>("txtblock_destination_path");
             txtblock_currentFile = this.Get<TextBlock>("txtblock_currentFile");
-            _TrackProgress = new Thread(new ThreadStart(TrackProgress)) { IsBackground = true };
 
             #endregion UI Declarations
 
+            _TrackProgress = new Thread(new ThreadStart(TrackProgress)) { IsBackground = true };
             Startup();
         }
 
@@ -215,7 +215,7 @@ namespace CryptoGUIAvalonia
             FilesEncrypted = 1; //Set it as one so we normalize "Count"
             UpdateGui = true;
             ExecuteAsync_GuiUpdater();
-            lbl_destination.Content = "Destination path:";
+            lbl_destination.Content = "Destination:";
             Title = @"Encrypting...";
             pb_total.Maximum = EncryptionData.Sources.Count;
             ExecuteAsync_Worker();
