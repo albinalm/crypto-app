@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -82,6 +83,7 @@ namespace CryptoGUIAvalonia
         private void Worker()
         {
             Thread.Sleep(1000);
+            var takenSources = new List<string>();
             foreach (var source in DecryptionData.Sources)
             {
                 CurrentFileSource = source;
@@ -91,34 +93,113 @@ namespace CryptoGUIAvalonia
                     //     lbl_percentage.Content = Math.Round(pb_current.Value / pb_current.Maximum * 100, 0) + "%";
                 });
                 SpeedCalculator_Increment = 0;
-                var safeFileName = Path.GetFileNameWithoutExtension(source);
-                var safeDirName =
-                    source.Remove(source.Length - (safeFileName.Length + Path.GetExtension(source).Length + 1),
-                        safeFileName.Length + Path.GetExtension(source).Length + 1);
-                var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => finf.Name.StartsWith(Path.GetFileNameWithoutExtension(source) + "_decrypted"));
-                if (fileCount == 0)
-                    DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted" +
-                                                         Path.GetExtension(source);
-                else
-                    DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted_" +
-                                                         fileCount + Path.GetExtension(source);
-                Dispatcher.UIThread.Post(() =>
+                if (DecryptionData.RootSubdirectories.Count > 0)
                 {
-                    Title = @"Decrypting files to: " + safeDirName;
-                    lbl_title.Content = "Decrypting..";
-                    txtblock_destination_path.Text = DecryptionData.DestinationFileName;
-                });
-                CalculateSpeed = true;
-                ExecuteAsync_SpeedCalculator();
-                Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = safeFileName + Path.GetExtension(source); });
+                    foreach (var subdir in DecryptionData.RootSubdirectories)
+                    {
+                        if (source.StartsWith(subdir + Path.DirectorySeparatorChar))
+                        {
+                            Dispatcher.UIThread.Post(() =>
+                            {
+                                //    MessageBox.Show(this, Path.GetPathRoot(source), "", MessageBox.MessageBoxButtons.Ok);
+                                //  MessageBox.Show(this, source + Environment.NewLine + subdir, "", MessageBox.MessageBoxButtons.Ok);
+                            });
+                            //C:/Users/Albin/Desktop/Ny mapp/Ny mapp2/Letgooo.exe
+                            var safeName = new DirectoryInfo(subdir).Name;
+                            var restPath = CurrentFileSource.Remove(0, subdir.Length);
+                            Dispatcher.UIThread.Post(() =>
+                            {
+                                //  MessageBox.Show(this, EncryptionData.Sources[i] + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
+                                //      MessageBox.Show(this, subdir + Environment.NewLine + source + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
+                            });
+                            if (!Directory.Exists(Path.GetDirectoryName($"{subdir}_decrypted{restPath}")))
+                                Directory.CreateDirectory(Path.GetDirectoryName($"{subdir}_decrypted{restPath}"));
+                            DecryptionData.DestinationFileName = $"{subdir}_decrypted{restPath}";
+                            Dispatcher.UIThread.Post(() =>
+                            {
+                                Title = @"Decrypting files to: " + subdir;
+                                lbl_title.Content = "Decrypting..";
+                                txtblock_destination_path.Text = DecryptionData.DestinationFileName;
+                            });
+                            CalculateSpeed = true;
+                            ExecuteAsync_SpeedCalculator();
+                            Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = DecryptionData.DestinationFileName; });
 
-                Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
-                if (!_TrackProgress.IsAlive)
-                {
-                    ExecuteAsync_TrackProgress();
+                            Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
+                            if (!_TrackProgress.IsAlive)
+                            {
+                                ExecuteAsync_TrackProgress();
+                            }
+
+                            Cryptography.Decryption.DecryptFile(source, DecryptionData.DestinationFileName, 1024);
+                            takenSources.Add(source);
+                            FilesDecrypted++;
+                            Dispatcher.UIThread.Post(() =>
+                            {
+                                //  MessageBox.Show(this, EncryptionData.Sources[i] + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
+                                //     MessageBox.Show(this, EncryptionData.DestinationFileName, "", MessageBox.MessageBoxButtons.Ok);
+                            });
+                        }
+                    }
+                    if (!takenSources.Contains(source))
+                    {
+                        var safeFileName = Path.GetFileNameWithoutExtension(source);
+                        var safeDirName = Path.GetDirectoryName(source);
+                        var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => finf.Name.StartsWith(Path.GetFileNameWithoutExtension(source) + "_decrypted"));
+                        if (fileCount == 0)
+                            DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted" +
+                                                                 Path.GetExtension(source);
+                        else
+                            DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted_" +
+                                                                 fileCount + Path.GetExtension(source);
+                        Dispatcher.UIThread.Post(() =>
+                        {
+                            Title = @"Decrypting files to: " + safeDirName;
+                            lbl_title.Content = "Decrypting..";
+                            txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
+                        });
+                        CalculateSpeed = true;
+                        ExecuteAsync_SpeedCalculator();
+                        Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = safeFileName + Path.GetExtension(source); });
+
+                        Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
+                        if (!_TrackProgress.IsAlive)
+                        {
+                            ExecuteAsync_TrackProgress();
+                        }
+                        Cryptography.Decryption.DecryptFile(source, DecryptionData.DestinationFileName, 1024);
+                        FilesDecrypted++;
+                    }
                 }
-                Cryptography.Decryption.DecryptFile(source, DecryptionData.DestinationFileName, 1024);
-                FilesDecrypted++;
+                else
+                {
+                    var safeFileName = Path.GetFileNameWithoutExtension(source);
+                    var safeDirName = Path.GetDirectoryName(source);
+                    var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => finf.Name.StartsWith(Path.GetFileNameWithoutExtension(source) + "_decrypted"));
+                    if (fileCount == 0)
+                        DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted" +
+                                                             Path.GetExtension(source);
+                    else
+                        DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted_" +
+                                                             fileCount + Path.GetExtension(source);
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        Title = @"Decrypting files to: " + safeDirName;
+                        lbl_title.Content = "Decrypting..";
+                        txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
+                    });
+                    CalculateSpeed = true;
+                    ExecuteAsync_SpeedCalculator();
+                    Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = safeFileName + Path.GetExtension(source); });
+
+                    Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
+                    if (!_TrackProgress.IsAlive)
+                    {
+                        ExecuteAsync_TrackProgress();
+                    }
+                    Cryptography.Decryption.DecryptFile(source, DecryptionData.DestinationFileName, 1024);
+                    FilesDecrypted++;
+                }
             }
             Environment.Exit(0);
         }

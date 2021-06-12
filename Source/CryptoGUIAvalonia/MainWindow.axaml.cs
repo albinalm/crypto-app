@@ -160,6 +160,7 @@ namespace CryptoGUIAvalonia
                     var attr = File.GetAttributes(args[2]);
                     if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
                     {
+                        DecryptionData.RootSubdirectories.Add(args[2]);
                         DirectoryDigging(args[2], true);
                         var decryptorArray = new DecryptorArray();
                         decryptorArray.Show();

@@ -7,6 +7,8 @@ namespace CryptoGUI.DataModel
         static DecryptionData()
         {
             Sources = new List<string>();
+            RootSubdirectories = new List<string>();
+            Destinations = new List<string>();
         }
 
         public static string SourceFileName { get; set; }
