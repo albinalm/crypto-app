@@ -142,28 +142,7 @@ namespace CryptoGUIAvalonia
                     var attr = File.GetAttributes(args[2]);
                     if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
                     {
-                        var baseDir = Directory.GetParent(args[2]);
-                        var dirName = new DirectoryInfo(args[2]).Name;
-                        var fullPath = "";
-                        bool exists = true;
-                        var count = 0;
-                        while (exists)
-                        {
-                            if (!Directory.Exists(baseDir + "/" + dirName + "_encrypted"))
-                            {
-                                fullPath = baseDir + "/" + dirName + "_encrypted";
-                                exists = false;
-                            }
-                            else
-                            {
-                                count++;
-                                if (!Directory.Exists(baseDir + "/" + dirName + "_encrypted" + count))
-                                {
-                                    fullPath = baseDir + "/" + dirName + "_encrypted" + count;
-                                }
-                            }
-                        }
-                        Directory.CreateDirectory(fullPath);
+                        EncryptionData.RootSubdirectories.Add(args[2]);
                         DirectoryDigging(args[2], false);
                         var encryptorArray = new EncryptorArray();
                         encryptorArray.Show();
