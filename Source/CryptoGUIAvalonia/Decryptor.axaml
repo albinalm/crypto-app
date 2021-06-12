@@ -7,7 +7,7 @@
         Title="CryptoGUIAvalonia" Height="245" Width="505" CanResize="False" WindowStartupLocation="CenterScreen">
 	<Grid Margin="10,0,10,9">
 		<ProgressBar x:Name="pb_progress" HorizontalAlignment="Stretch" Height="15" Margin="0,0,0,0"
-							 VerticalAlignment="Bottom" />
+							 VerticalAlignment="Bottom" Foreground="Red" />
 		<Label x:Name="lbl_speed" Content="Speed: 2,5MB/s" HorizontalAlignment="Right" Margin="0,0,6,18"
                VerticalAlignment="Bottom" RenderTransformOrigin="0.684,-0.079" />
 		<Label x:Name="lbl_source" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"

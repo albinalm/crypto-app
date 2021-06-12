@@ -88,17 +88,17 @@ namespace CryptoGUIAvalonia
             }
             else if (args.Length == 3)
             {
-                if (args[1] == "CryptoApp_CommandArgs_Encrypt")
+                if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
                 {
                     await InitCryptography();
-                    EncryptionData.SourceFileName = args[2];
+                    AddSources(false);
                     var encryptor = new Encryptor();
                     encryptor.Show();
                 }
-                else if (args[1] == "CryptoApp_CommandArgs_Decrypt")
+                else if (args.Contains("CryptoApp_CommandArgs_Decrypt"))
                 {
                     await InitCryptography();
-                    DecryptionData.SourceFileName = args[2];
+                    AddSources(true);
                     var decryptor = new Decryptor();
                     decryptor.Show();
                 }

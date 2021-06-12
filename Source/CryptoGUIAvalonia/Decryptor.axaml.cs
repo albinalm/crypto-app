@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -27,6 +28,7 @@ namespace CryptoGUIAvalonia
         private int SpeedCalculator_Increment { get; set; }
         private bool CalculateSpeed = true;
         private bool UpdateGui = true;
+
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
@@ -50,6 +52,12 @@ namespace CryptoGUIAvalonia
             lbl_destination = this.Get<Label>("lbl_destination");
             pb_progress = this.Get<ProgressBar>("pb_progress");
             Startup();
+            this.Closing += Window_OnClose;
+        }
+
+        private void Window_OnClose(object? sender, CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
 
         private void Startup()
@@ -57,67 +65,69 @@ namespace CryptoGUIAvalonia
             UpdateGui = true;
             ExecuteAsync_GuiUpdater();
             lbl_source.Content = "Source:";
-            lbl_source_path.Content = DecryptionData.SourceFileName;
+            lbl_source_path.Content = DecryptionData.Sources[0];
             lbl_destination.Content = "Destination:";
-            Title = @"Decrypting: " + DecryptionData.SourceFileName;
-            ExecuteAsync_TrackProgress();
+            Title = @"Decrypting: " + DecryptionData.Sources[0];
+
             ExecuteAsync_Worker();
         }
-           private void ExecuteAsync_Worker()
+
+        private void ExecuteAsync_Worker()
         {
-            var thread = new Thread(new ThreadStart(Worker)) {IsBackground = true};
+            var thread = new Thread(new ThreadStart(Worker)) { IsBackground = true };
             thread.Start();
         }
+
         private void ExecuteAsync_TrackProgress()
         {
-            var thread = new Thread(new ThreadStart(TrackProgress)) {IsBackground = true};
+            var thread = new Thread(new ThreadStart(TrackProgress)) { IsBackground = true };
             thread.Start();
         }
+
         private void Worker()
         {
-            Thread.Sleep(1000);
             try
             {
-                var safeFileName = Path.GetFileNameWithoutExtension(DecryptionData.SourceFileName);
-                var safeDirName = DecryptionData.SourceFileName.Remove(
-                    DecryptionData.SourceFileName.Length - (safeFileName.Length +
-                                                            Path.GetExtension(DecryptionData.SourceFileName).Length +
+                var safeFileName = Path.GetFileNameWithoutExtension(DecryptionData.Sources[0]);
+                var safeDirName = DecryptionData.Sources[0].Remove(
+                    DecryptionData.Sources[0].Length - (safeFileName.Length +
+                                                            Path.GetExtension(DecryptionData.Sources[0]).Length +
                                                             1),
-                    safeFileName.Length + Path.GetExtension(DecryptionData.SourceFileName).Length + 1);
-                var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => 
-                    finf.Name.StartsWith(Path.GetFileNameWithoutExtension(DecryptionData.SourceFileName) + "_decrypted"));
+                    safeFileName.Length + Path.GetExtension(DecryptionData.Sources[0]).Length + 1);
+                var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf =>
+                    finf.Name.StartsWith(Path.GetFileNameWithoutExtension(DecryptionData.Sources[0]) + "_decrypted"));
 
                 if (fileCount == 0)
-                    DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted" +
-                                                         Path.GetExtension(DecryptionData.SourceFileName);
+                    DecryptionData.Destinations.Add(safeDirName + "/" + safeFileName + "_decrypted" +
+                                                         Path.GetExtension(DecryptionData.Sources[0]));
                 else
-                    DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted_" + fileCount +
-                                                         Path.GetExtension(DecryptionData.SourceFileName);
+                    DecryptionData.Destinations.Add(safeDirName + "/" + safeFileName + "_decrypted_" + fileCount +
+                                                         Path.GetExtension(DecryptionData.Sources[0]));
                 Dispatcher.UIThread.Post(() =>
                 {
                     lbl_destination_path.Content =
-                        DecryptionData.DestinationFileName.Replace("_", "__"); //avoid mnemonics 
+                        DecryptionData.Destinations[0].Replace("_", "__"); //avoid mnemonics
                 });
-               // ExecuteAsync_TrackProgress();
-                    CalculateSpeed = true;
-                 ExecuteAsync_SpeedCalculator();
-                 Cryptography.Decryption.DecryptFile(DecryptionData.SourceFileName, DecryptionData.DestinationFileName,
-                     1024);
-                 Environment.Exit(0);
+                ExecuteAsync_TrackProgress();
+                CalculateSpeed = true;
+                ExecuteAsync_SpeedCalculator();
+                Cryptography.Decryption.DecryptFile(DecryptionData.Sources[0], DecryptionData.Destinations[0],
+                    1024);
+                Environment.Exit(0);
             }
             catch (Exception ex)
             {
-             //   MessageBox.Show(this, ex.ToString(), "An error has occurred", MessageBox.MessageBoxButtons.Ok);
-             Console.WriteLine(ex.ToString());
+                //   MessageBox.Show(this, ex.ToString(), "An error has occurred", MessageBox.MessageBoxButtons.Ok);
+                Console.WriteLine(ex.ToString());
             }
         }
+
         private void ExecuteAsync_SpeedCalculator()
         {
-         
-            var thread = new Thread(new ThreadStart(SpeedCalculator)) {IsBackground = true};
+            var thread = new Thread(new ThreadStart(SpeedCalculator)) { IsBackground = true };
             thread.Start();
-           
         }
+
         private void SpeedCalculator()
         {
             do
@@ -125,23 +135,22 @@ namespace CryptoGUIAvalonia
                 SpeedCalculator_Increment++;
                 Dispatcher.UIThread.Post(() =>
                 {
-
                     var sizeDiff = pb_progress.Value / SpeedCalculator_Increment;
                     lbl_speed.Content = $"Speed: {Math.Round(sizeDiff * 5, 1)} MB/s";
                 });
-             
+
                 Thread.Sleep(200);
             } while (CalculateSpeed);
-           
         }
+
         private void ExecuteAsync_GuiUpdater()
         {
-            var thread = new Thread(new ThreadStart(GuiUpdater)) {IsBackground = true};
+            var thread = new Thread(new ThreadStart(GuiUpdater)) { IsBackground = true };
             thread.Start();
         }
+
         private void GuiUpdater()
         {
-          
             do
             {
                 Dispatcher.UIThread.Post(() =>
@@ -161,31 +170,28 @@ namespace CryptoGUIAvalonia
                 });
                 Thread.Sleep(200);
             } while (UpdateGui);
-          
-        
         }
-       
+
         private void TrackProgress()
         {
-           // Thread.Sleep(1000);
+            // Thread.Sleep(1000);
             try
             {
-                var fileLength = Math.Round((double) new FileInfo(DecryptionData.SourceFileName).Length / 1048576, 0);
+                var fileLength = Math.Round((double)new FileInfo(DecryptionData.Sources[0]).Length / 1048576, 0);
                 var runloop = true;
                 Dispatcher.UIThread.Post(() =>
                 {
                     pb_progress.Maximum = fileLength;
                 });
                 while (runloop)
-                    if (File.Exists(DecryptionData.DestinationFileName))
+                    if (File.Exists(DecryptionData.Destinations[0]))
                     {
-                        
                         Thread.Sleep(10);
-                        FileInfo finf = new(DecryptionData.DestinationFileName);
+                        FileInfo finf = new(DecryptionData.Destinations[0]);
                         Dispatcher.UIThread.Post(() =>
-                        {  
+                        {
                             //Thread.Sleep(200);
-                            pb_progress.Value = Math.Round((double) finf.Length / 1048576, 0);
+                            pb_progress.Value = Math.Round((double)finf.Length / 1048576, 0);
                             lbl_percentage.Content = Math.Round(pb_progress.Value / pb_progress.Maximum * 100, 0) + "%";
                             if (pb_progress.Value != pb_progress.Maximum) return;
                             CalculateSpeed = false;
@@ -193,15 +199,13 @@ namespace CryptoGUIAvalonia
                             lbl_percentage.Content = "Finalizing file...";
                             lbl_title.Content = "Finishing up...";
                             runloop = false;
-                            
                         });
-                      
                     }
             }
             catch (Exception ex)
             {
                 //MessageBox.Show(this, ex.ToString(), "An error has occurred", MessageBox.MessageBoxButtons.Ok);
-               File.WriteAllText("/home/albin/RiderProjects/crypto-app/Source/CryptoGUIAvalonia/bin/Any CPU/Debug/net5.0/linux-x64/log.txt", ex.ToString());
+                File.WriteAllText("/home/albin/RiderProjects/crypto-app/Source/CryptoGUIAvalonia/bin/Any CPU/Debug/net5.0/linux-x64/log.txt", ex.ToString());
             }
         }
     }
