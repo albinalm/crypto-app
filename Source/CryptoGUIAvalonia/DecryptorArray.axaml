@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
         x:Class="CryptoGUIAvalonia.DecryptorArray"
-        Title="CryptoGUIAvalonia" Height="245" Width="505" CanResize="False">
+        Title="CryptoGUIAvalonia" Height="245" Width="505" CanResize="False" WindowStartupLocation="CenterScreen">
 	<Grid Margin="10,0,10,9" RenderTransformOrigin="0.502,0.308">
 		<ProgressBar x:Name="pb_current" Height="8" Margin="0,187,0,0" VerticalAlignment="Bottom" />
 
@@ -16,7 +16,7 @@
                FontFamily="Segoe UI Semibold" FontSize="14" />
 		<Label x:Name="lbl_destination_path" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
                RenderTransformOrigin="0.684,-0.079" Margin="10,72,0,0" FontWeight="Normal" FontStyle="Normal"
-               FontFamily="Segoe UI Light" Width="300">
+               FontFamily="Segoe UI Light" Width="2000">
 			<TextBlock x:Name="txtblock_destination_path" TextTrimming="CharacterEllipsis"></TextBlock>
 		</Label>
 		<Image x:Name="img_icon" HorizontalAlignment="Right" Margin="0,2,0,0"

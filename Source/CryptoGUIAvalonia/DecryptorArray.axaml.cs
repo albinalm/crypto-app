@@ -97,16 +97,16 @@ namespace CryptoGUIAvalonia
                         safeFileName.Length + Path.GetExtension(source).Length + 1);
                 var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => finf.Name.StartsWith(Path.GetFileNameWithoutExtension(source) + "_decrypted"));
                 if (fileCount == 0)
-                    DecryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_decrypted" +
+                    DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted" +
                                                          Path.GetExtension(source);
                 else
-                    DecryptionData.DestinationFileName = safeDirName + @"\" + safeFileName + "_decrypted_" +
+                    DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted_" +
                                                          fileCount + Path.GetExtension(source);
                 Dispatcher.UIThread.Post(() =>
                 {
                     Title = @"Decrypting files to: " + safeDirName;
                     lbl_title.Content = "Decrypting..";
-                    txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
+                    txtblock_destination_path.Text = DecryptionData.DestinationFileName;
                 });
                 CalculateSpeed = true;
                 ExecuteAsync_SpeedCalculator();

@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
         x:Class="CryptoGUIAvalonia.EncryptorArray"
-        Title="CryptoGUIAvalonia" Height="254" Width="505" CanResize="False">
+        Title="CryptoGUIAvalonia" Height="254" Width="505" CanResize="False" WindowStartupLocation="CenterScreen">
 	<Grid Margin="10,0,10,9" RenderTransformOrigin="0.502,0.308">
 		<ProgressBar x:Name="pb_current" Height="8" Margin="0,187,0,0" VerticalAlignment="Bottom" />
 		<Label x:Name="lbl_title" Content="Encrypting..." HorizontalAlignment="Left" VerticalAlignment="Top"

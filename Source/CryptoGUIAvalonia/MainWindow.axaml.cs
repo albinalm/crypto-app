@@ -33,6 +33,12 @@ namespace CryptoGUIAvalonia
 #if DEBUG
             this.AttachDevTools();
 #endif
+            /*
+            foreach (var arg in Environment.GetCommandLineArgs())
+            {
+                MessageBox.Show(this, arg, "", MessageBox.MessageBoxButtons.Ok);
+            }
+            */
             InitializeStartup();
         }
 
