@@ -47,12 +47,60 @@ namespace CryptoGUIAvalonia
             for (var i = 0; i <= Environment.GetCommandLineArgs().Length - 1; i++)
             {
                 var arg = Environment.GetCommandLineArgs()[i];
+
                 if (i == 0 || arg is "CryptoApp_CommandArgs_Encrypt" or "CryptoApp_CommandArgs_Decrypt")
                     continue;
-                if (!decryption)
-                    EncryptionData.Sources.Add(Environment.GetCommandLineArgs()[i]);
+                if (decryption)
+                {
+                    var attr = File.GetAttributes(arg);
+                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        DecryptionData.RootSubdirectories.Add(arg);
+                        DirectoryDigging(arg, decryption);
+                    }
+                    else
+                    {
+                        DecryptionData.Sources.Add(arg);
+                    }
+                }
                 else
-                    DecryptionData.Sources.Add(Environment.GetCommandLineArgs()[i]);
+                {
+                    var attr = File.GetAttributes(arg);
+                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        EncryptionData.RootSubdirectories.Add(arg);
+                        DirectoryDigging(arg, decryption);
+                    }
+                    else
+                    {
+                        EncryptionData.Sources.Add(arg);
+                    }
+                }
+            }
+        }
+
+        private void DirectoryDigging(string sDir, bool decryption)
+        {
+            try
+            {
+                Console.WriteLine(sDir);
+
+                foreach (string f in Directory.GetFiles(sDir))
+                {
+                    if (decryption)
+                        DecryptionData.Sources.Add(f);
+                    else
+                        EncryptionData.Sources.Add(f);
+                }
+
+                foreach (string d in Directory.GetDirectories(sDir))
+                {
+                    DirectoryDigging(d, decryption);
+                }
+            }
+            catch (System.Exception excpt)
+            {
+                MessageBox.Show(this, excpt.ToString(), excpt.Message, MessageBox.MessageBoxButtons.Ok);
             }
         }
 
@@ -91,16 +139,58 @@ namespace CryptoGUIAvalonia
                 if (args.Contains("CryptoApp_CommandArgs_Encrypt"))
                 {
                     await InitCryptography();
-                    AddSources(false);
-                    var encryptor = new Encryptor();
-                    encryptor.Show();
+                    var attr = File.GetAttributes(args[2]);
+                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        var baseDir = Directory.GetParent(args[2]);
+                        var dirName = new DirectoryInfo(args[2]).Name;
+                        var fullPath = "";
+                        bool exists = true;
+                        var count = 0;
+                        while (exists)
+                        {
+                            if (!Directory.Exists(baseDir + "/" + dirName + "_encrypted"))
+                            {
+                                fullPath = baseDir + "/" + dirName + "_encrypted";
+                                exists = false;
+                            }
+                            else
+                            {
+                                count++;
+                                if (!Directory.Exists(baseDir + "/" + dirName + "_encrypted" + count))
+                                {
+                                    fullPath = baseDir + "/" + dirName + "_encrypted" + count;
+                                }
+                            }
+                        }
+                        Directory.CreateDirectory(fullPath);
+                        DirectoryDigging(args[2], false);
+                        var encryptorArray = new EncryptorArray();
+                        encryptorArray.Show();
+                    }
+                    else
+                    {
+                        EncryptionData.SourceFileName = args[2];
+                        var encryptor = new Encryptor();
+                        encryptor.Show();
+                    }
                 }
                 else if (args.Contains("CryptoApp_CommandArgs_Decrypt"))
                 {
                     await InitCryptography();
-                    AddSources(true);
-                    var decryptor = new Decryptor();
-                    decryptor.Show();
+                    var attr = File.GetAttributes(args[2]);
+                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        DirectoryDigging(args[2], true);
+                        var decryptorArray = new DecryptorArray();
+                        decryptorArray.Show();
+                    }
+                    else
+                    {
+                        DecryptionData.SourceFileName = args[2];
+                        var decryptor = new Decryptor();
+                        decryptor.Show();
+                    }
                 }
             }
             else

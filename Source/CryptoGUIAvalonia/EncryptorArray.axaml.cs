@@ -1,5 +1,5 @@
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -67,12 +67,6 @@ namespace CryptoGUIAvalonia
 
             _TrackProgress = new Thread(new ThreadStart(TrackProgress)) { IsBackground = true };
             Startup();
-            this.Closing += Window_OnClose;
-        }
-
-        private void Window_OnClose(object? sender, CancelEventArgs e)
-        {
-            Environment.Exit(0);
         }
 
         private void ExecuteAsync_Worker()
@@ -90,8 +84,14 @@ namespace CryptoGUIAvalonia
         private void Worker()
         {
             Thread.Sleep(1000);
+            var takenSources = new List<string>();
             foreach (var source in EncryptionData.Sources)
             {
+                Dispatcher.UIThread.Post(() =>
+                {
+                    //    MessageBox.Show(this, source, "", MessageBox.MessageBoxButtons.Ok);
+                    //     lbl_percentage.Content = Math.Round(pb_current.Value / pb_current.Maximum * 100, 0) + "%";
+                });
                 CurrentFileSource = source;
                 Dispatcher.UIThread.Post(() =>
                 {
@@ -99,34 +99,114 @@ namespace CryptoGUIAvalonia
                     //     lbl_percentage.Content = Math.Round(pb_current.Value / pb_current.Maximum * 100, 0) + "%";
                 });
                 SpeedCalculator_Increment = 0;
-                var safeFileName = Path.GetFileNameWithoutExtension(source);
-                var safeDirName =
-                    source.Remove(source.Length - (safeFileName.Length + Path.GetExtension(source).Length + 1),
-                        safeFileName.Length + Path.GetExtension(source).Length + 1);
-                var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => finf.Name.StartsWith(Path.GetFileNameWithoutExtension(source) + "_encrypted"));
-                if (fileCount == 0)
-                    EncryptionData.Destinations.Add(safeDirName + "/" + safeFileName + "_encrypted" +
-                                                         Path.GetExtension(source));
-                else
-                    EncryptionData.Destinations.Add(safeDirName + "/" + safeFileName + "_encrypted_" +
-                                                         fileCount + Path.GetExtension(source));
-                Dispatcher.UIThread.Post(() =>
+                //Check if file is inside a formatted subdirectory
+                if (EncryptionData.RootSubdirectories.Count > 0)
                 {
-                    Title = @"Encrypting files to: " + safeDirName;
-                    lbl_title.Content = "Encrypting..";
-                    txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
-                });
-                CalculateSpeed = true;
-                ExecuteAsync_SpeedCalculator();
-                Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = safeFileName + Path.GetExtension(source); });
+                    foreach (var subdir in EncryptionData.RootSubdirectories)
+                    {
+                        if (source.StartsWith(subdir + Path.DirectorySeparatorChar))
+                        {
+                            Dispatcher.UIThread.Post(() =>
+                            {
+                                //    MessageBox.Show(this, Path.GetPathRoot(source), "", MessageBox.MessageBoxButtons.Ok);
+                                //  MessageBox.Show(this, source + Environment.NewLine + subdir, "", MessageBox.MessageBoxButtons.Ok);
+                            });
+                            //C:/Users/Albin/Desktop/Ny mapp/Ny mapp2/Letgooo.exe
+                            var safeName = new DirectoryInfo(subdir).Name;
+                            var restPath = CurrentFileSource.Remove(0, subdir.Length);
+                            Dispatcher.UIThread.Post(() =>
+                            {
+                                //  MessageBox.Show(this, EncryptionData.Sources[i] + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
+                                //      MessageBox.Show(this, subdir + Environment.NewLine + source + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
+                            });
+                            if (!Directory.Exists(Path.GetDirectoryName($"{subdir}_encrypted{restPath}")))
+                                Directory.CreateDirectory(Path.GetDirectoryName($"{subdir}_encrypted{restPath}"));
+                            EncryptionData.DestinationFileName = $"{subdir}_encrypted{restPath}";
+                            Dispatcher.UIThread.Post(() =>
+                            {
+                                Title = @"Encrypting files to: " + subdir;
+                                lbl_title.Content = "Encrypting..";
+                                txtblock_destination_path.Text = EncryptionData.DestinationFileName;
+                            });
+                            CalculateSpeed = true;
+                            ExecuteAsync_SpeedCalculator();
+                            Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = EncryptionData.DestinationFileName; });
 
-                Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
-                if (!_TrackProgress.IsAlive)
-                {
-                    ExecuteAsync_TrackProgress();
+                            Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
+                            if (!_TrackProgress.IsAlive)
+                            {
+                                ExecuteAsync_TrackProgress();
+                            }
+
+                            Cryptography.Encryption.EncryptFile(source, EncryptionData.DestinationFileName, 1024);
+                            takenSources.Add(source);
+                            FilesEncrypted++;
+                            Dispatcher.UIThread.Post(() =>
+                            {
+                                //  MessageBox.Show(this, EncryptionData.Sources[i] + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
+                                //     MessageBox.Show(this, EncryptionData.DestinationFileName, "", MessageBox.MessageBoxButtons.Ok);
+                            });
+                        }
+                    }
+                    if (!takenSources.Contains(source))
+                    {
+                        var safeFileName = Path.GetFileNameWithoutExtension(source);
+                        var safeDirName = Path.GetDirectoryName(source);
+                        var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => finf.Name.StartsWith(Path.GetFileNameWithoutExtension(source) + "_encrypted"));
+                        if (fileCount == 0)
+                            EncryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_encrypted" +
+                                                                 Path.GetExtension(source);
+                        else
+                            EncryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_encrypted_" +
+                                                                 fileCount + Path.GetExtension(source);
+                        Dispatcher.UIThread.Post(() =>
+                        {
+                            Title = @"Encrypting files to: " + safeDirName;
+                            lbl_title.Content = "Encrypting..";
+                            txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
+                        });
+                        CalculateSpeed = true;
+                        ExecuteAsync_SpeedCalculator();
+                        Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = safeFileName + Path.GetExtension(source); });
+
+                        Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
+                        if (!_TrackProgress.IsAlive)
+                        {
+                            ExecuteAsync_TrackProgress();
+                        }
+                        Cryptography.Encryption.EncryptFile(source, EncryptionData.DestinationFileName, 1024);
+                        FilesEncrypted++;
+                    }
                 }
-                Cryptography.Encryption.EncryptFile(source, EncryptionData.Destinations[0], 1024);
-                FilesEncrypted++;
+                else
+                {
+                    var safeFileName = Path.GetFileNameWithoutExtension(source);
+                    var safeDirName = Path.GetDirectoryName(source);
+                    var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf => finf.Name.StartsWith(Path.GetFileNameWithoutExtension(source) + "_encrypted"));
+                    if (fileCount == 0)
+                        EncryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_encrypted" +
+                                                             Path.GetExtension(source);
+                    else
+                        EncryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_encrypted_" +
+                                                             fileCount + Path.GetExtension(source);
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        Title = @"Encrypting files to: " + safeDirName;
+                        lbl_title.Content = "Encrypting..";
+                        txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
+                    });
+                    CalculateSpeed = true;
+                    ExecuteAsync_SpeedCalculator();
+                    Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = safeFileName + Path.GetExtension(source); });
+
+                    Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
+                    if (!_TrackProgress.IsAlive)
+                    {
+                        ExecuteAsync_TrackProgress();
+                    }
+                    Cryptography.Encryption.EncryptFile(source, EncryptionData.DestinationFileName, 1024);
+                    FilesEncrypted++;
+                }
             }
             Environment.Exit(0);
         }
@@ -141,10 +221,10 @@ namespace CryptoGUIAvalonia
                 Dispatcher.UIThread.Post(() => { pb_current.Maximum = fileLength; });
 
                 while (runloop)
-                    if (File.Exists(EncryptionData.Destinations[0]))
+                    if (File.Exists(EncryptionData.DestinationFileName))
                     {
                         Thread.Sleep(10);
-                        FileInfo finf = new(EncryptionData.Destinations[0]);
+                        FileInfo finf = new(EncryptionData.DestinationFileName);
                         Dispatcher.UIThread.Post(() =>
                         {
                             lbl_percentage.Content = $"Encrypting file {FilesEncrypted} of {EncryptionData.Sources.Count} {Math.Round(pb_current.Value / pb_current.Maximum * 100, 0)}%";

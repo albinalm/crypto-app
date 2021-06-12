@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -59,12 +58,6 @@ namespace CryptoGUIAvalonia
             #endregion UI Declarations
 
             Startup();
-            this.Closing += Window_OnClose;
-        }
-
-        private void Window_OnClose(object? sender, CancelEventArgs e)
-        {
-            Environment.Exit(0);
         }
 
         private void ExecuteAsync_Worker()
@@ -81,35 +74,34 @@ namespace CryptoGUIAvalonia
 
         private void Worker()
         {
-            //Thread.Sleep(1000);
+            Thread.Sleep(1000);
             try
             {
-                var safeFileName = Path.GetFileNameWithoutExtension(EncryptionData.Sources[0]);
-                var safeDirName = EncryptionData.Sources[0].Remove(
-                    EncryptionData.Sources[0].Length - (safeFileName.Length +
-                                                            Path.GetExtension(EncryptionData.Sources[0]).Length +
+                var safeFileName = Path.GetFileNameWithoutExtension(EncryptionData.SourceFileName);
+                var safeDirName = EncryptionData.SourceFileName.Remove(
+                    EncryptionData.SourceFileName.Length - (safeFileName.Length +
+                                                            Path.GetExtension(EncryptionData.SourceFileName).Length +
                                                             1),
-                    safeFileName.Length + Path.GetExtension(EncryptionData.Sources[0]).Length + 1);
+                    safeFileName.Length + Path.GetExtension(EncryptionData.SourceFileName).Length + 1);
                 var fileCount = new DirectoryInfo(safeDirName).GetFiles().Count(finf =>
-                    finf.Name.StartsWith(Path.GetFileNameWithoutExtension(EncryptionData.Sources[0]) +
+                    finf.Name.StartsWith(Path.GetFileNameWithoutExtension(EncryptionData.SourceFileName) +
                                          "_encrypted"));
 
                 if (fileCount == 0)
-                    EncryptionData.Destinations.Add(safeDirName + "/" + safeFileName + "_encrypted" +
-                                                         Path.GetExtension(EncryptionData.Sources[0]));
+                    EncryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_encrypted" +
+                                                         Path.GetExtension(EncryptionData.SourceFileName);
                 else
-                    EncryptionData.Destinations.Add(safeDirName + "/" + safeFileName + "_encrypted_" + fileCount +
-                                                         Path.GetExtension(EncryptionData.Sources[0]));
+                    EncryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_encrypted_" + fileCount +
+                                                         Path.GetExtension(EncryptionData.SourceFileName);
                 Dispatcher.UIThread.Post(() =>
                 {
                     lbl_destination_path.Content =
-                        EncryptionData.Destinations[0].Replace("_", "__"); //avoid mnemonics
+                        EncryptionData.DestinationFileName.Replace("_", "__"); //avoid mnemonics
                 });
-                ExecuteAsync_TrackProgress();
                 // ExecuteAsync_TrackProgress();
                 CalculateSpeed = true;
                 ExecuteAsync_SpeedCalculator();
-                Cryptography.Encryption.EncryptFile(EncryptionData.Sources[0], EncryptionData.Destinations[0],
+                Cryptography.Encryption.EncryptFile(EncryptionData.SourceFileName, EncryptionData.DestinationFileName,
                     1024);
                 Environment.Exit(0);
             }
@@ -125,17 +117,17 @@ namespace CryptoGUIAvalonia
             // Thread.Sleep(1000);
             try
             {
-                var fileLength = Math.Round((double)new FileInfo(EncryptionData.Sources[0]).Length / 1048576, 0);
+                var fileLength = Math.Round((double)new FileInfo(EncryptionData.SourceFileName).Length / 1048576, 0);
                 var runloop = true;
                 Dispatcher.UIThread.Post(() =>
                 {
                     pb_progress.Maximum = fileLength;
                 });
                 while (runloop)
-                    if (File.Exists(EncryptionData.Destinations[0]))
+                    if (File.Exists(EncryptionData.DestinationFileName))
                     {
                         Thread.Sleep(10);
-                        FileInfo finf = new(EncryptionData.Destinations[0]);
+                        FileInfo finf = new(EncryptionData.DestinationFileName);
                         Dispatcher.UIThread.Post(() =>
                         {
                             //Thread.Sleep(200);
@@ -212,10 +204,11 @@ namespace CryptoGUIAvalonia
             UpdateGui = true;
             ExecuteAsync_GuiUpdater();
             lbl_source.Content = "Source:";
-            lbl_source_path.Content = EncryptionData.Sources[0];
+            lbl_source_path.Content = EncryptionData.SourceFileName;
             lbl_destination.Content = "Destination:";
-            Title = @"Encrypting: " + EncryptionData.Sources[0];
+            Title = @"Encrypting: " + EncryptionData.SourceFileName;
 
+            ExecuteAsync_TrackProgress();
             ExecuteAsync_Worker();
         }
     }
