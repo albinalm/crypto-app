@@ -20,7 +20,6 @@ using Ionic.Zlib;
 
 namespace CryptoGUIAvalonia
 {
-    
     public class Index : Window
     {
         private Label lbl_validation;
@@ -36,14 +35,14 @@ namespace CryptoGUIAvalonia
         private string Mode = "";
         private string LoadKey_FileName = "";
         private string ValidateKey_FileName = "";
+
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
         }
+
         public Index()
         {
-          
-          
             InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
@@ -52,7 +51,7 @@ namespace CryptoGUIAvalonia
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo01.png");
             this.Get<TextBox>("txt_pass").GotFocus += txt_pass_gotFocus;
-        //    this.Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
+            this.Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
             lbl_validation = this.Get<Label>("lbl_validation");
             lbl_details = this.Get<Label>("lbl_details");
             lbl_enterkey = this.Get<Label>("lbl_enterkey");
@@ -101,6 +100,7 @@ namespace CryptoGUIAvalonia
                 btn_validatekey.IsEnabled = false;
             }
         }
+
         private void btn_newKey_click(object sender, RoutedEventArgs e)
         {
             btn_loadkey.IsEnabled = true;
@@ -114,7 +114,6 @@ namespace CryptoGUIAvalonia
                 var thread = new Thread(new ThreadStart(AnimateDownwards));
                 thread.Start();
             }
-
         }
 
         private void ValidateKey(string path, string password)
@@ -125,7 +124,7 @@ namespace CryptoGUIAvalonia
                 zip.Encryption = EncryptionAlgorithm.WinZipAes256;
                 zip.CompressionLevel = CompressionLevel.None;
                 zip.Password = password;
-                 
+
                 try
                 {
                     zip.ExtractAll(Environment.CurrentDirectory, ExtractExistingFileAction.OverwriteSilently);
@@ -135,9 +134,9 @@ namespace CryptoGUIAvalonia
                     zipFailed = true;
                     lbl_validation.Content = "× Validation failed";
                     lbl_validation.Foreground = Brushes.Red;
-                    if(File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
+                    if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
-                    if(File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
+                    if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
                     if (Height > 455)
                     {
@@ -154,9 +153,9 @@ namespace CryptoGUIAvalonia
                 {
                     lbl_validation.Content = "✓ Validation successful";
                     lbl_validation.Foreground = Brushes.Green;
-                    if(File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
+                    if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
-                    if(File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
+                    if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
                     var writer =
                         new StreamWriter(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini");
@@ -174,9 +173,9 @@ namespace CryptoGUIAvalonia
                 {
                     lbl_validation.Content = "× Validation failed";
                     lbl_validation.Foreground = Brushes.Red;
-                    if(File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
+                    if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
-                    if(File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
+                    if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
                     if (Height > 455)
                     {
@@ -185,10 +184,7 @@ namespace CryptoGUIAvalonia
                     }
                 }
             }
-       
         }
-
-      
 
         private async Task CreateNewKey(string password)
         {
@@ -206,7 +202,7 @@ namespace CryptoGUIAvalonia
             File.WriteAllBytes($"{Path.GetDirectoryName(fileRes)}{Path.DirectorySeparatorChar}data.ekey",
                 Cryptography.GenerateEncryptionKey(password));
             File.WriteAllText($"{Path.GetDirectoryName(fileRes)}{Path.DirectorySeparatorChar}conf.eval", Cryptography.Encryption.HashPassword(password));
-            using(ZipFile zip = new ZipFile())
+            using (ZipFile zip = new ZipFile())
             {
                 zip.Encryption = EncryptionAlgorithm.WinZipAes256;
                 zip.CompressionLevel = CompressionLevel.None;
@@ -229,11 +225,11 @@ namespace CryptoGUIAvalonia
             {
                 Dispatcher.UIThread.Post(() =>
                 {
-                if (this.Height > 484)
-                    fullSize = true;
-                this.Height++;
+                    if (this.Height > 484)
+                        fullSize = true;
+                    this.Height++;
                 });
-                  
+
                 Thread.Sleep(1);
             } while (!fullSize);
             Dispatcher.UIThread.Post(() =>
@@ -242,9 +238,9 @@ namespace CryptoGUIAvalonia
                 lbl_enterkey.IsVisible = true;
                 txt_pass.IsVisible = true;
                 Height = 485;
-               
             });
         }
+
         private void AnimateUpwards()
         {
             var fullSize = false;
@@ -256,9 +252,8 @@ namespace CryptoGUIAvalonia
                         fullSize = true;
                     this.Height--;
                 });
-                  
+
                 Thread.Sleep(1);
-               
             } while (!fullSize);
             Dispatcher.UIThread.Post(() =>
             {
@@ -299,7 +294,6 @@ namespace CryptoGUIAvalonia
 
         private void Btn_loadkey_OnClick(object? sender, RoutedEventArgs e)
         {
-      
             btn_loadkey.IsEnabled = false;
             btn_newkey.IsEnabled = true;
             btn_validatekey.IsEnabled = true;
@@ -310,7 +304,6 @@ namespace CryptoGUIAvalonia
 
         private async Task LoadKey()
         {
-          
             var dlg = new OpenFileDialog();
             var filter = new FileDialogFilter
             {

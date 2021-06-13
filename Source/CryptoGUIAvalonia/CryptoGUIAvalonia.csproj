@@ -3,6 +3,7 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
 		<Nullable>enable</Nullable>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.0" />
@@ -37,8 +38,8 @@
 			<DependentUpon>Encryptor.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Index.axaml.cs">
-		  <DependentUpon>Index.axaml</DependentUpon>
-		  <SubType>Code</SubType>
+			<DependentUpon>Index.axaml</DependentUpon>
+			<SubType>Code</SubType>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
@@ -50,6 +51,9 @@
 		<Resource Include="Resources\logo02.png" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Update="Resources\icon.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="Resources\logo01.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
