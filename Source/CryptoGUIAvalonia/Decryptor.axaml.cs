@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -43,6 +44,7 @@ namespace CryptoGUIAvalonia
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo02.png");
             Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
+            this.Closing += OnClosing;
             lbl_destination_path = this.Get<Label>("lbl_destination_path");
             
             lbl_percentage = this.Get<Label>("lbl_percentage");
@@ -53,6 +55,11 @@ namespace CryptoGUIAvalonia
             lbl_destination = this.Get<Label>("lbl_destination");
             pb_progress = this.Get<ProgressBar>("pb_progress");
             Startup();
+        }
+
+        private void OnClosing(object? sender, CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
 
         private void Startup()

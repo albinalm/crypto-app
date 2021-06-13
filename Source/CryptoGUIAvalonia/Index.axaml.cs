@@ -186,9 +186,15 @@ namespace CryptoGUIAvalonia
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
                     var writer =
                         new StreamWriter(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini");
+                   
                     writer.WriteLine(path);
                     writer.Flush();
                     writer.Close();
+                    var hashWriter =
+                        new StreamWriter(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "credential");
+                    hashWriter.WriteLine(Cryptography.Encryption.HashPassword(password));
+                    hashWriter.Flush();
+                    hashWriter.Close();
                     UpdateUI();
                     if (Height > 455)
                     {

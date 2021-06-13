@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -50,6 +51,7 @@ namespace CryptoGUIAvalonia
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo02.png");
             Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
+            this.Closing += OnClosing;
             #region UI Declarations
 
             lbl_destination_path = this.Get<Label>("lbl_destination_path");
@@ -67,6 +69,11 @@ namespace CryptoGUIAvalonia
 
             _TrackProgress = new Thread(new ThreadStart(TrackProgress)) { IsBackground = true };
             Startup();
+        }
+
+        private void OnClosing(object? sender, CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
 
         private void ExecuteAsync_Worker()

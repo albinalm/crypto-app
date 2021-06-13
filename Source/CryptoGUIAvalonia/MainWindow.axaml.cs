@@ -320,6 +320,7 @@ namespace CryptoGUIAvalonia
             else
             {
                 await MessageBox.Show(this, "Did not find data files", "Did not find data files", MessageBox.MessageBoxButtons.Ok);
+                Process.Start(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "CryptoGUIAvalonia");
                 Environment.Exit(0);
             }
         }
