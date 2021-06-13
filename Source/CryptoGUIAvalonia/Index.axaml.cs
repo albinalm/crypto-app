@@ -35,6 +35,8 @@ namespace CryptoGUIAvalonia
         private string Mode = "";
         private string LoadKey_FileName = "";
         private string ValidateKey_FileName = "";
+        private bool isResizing = false;
+        private bool isMaxMode = false;
 
         private void InitializeComponent()
         {
@@ -51,7 +53,9 @@ namespace CryptoGUIAvalonia
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo01.png");
             this.Get<TextBox>("txt_pass").GotFocus += txt_pass_gotFocus;
-            this.Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
+            this.LayoutUpdated += OnLayoutUpdated;
+            this.Closing += OnClosing;
+            Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
             lbl_validation = this.Get<Label>("lbl_validation");
             lbl_details = this.Get<Label>("lbl_details");
             lbl_enterkey = this.Get<Label>("lbl_enterkey");
@@ -62,7 +66,30 @@ namespace CryptoGUIAvalonia
             btn_newkey = this.Get<Button>("btn_newkey");
             btn_loadkey = this.Get<Button>("btn_loadkey");
             btn_validatekey = this.Get<Button>("btn_validatekey");
+            Height = 451;
             UpdateUI();
+        }
+
+        private void OnClosing(object? sender, CancelEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void OnLayoutUpdated(object? sender, EventArgs e)
+        {
+            if (!isResizing)
+            {
+                if (!isMaxMode)
+                {
+                    Height = 450;
+                    Width = 700;
+                }
+                else
+                {
+                    Height = 485;
+                    Width = 700;
+                }
+            }
         }
 
         private void UpdateUI()
@@ -220,6 +247,7 @@ namespace CryptoGUIAvalonia
 
         private void AnimateDownwards()
         {
+            isResizing = true;
             var fullSize = false;
             do
             {
@@ -239,10 +267,13 @@ namespace CryptoGUIAvalonia
                 txt_pass.IsVisible = true;
                 Height = 485;
             });
+            isMaxMode = true;
+            isResizing = false;
         }
 
         private void AnimateUpwards()
         {
+            isResizing = true;
             var fullSize = false;
             do
             {
@@ -265,6 +296,8 @@ namespace CryptoGUIAvalonia
                 btn_newkey.IsEnabled = true;
                 btn_validatekey.IsEnabled = true;
             });
+            isMaxMode = false;
+            isResizing = false;
         }
 
         private void txt_pass_gotFocus(object? sender, GotFocusEventArgs e)

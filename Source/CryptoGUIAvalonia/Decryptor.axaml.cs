@@ -42,7 +42,9 @@ namespace CryptoGUIAvalonia
             var logoImage = this.Get<Image>("img_icon");
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo02.png");
+            Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
             lbl_destination_path = this.Get<Label>("lbl_destination_path");
+            
             lbl_percentage = this.Get<Label>("lbl_percentage");
             lbl_title = this.Get<Label>("lbl_title");
             lbl_speed = this.Get<Label>("lbl_speed");

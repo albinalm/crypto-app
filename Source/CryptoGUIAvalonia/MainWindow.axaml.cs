@@ -13,6 +13,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Ionic.Zip;
+using Ionic.Zlib;
 
 namespace CryptoGUIAvalonia
 {
@@ -175,8 +177,8 @@ namespace CryptoGUIAvalonia
             }
             else
             {
-                var conf = new Configuration();
-                conf.Show();
+                var index = new Index();
+                index.Show();
                 //  this.Hide();
             }
         }
@@ -219,9 +221,20 @@ namespace CryptoGUIAvalonia
                     switch (pwDiag.Valid)
                     {
                         case true:
-                            Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(keyPath));
+                            using (ZipFile zip = ZipFile.Read(keyPath))
+                            {
+                                zip.Encryption = EncryptionAlgorithm.WinZipAes256;
+                                zip.CompressionLevel = CompressionLevel.None;
+                                zip.Password = pwDiag.OutputPw;
+                                zip.ExtractAll(Environment.CurrentDirectory, ExtractExistingFileAction.OverwriteSilently);
+                            }
+                            Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"));
                             keyReader.Close();
                             hashReader.Close();
+                            if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
+                                File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
+                            if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
+                                File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
                             //     File.Encrypt(Environment.CurrentDirectory + @"\credential");
                             break;
 
@@ -240,16 +253,16 @@ namespace CryptoGUIAvalonia
                     var dlg = new OpenFileDialog();
                     var filter = new FileDialogFilter
                     {
-                        Name = "Encryption key file",
+                        Name = "Encryption package",
                     };
-                    filter.Extensions.Add("ekey");
+                    filter.Extensions.Add("epak");
                     dlg.Filters.Add(filter);
                     var _dlg = dlg.ShowAsync(this);
                     var result = false;
                     var fileRes = "";
                     foreach (var res in await _dlg)
                     {
-                        if (res.EndsWith(".ekey"))
+                        if (res.EndsWith(".epak"))
                         {
                             fileRes = res;
                             result = true;
@@ -263,7 +276,21 @@ namespace CryptoGUIAvalonia
                         switch (pwDiag.Valid)
                         {
                             case true:
-                                Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(keyPath));
+                                
+                                using (ZipFile zip = ZipFile.Read(keyPath))
+                                {
+                                    zip.Encryption = EncryptionAlgorithm.WinZipAes256;
+                                    zip.CompressionLevel = CompressionLevel.None;
+                                    zip.Password = pwDiag.OutputPw;
+                                    zip.ExtractAll(Environment.CurrentDirectory, ExtractExistingFileAction.OverwriteSilently);
+                                }
+                                Cryptography.ReadEncryptionKey(pwDiag.OutputPw, File.ReadAllBytes(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"));
+                                keyReader.Close();
+                                hashReader.Close();
+                                if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
+                                    File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
+                                if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
+                                    File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
                                 keyReader.Close();
                                 hashReader.Close();
                                 //      File.Encrypt(Environment.CurrentDirectory + @"\credential");

@@ -29,6 +29,7 @@ namespace CryptoGUIAvalonia
 #if DEBUG
             this.AttachDevTools();
 #endif
+            Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
             txt_newPw = this.Get<TextBox>("txt_newPw");
             txt_oldPw = this.Get<TextBox>("txt_oldPw");
             txt_repeat = this.Get<TextBox>("txt_repeat");

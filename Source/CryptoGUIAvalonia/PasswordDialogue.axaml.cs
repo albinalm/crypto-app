@@ -41,6 +41,7 @@ namespace CryptoGUIAvalonia
             var logoImage = this.Get<Image>("img_icon");
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo02.png");
+            Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
         }
 
         private void btn_confirm_Click(object sender, RoutedEventArgs e)
