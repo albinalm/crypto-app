@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
+        x:Class="CryptoGUIAvalonia.Index"
+        Title="Configure Privateer" Height="450" Width="700" CanResize="False" WindowStartupLocation="CenterScreen">
+	
+	<Grid Margin="0,0,0,0">
+		<Image x:Name="img_icon" HorizontalAlignment="Center" Margin="0,40,0,0"
+		       VerticalAlignment="Top" Width="350" Height="150" Stretch="Uniform" />
+		<Label Content="Key details:" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,200,0,0" FontSize="20"></Label>
+		<Label Name="lbl_keydate" Content="Created: 2021/06/12 14:43" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,230,0,0" FontWeight="Light" FontSize="12"></Label>
+		<Label Name="lbl_keylocation" Content="Expected location: null" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,250,0,0" FontWeight="Light" FontSize="12"></Label>
+		<Label Name="lbl_keyfound" Content="✓ Key found" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,280,0,0" Foreground="Green" FontWeight="Bold" FontSize="12"></Label>
+		<Label Name="lbl_validation" Content="⚠ No validation has been done" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,300,0,0" Foreground="Goldenrod" FontWeight="Bold" FontSize="12"></Label>
+		<Button Name="btn_newkey" Content="Add new key" Click="btn_newKey_click" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="320,370,0,0" Width="130" Height="30" HorizontalContentAlignment="Center" FontWeight="Light"></Button>
+		<Button Name="btn_validatekey" Content="Validate key" Click="Btn_validatekey_OnClick" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,370,0,0" Width="130" Height="30" HorizontalContentAlignment="Center" FontWeight="Light"></Button>
+		<Button Name="btn_loadkey" Content="Load key" Click="Btn_loadkey_OnClick" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,370,320,0" Width="130" Height="30" HorizontalContentAlignment="Center" FontWeight="Light"></Button>
+	
+		<TextBox Name="txt_pass" VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+		         Margin="0,0,0,25" Width="400" Height="10" PasswordChar="•" IsVisible="False" HorizontalContentAlignment="Center"
+		          KeyDown="Txt_pass_OnKeyDown">
+		</TextBox>
+		
+		<Label Name="lbl_enterkey" Content="Press enter to accept" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,273,7" FontSize="12" FontWeight="UltraBold" Foreground="Darkred" IsVisible="false"></Label>
+		<Label Name="lbl_details" Content="Password:" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,340,57" FontSize="12" FontWeight="Light" Foreground="Black" IsVisible="false"></Label>
+	</Grid>
+</Window>

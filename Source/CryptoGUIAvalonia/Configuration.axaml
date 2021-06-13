@@ -4,7 +4,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
         x:Class="CryptoGUIAvalonia.Configuration"
-        Title="CryptoGUIAvalonia" Height="295" Width="488" CanResize="False" WindowStartupLocation="CenterScreen">
+        Title="CryptoGUIAvalonia" Height="295" Width="488" WindowStartupLocation="CenterScreen" ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1">
 	<Grid Margin="0,0,0,2">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="115*" />

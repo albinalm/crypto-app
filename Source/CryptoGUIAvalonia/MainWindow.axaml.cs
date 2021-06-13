@@ -199,27 +199,6 @@ namespace CryptoGUIAvalonia
         private void window_finishedInit(object? sender, EventArgs e)
         {
         }
-
-        private void ShowMessage_Click(object sender, RoutedEventArgs e)
-        {
-            sfdlg();
-        }
-
-        public async Task sfdlg()
-        {
-            var dlg = new SaveFileDialog();
-            var filter = new FileDialogFilter
-            {
-                Name = "Encryption key file",
-            };
-            filter.Extensions.Add("ekey");
-            dlg.Filters.Add(filter);
-            var _dlg = await dlg.ShowAsync(this);
-            var result = false;
-            var fileRes = "";
-            fileRes = _dlg;
-        }
-
         private async Task InitCryptography()
         {
             if (Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) != null)
