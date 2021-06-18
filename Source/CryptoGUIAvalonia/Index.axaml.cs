@@ -32,6 +32,7 @@ namespace CryptoGUIAvalonia
         private Button btn_newkey;
         private Button btn_loadkey;
         private Button btn_validatekey;
+        private Image btn_settings;
         private string Mode = "";
         private string LoadKey_FileName = "";
         private string ValidateKey_FileName = "";
@@ -66,8 +67,47 @@ namespace CryptoGUIAvalonia
             btn_newkey = this.Get<Button>("btn_newkey");
             btn_loadkey = this.Get<Button>("btn_loadkey");
             btn_validatekey = this.Get<Button>("btn_validatekey");
+            btn_settings = this.Get<Image>("btn_settings");
+            btn_settings.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/icn_settings.png");
+            btn_settings.PointerEnter += Btn_settingsOnPointerEnter;
+            btn_settings.PointerLeave += Btn_settingsOnPointerLeave;
+            btn_settings.PointerReleased += Btn_settingsOnPointerReleased;
+            this.PointerPressed += OnPointerPressed;
             Height = 451;
             UpdateUI();
+        }
+
+        private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            btn_settings.Height = 57;
+            btn_settings.Width = 57;
+        }
+
+        private void Btn_settingsOnPointerReleased(object? sender, PointerReleasedEventArgs e)
+        {
+            
+            btn_settings.Height = 60;
+            btn_settings.Width = 60;
+            btn_settings.IsEnabled = false;
+            ShowSettingsDialogue();
+        }
+
+        private async Task ShowSettingsDialogue()
+        {
+            var dlg = new SettingsDialogue();
+            await dlg.ShowDialog(this);
+            btn_settings.IsEnabled = true;
+        }
+        private void Btn_settingsOnPointerLeave(object? sender, PointerEventArgs e)
+        {
+            btn_settings.Height = 64;
+            btn_settings.Width = 64;
+        }
+
+        private void Btn_settingsOnPointerEnter(object? sender, PointerEventArgs e)
+        {
+            btn_settings.Height = 60;
+            btn_settings.Width = 60;
         }
 
         private void OnClosing(object? sender, CancelEventArgs e)

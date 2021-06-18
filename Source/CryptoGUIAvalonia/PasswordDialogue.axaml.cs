@@ -47,9 +47,18 @@ namespace CryptoGUIAvalonia
             var keyReader = new StreamReader(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini");
             this.Get<Label>("lbl_key").Content = $"Key: {Path.GetFileName(keyReader.ReadLine())}";
             lbl_incorrectpassword = this.Get<Label>("lbl_incorrectpassword");
+            txt_pw.KeyDown += Txt_pwOnKeyDown;
             keyReader.Close();
             txt_pw.GotFocus += Txt_pw_GotFocus;
             this.Closing += PasswordDialogue_Closing;
+        }
+
+        private void Txt_pwOnKeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Validate();
+            }
         }
 
         private void PasswordDialogue_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -66,6 +75,11 @@ namespace CryptoGUIAvalonia
         }
 
         private void btn_confirm_Click(object sender, RoutedEventArgs e)
+        {
+         Validate();
+        }
+
+        private void Validate()
         {
             if (Cryptography.Encryption.HashPassword(txt_pw.Text) == _inputHash)
             {

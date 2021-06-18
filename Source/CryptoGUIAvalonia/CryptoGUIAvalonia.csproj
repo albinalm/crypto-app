@@ -41,6 +41,10 @@
 			<DependentUpon>Index.axaml</DependentUpon>
 			<SubType>Code</SubType>
 		</Compile>
+		<Compile Update="SettingsDialogue.axaml.cs">
+		  <DependentUpon>SettingsDialogue.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\CryptoAPI\CryptoAPI.csproj" />
@@ -59,6 +63,9 @@
 		</None>
 		<None Update="Resources\logo02.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Resources\icn_settings.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 </Project>

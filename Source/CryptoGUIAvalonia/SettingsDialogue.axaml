@@ -1,0 +1,11 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
+        x:Class="CryptoGUIAvalonia.SettingsDialogue"
+        Title="CryptoGUIAvalonia" Height="500" Width="500" CanResize="False" WindowStartupLocation="CenterScreen">
+	<Grid Height="195" VerticalAlignment="Top">
+	<CheckBox Content="Check for updates automatically"></CheckBox>
+	</Grid>
+</Window>
