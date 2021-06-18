@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -28,11 +29,14 @@ namespace CryptoGUIAvalonia
         private Label lbl_keyfound;
         private Label lbl_keydate;
         private Label lbl_keylocation;
+        private Label lbl_checkingforupdates;
         private TextBox txt_pass;
         private Button btn_newkey;
         private Button btn_loadkey;
         private Button btn_validatekey;
         private Image btn_settings;
+        private Border pnl_overlay;
+        private CheckBox chk_autoupdates;
         private string Mode = "";
         private string LoadKey_FileName = "";
         private string ValidateKey_FileName = "";
@@ -72,6 +76,9 @@ namespace CryptoGUIAvalonia
             btn_settings.PointerEnter += Btn_settingsOnPointerEnter;
             btn_settings.PointerLeave += Btn_settingsOnPointerLeave;
             btn_settings.PointerReleased += Btn_settingsOnPointerReleased;
+            pnl_overlay = this.Get<Border>("pnl_overlay");
+            chk_autoupdates = this.Get<CheckBox>("chk_autoupdates");
+            lbl_checkingforupdates = this.Get<Label>("lbl_checkingforupdates");
             this.PointerPressed += OnPointerPressed;
             Height = 451;
             UpdateUI();
@@ -85,7 +92,6 @@ namespace CryptoGUIAvalonia
 
         private void Btn_settingsOnPointerReleased(object? sender, PointerReleasedEventArgs e)
         {
-            
             btn_settings.Height = 60;
             btn_settings.Width = 60;
             btn_settings.IsEnabled = false;
@@ -98,6 +104,7 @@ namespace CryptoGUIAvalonia
             await dlg.ShowDialog(this);
             btn_settings.IsEnabled = true;
         }
+
         private void Btn_settingsOnPointerLeave(object? sender, PointerEventArgs e)
         {
             btn_settings.Height = 64;
@@ -166,6 +173,21 @@ namespace CryptoGUIAvalonia
                 lbl_keyfound.Foreground = Brushes.Red;
                 btn_validatekey.IsEnabled = false;
             }
+
+            var executeUpdater = new Thread(new ThreadStart(CheckForUpdates));
+            executeUpdater.Start();
+        }
+
+        private void CheckForUpdates()
+        {
+            Thread.Sleep(3000);
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                pnl_overlay.IsVisible = false;
+                lbl_checkingforupdates.IsVisible = false;
+                chk_autoupdates.IsVisible = true;
+                var revision = Assembly.GetEntryAssembly()?.GetName().Version;
+            });
         }
 
         private void btn_newKey_click(object sender, RoutedEventArgs e)
@@ -226,7 +248,7 @@ namespace CryptoGUIAvalonia
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
                     var writer =
                         new StreamWriter(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini");
-                   
+
                     writer.WriteLine(path);
                     writer.Flush();
                     writer.Close();

@@ -4,6 +4,8 @@
 		<TargetFramework>net5.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ApplicationIcon>icon.ico</ApplicationIcon>
+		<Deterministic>false</Deterministic>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.0" />
@@ -42,8 +44,8 @@
 			<SubType>Code</SubType>
 		</Compile>
 		<Compile Update="SettingsDialogue.axaml.cs">
-		  <DependentUpon>SettingsDialogue.axaml</DependentUpon>
-		  <SubType>Code</SubType>
+			<DependentUpon>SettingsDialogue.axaml</DependentUpon>
+			<SubType>Code</SubType>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
@@ -65,7 +67,7 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="Resources\icn_settings.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 </Project>

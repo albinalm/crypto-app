@@ -27,7 +27,6 @@ namespace CryptoGUIAvalonia
 
         public MainWindow()
         {
-            Initialized += window_initialized;
             Activated += window_activated;
 
             InitializeComponent();
@@ -35,12 +34,6 @@ namespace CryptoGUIAvalonia
 #if DEBUG
             this.AttachDevTools();
 #endif
-            /*
-            foreach (var arg in Environment.GetCommandLineArgs())
-            {
-                MessageBox.Show(this, arg, "", MessageBox.MessageBoxButtons.Ok);
-            }
-            */
             InitializeStartup();
         }
 
@@ -183,24 +176,12 @@ namespace CryptoGUIAvalonia
             }
         }
 
-        private void window_lostFocus(object? sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void window_initialized(object? sender, EventArgs e)
-        {
-        }
-
         private void window_activated(object? sender, EventArgs e)
         {
-            //
-            //Hide();
+            if (Environment.OSVersion.ToString().Contains("Windows"))
+                Hide();
         }
 
-        private void window_finishedInit(object? sender, EventArgs e)
-        {
-        }
         private async Task InitCryptography()
         {
             if (Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) != null)
@@ -276,7 +257,7 @@ namespace CryptoGUIAvalonia
                         switch (pwDiag.Valid)
                         {
                             case true:
-                                
+
                                 using (ZipFile zip = ZipFile.Read(keyPath))
                                 {
                                     zip.Encryption = EncryptionAlgorithm.WinZipAes256;
@@ -319,7 +300,7 @@ namespace CryptoGUIAvalonia
             }
             else
             {
-                await MessageBox.Show(this, "Did not find data files", "Did not find data files", MessageBox.MessageBoxButtons.Ok);
+                //await MessageBox.Show(this, "Did not find data files", "Did not find data files", MessageBox.MessageBoxButtons.Ok);
                 Process.Start(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "CryptoGUIAvalonia");
                 Environment.Exit(0);
             }
