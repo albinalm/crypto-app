@@ -51,6 +51,7 @@ namespace CryptoGUIAvalonia
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo02.png");
             Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
             this.Closing += OnClosing;
+
             #region UI Declarations
 
             lbl_destination_path = this.Get<Label>("lbl_destination_path");
@@ -94,10 +95,9 @@ namespace CryptoGUIAvalonia
             foreach (var source in DecryptionData.Sources)
             {
                 CurrentFileSource = source;
-                Dispatcher.UIThread.Post(() =>
+                Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     pb_total.Value = FilesDecrypted;
-                    //     lbl_percentage.Content = Math.Round(pb_current.Value / pb_current.Maximum * 100, 0) + "%";
                 });
                 SpeedCalculator_Increment = 0;
                 if (DecryptionData.RootSubdirectories.Count > 0)
@@ -106,46 +106,33 @@ namespace CryptoGUIAvalonia
                     {
                         if (source.StartsWith(subdir + Path.DirectorySeparatorChar))
                         {
-                            Dispatcher.UIThread.Post(() =>
-                            {
-                                //    MessageBox.Show(this, Path.GetPathRoot(source), "", MessageBox.MessageBoxButtons.Ok);
-                                //  MessageBox.Show(this, source + Environment.NewLine + subdir, "", MessageBox.MessageBoxButtons.Ok);
-                            });
-                            //C:/Users/Albin/Desktop/Ny mapp/Ny mapp2/Letgooo.exe
                             var safeName = new DirectoryInfo(subdir).Name;
                             var restPath = CurrentFileSource.Remove(0, subdir.Length);
-                            Dispatcher.UIThread.Post(() =>
-                            {
-                                //  MessageBox.Show(this, EncryptionData.Sources[i] + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
-                                //      MessageBox.Show(this, subdir + Environment.NewLine + source + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
-                            });
                             if (!Directory.Exists(Path.GetDirectoryName($"{subdir}_decrypted{restPath}")))
                                 Directory.CreateDirectory(Path.GetDirectoryName($"{subdir}_decrypted{restPath}"));
                             DecryptionData.DestinationFileName = $"{subdir}_decrypted{restPath}";
-                            Dispatcher.UIThread.Post(() =>
+                            Dispatcher.UIThread.InvokeAsync(() =>
                             {
                                 Title = @"Decrypting files to: " + subdir;
                                 lbl_title.Content = "Decrypting..";
                                 txtblock_destination_path.Text = DecryptionData.DestinationFileName;
+                                txtblock_currentFile.Text = DecryptionData.DestinationFileName;
+                                pb_current.Value = 0;
+                                lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count}";
+                                lbl_speed.Content = "Speed: --";
                             });
-                            CalculateSpeed = true;
-                            ExecuteAsync_SpeedCalculator();
-                            Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = DecryptionData.DestinationFileName; });
-
-                            Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
-                            if (!_TrackProgress.IsAlive)
+                            if (new FileInfo(source).Length > 1000000) //10000000
                             {
-                                ExecuteAsync_TrackProgress();
+                                CalculateSpeed = true;
+                                ExecuteAsync_SpeedCalculator();
+                                if (!_TrackProgress.IsAlive)
+                                {
+                                    ExecuteAsync_TrackProgress();
+                                }
                             }
-
                             Cryptography.Decryption.DecryptFile(source, DecryptionData.DestinationFileName, 1024);
                             takenSources.Add(source);
                             FilesDecrypted++;
-                            Dispatcher.UIThread.Post(() =>
-                            {
-                                //  MessageBox.Show(this, EncryptionData.Sources[i] + Environment.NewLine + safeName + Environment.NewLine + restPath, "", MessageBox.MessageBoxButtons.Ok);
-                                //     MessageBox.Show(this, EncryptionData.DestinationFileName, "", MessageBox.MessageBoxButtons.Ok);
-                            });
                         }
                     }
                     if (!takenSources.Contains(source))
@@ -159,20 +146,24 @@ namespace CryptoGUIAvalonia
                         else
                             DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted_" +
                                                                  fileCount + Path.GetExtension(source);
-                        Dispatcher.UIThread.Post(() =>
+                        Dispatcher.UIThread.InvokeAsync(() =>
                         {
                             Title = @"Decrypting files to: " + safeDirName;
                             lbl_title.Content = "Decrypting..";
                             txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
+                            txtblock_currentFile.Text = DecryptionData.DestinationFileName;
+                            pb_current.Value = 0;
+                            lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count}";
+                            lbl_speed.Content = "Speed: --";
                         });
-                        CalculateSpeed = true;
-                        ExecuteAsync_SpeedCalculator();
-                        Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = safeFileName + Path.GetExtension(source); });
-
-                        Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
-                        if (!_TrackProgress.IsAlive)
+                        if (new FileInfo(source).Length > 1000000) //10000000
                         {
-                            ExecuteAsync_TrackProgress();
+                            CalculateSpeed = true;
+                            ExecuteAsync_SpeedCalculator();
+                            if (!_TrackProgress.IsAlive)
+                            {
+                                ExecuteAsync_TrackProgress();
+                            }
                         }
                         Cryptography.Decryption.DecryptFile(source, DecryptionData.DestinationFileName, 1024);
                         FilesDecrypted++;
@@ -189,20 +180,24 @@ namespace CryptoGUIAvalonia
                     else
                         DecryptionData.DestinationFileName = safeDirName + "/" + safeFileName + "_decrypted_" +
                                                              fileCount + Path.GetExtension(source);
-                    Dispatcher.UIThread.Post(() =>
+                    Dispatcher.UIThread.InvokeAsync(() =>
                     {
                         Title = @"Decrypting files to: " + safeDirName;
                         lbl_title.Content = "Decrypting..";
                         txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
+                        txtblock_currentFile.Text = DecryptionData.DestinationFileName;
+                        pb_current.Value = 0;
+                        lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count}";
+                        lbl_speed.Content = "Speed: --";
                     });
-                    CalculateSpeed = true;
-                    ExecuteAsync_SpeedCalculator();
-                    Dispatcher.UIThread.Post(() => { txtblock_currentFile.Text = safeFileName + Path.GetExtension(source); });
-
-                    Dispatcher.UIThread.Post(() => { pb_current.Value = 0; });
-                    if (!_TrackProgress.IsAlive)
+                    if (new FileInfo(source).Length > 1000000) //10000000
                     {
-                        ExecuteAsync_TrackProgress();
+                        CalculateSpeed = true;
+                        ExecuteAsync_SpeedCalculator();
+                        if (!_TrackProgress.IsAlive)
+                        {
+                            ExecuteAsync_TrackProgress();
+                        }
                     }
                     Cryptography.Decryption.DecryptFile(source, DecryptionData.DestinationFileName, 1024);
                     FilesDecrypted++;
@@ -218,14 +213,14 @@ namespace CryptoGUIAvalonia
             {
                 var fileLength = Math.Round((double)new FileInfo(CurrentFileSource).Length / 1048576, 0);
                 var runloop = true;
-                Dispatcher.UIThread.Post(() => { pb_current.Maximum = fileLength; });
+                Dispatcher.UIThread.InvokeAsync(() => { pb_current.Maximum = fileLength; });
 
                 while (runloop)
                     if (File.Exists(DecryptionData.DestinationFileName))
                     {
                         Thread.Sleep(10);
                         FileInfo finf = new(DecryptionData.DestinationFileName);
-                        Dispatcher.UIThread.Post(() =>
+                        Dispatcher.UIThread.InvokeAsync(() =>
                         {
                             lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count} {Math.Round(pb_current.Value / pb_current.Maximum * 100, 0)}%";
                             pb_current.Value = Math.Round((double)finf.Length / 1048576, 0);
@@ -257,7 +252,7 @@ namespace CryptoGUIAvalonia
             do
             {
                 SpeedCalculator_Increment++;
-                Dispatcher.UIThread.Post(() =>
+                Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     var sizeDiff =
                         pb_current.Value / SpeedCalculator_Increment;
@@ -278,7 +273,7 @@ namespace CryptoGUIAvalonia
         {
             do
             {
-                Dispatcher.UIThread.Post(() =>
+                Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     lbl_title.Content = lbl_title.Content.ToString() switch
                     {

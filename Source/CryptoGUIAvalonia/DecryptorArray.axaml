@@ -16,7 +16,7 @@
                FontFamily="Segoe UI Semibold" FontSize="14" />
 		<Label x:Name="lbl_destination_path" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
                RenderTransformOrigin="0.684,-0.079" Margin="10,72,0,0" FontWeight="Normal" FontStyle="Normal"
-               FontFamily="Segoe UI Light" Width="2000">
+               FontFamily="Segoe UI Light" Width="300">
 			<TextBlock x:Name="txtblock_destination_path" TextTrimming="CharacterEllipsis"></TextBlock>
 		</Label>
 		<Image x:Name="img_icon" HorizontalAlignment="Right" Margin="0,2,0,0"

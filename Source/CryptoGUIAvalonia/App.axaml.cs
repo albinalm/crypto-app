@@ -17,6 +17,7 @@ namespace CryptoGUIAvalonia
         {
             AvaloniaXamlLoader.Load(this);
         }
+
         public override void OnFrameworkInitializationCompleted()
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -30,9 +31,7 @@ namespace CryptoGUIAvalonia
                 desktop.MainWindow = new MainWindow();
             }
 
-         
             base.OnFrameworkInitializationCompleted();
         }
-
     }
 }
