@@ -28,7 +28,8 @@ namespace CryptoGUIAvalonia
                     "The disk space has run out\nPlease retry after cleaning up!", MessageBox.MessageBoxButtons.Ok);
                  */
                 Environment.CurrentDirectory = AppContext.BaseDirectory.EndsWith(Path.DirectorySeparatorChar) ? AppContext.BaseDirectory.Remove(AppContext.BaseDirectory.Length - 1, 1) : AppContext.BaseDirectory;
-                desktop.MainWindow = new MainWindow();
+                desktop.MainWindow = new PasswordDialogue("xD");
+                //desktop.MainWindow = new Index();
             }
 
             base.OnFrameworkInitializationCompleted();
