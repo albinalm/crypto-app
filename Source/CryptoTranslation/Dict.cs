@@ -41,14 +41,15 @@ namespace CryptoTranslation
 
         #region EncryptionArray
 
-        public string EncryptionArray_Encrypting { get; set; }
-        public string EncryptionArray_Destination { get; set; }
-        public string EncryptionArray_Speed { get; set; }
-        public string EncryptionArray_Title { get; set; }
-        public string EncryptionArray_EncryptingFile { get; set; }
-        public string EncryptionArray_EncryptingFileOf { get; set; }
-        public string EncryptionArray_Finalizing { get; set; }
-        public string EncryptionArray_FinishingUp { get; set; }
+        public string Encryption_Encrypting { get; set; }
+        public string Encryption_Destination { get; set; }
+        public string Encryption_Speed { get; set; }
+        public string Encryption_Title { get; set; }
+        public string Encryption_EncryptingFile { get; set; }
+        public string Encryption_EncryptingFileOf { get; set; }
+        public string Encryption_Finalizing { get; set; }
+        public string Encryption_FinishingUp { get; set; }
+        public string Encryption_Source { get; set; }
 
         #endregion EncryptionArray
 

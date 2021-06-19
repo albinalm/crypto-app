@@ -13,11 +13,13 @@ using Avalonia.Threading;
 using CryptoAPI.ORM;
 using CryptoGUI.DataModel;
 using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
+using CryptoTranslation;
 
 namespace CryptoGUIAvalonia
 {
     public class Encryptor : Window
     {
+        private Dict Dictionary;
         private Label lbl_destination_path { get; set; }
         private Label lbl_percentage { get; set; }
         private Label lbl_title { get; set; }
@@ -46,6 +48,7 @@ namespace CryptoGUIAvalonia
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo02.png");
             Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
             this.Closing += OnClosing;
+
             #region UI Declarations
 
             lbl_destination_path = this.Get<Label>("lbl_destination_path");
@@ -59,6 +62,15 @@ namespace CryptoGUIAvalonia
 
             #endregion UI Declarations
 
+            InitializeTranslation();
+        }
+
+        private void InitializeTranslation()
+        {
+            var language = System.Globalization.CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName;
+            var engine = new TranslationEngine();
+            Dictionary = engine.InitializeLanguage(TranslationEngine.Languages.Contains(language) ? language : "eng");
+            lbl_title.Content = $"{Dictionary.Encryption_Encrypting}...";
             Startup();
         }
 
@@ -142,9 +154,9 @@ namespace CryptoGUIAvalonia
                             lbl_percentage.Content = Math.Round(pb_progress.Value / pb_progress.Maximum * 100, 0) + "%";
                             if (pb_progress.Value != pb_progress.Maximum) return;
                             CalculateSpeed = false;
-                            lbl_speed.Content = "Speed: --";
-                            lbl_percentage.Content = "Finalizing file...";
-                            lbl_title.Content = "Finishing up...";
+                            lbl_speed.Content = $"{Dictionary.Encryption_Speed}: --";
+                            lbl_percentage.Content = $"{Dictionary.Encryption_Finalizing}...";
+                            lbl_title.Content = $"{Dictionary.Encryption_FinishingUp}...";
                             runloop = false;
                         });
                     }
@@ -170,7 +182,7 @@ namespace CryptoGUIAvalonia
                 Dispatcher.UIThread.Post(() =>
                 {
                     var sizeDiff = pb_progress.Value / SpeedCalculator_Increment;
-                    lbl_speed.Content = $"Speed: {Math.Round(sizeDiff * 5, 1)} MB/s";
+                    lbl_speed.Content = $"{Dictionary.Encryption_Speed}: {Math.Round(sizeDiff * 5, 1)} MB/s";
                 });
 
                 Thread.Sleep(200);
@@ -187,20 +199,24 @@ namespace CryptoGUIAvalonia
         {
             do
             {
-                Dispatcher.UIThread.Post(() =>
+                Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    lbl_title.Content = lbl_title.Content.ToString() switch
-                    {
-                        "Encrypting" => "Encrypting.",
-                        "Encrypting." => "Encrypting..",
-                        "Encrypting.." => "Encrypting...",
-                        "Encrypting..." => "Encrypting",
-                        "Finishing up" => "Finishing up.",
-                        "Finishing up." => "Finishing up..",
-                        "Finishing up.." => "Finishing up...",
-                        "Finishing up..." => "Finishing up",
-                        _ => lbl_title.Content
-                    };
+                    if (lbl_title.Content.ToString() == Dictionary.Encryption_Encrypting)
+                        lbl_title.Content = $"{Dictionary.Encryption_Encrypting}.";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_Encrypting}.")
+                        lbl_title.Content = $"{Dictionary.Encryption_Encrypting}..";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_Encrypting}..")
+                        lbl_title.Content = $"{Dictionary.Encryption_Encrypting}...";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_Encrypting}...")
+                        lbl_title.Content = Dictionary.Encryption_Encrypting;
+                    else if (lbl_title.Content.ToString() == Dictionary.Encryption_FinishingUp)
+                        lbl_title.Content = $"{Dictionary.Encryption_FinishingUp}.";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_FinishingUp}.")
+                        lbl_title.Content = $"{Dictionary.Encryption_FinishingUp}..";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_FinishingUp}..")
+                        lbl_title.Content = $"{Dictionary.Encryption_FinishingUp}...";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_FinishingUp}...")
+                        lbl_title.Content = Dictionary.Encryption_FinishingUp;
                 });
                 Thread.Sleep(200);
             } while (UpdateGui);
@@ -210,10 +226,10 @@ namespace CryptoGUIAvalonia
         {
             UpdateGui = true;
             ExecuteAsync_GuiUpdater();
-            lbl_source.Content = "Source:";
+            lbl_source.Content = Dictionary.Encryption_Source;
             lbl_source_path.Content = EncryptionData.SourceFileName;
-            lbl_destination.Content = "Destination:";
-            Title = @"Encrypting: " + EncryptionData.SourceFileName;
+            lbl_destination.Content = Dictionary.Encryption_Destination;
+            Title = $"{Dictionary.Encryption_Encrypting}: " + EncryptionData.SourceFileName;
 
             ExecuteAsync_TrackProgress();
             ExecuteAsync_Worker();

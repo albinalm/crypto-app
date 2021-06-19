@@ -128,13 +128,13 @@ namespace CryptoGUIAvalonia
 
                             Dispatcher.UIThread.InvokeAsync(() =>
                             {
-                                Title = @$"{Dictionary.EncryptionArray_Title} " + subdir;
-                                lbl_title.Content = $"{Dictionary.EncryptionArray_Encrypting}..";
+                                Title = @$"{Dictionary.Encryption_Title} " + subdir;
+                                lbl_title.Content = $"{Dictionary.Encryption_Encrypting}..";
                                 txtblock_destination_path.Text = EncryptionData.DestinationFileName;
                                 txtblock_currentFile.Text = EncryptionData.DestinationFileName;
                                 pb_current.Value = 0;
-                                lbl_percentage.Content = $"{Dictionary.EncryptionArray_EncryptingFile} {FilesEncrypted} {Dictionary.EncryptionArray_EncryptingFileOf} {EncryptionData.Sources.Count}";
-                                lbl_speed.Content = $"{Dictionary.EncryptionArray_Speed}: --";
+                                lbl_percentage.Content = $"{Dictionary.Encryption_EncryptingFile} {FilesEncrypted} {Dictionary.Encryption_EncryptingFileOf} {EncryptionData.Sources.Count}";
+                                lbl_speed.Content = $"{Dictionary.Encryption_Speed}: --";
                             });
                             if (new FileInfo(source).Length > 1000000) //10000000
                             {
@@ -166,11 +166,11 @@ namespace CryptoGUIAvalonia
                         {
                             txtblock_currentFile.Text = safeFileName + Path.GetExtension(source);
                             pb_current.Value = 0;
-                            Title = @$"{Dictionary.EncryptionArray_Title} " + safeDirName;
-                            lbl_title.Content = $"{Dictionary.EncryptionArray_Encrypting}..";
+                            Title = @$"{Dictionary.Encryption_Title} " + safeDirName;
+                            lbl_title.Content = $"{Dictionary.Encryption_Encrypting}..";
                             txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
-                            lbl_percentage.Content = $"{Dictionary.EncryptionArray_EncryptingFile} {FilesEncrypted} {Dictionary.EncryptionArray_EncryptingFileOf} {EncryptionData.Sources.Count}";
-                            lbl_speed.Content = $"{Dictionary.EncryptionArray_Speed}: --";
+                            lbl_percentage.Content = $"{Dictionary.Encryption_EncryptingFile} {FilesEncrypted} {Dictionary.Encryption_EncryptingFileOf} {EncryptionData.Sources.Count}";
+                            lbl_speed.Content = $"{Dictionary.Encryption_Speed}: --";
                         });
                         if (new FileInfo(source).Length > 1000000) //10000000
                         {
@@ -199,13 +199,13 @@ namespace CryptoGUIAvalonia
 
                     Dispatcher.UIThread.InvokeAsync(() =>
                     {
-                        Title = @$"{Dictionary.EncryptionArray_Title} " + safeDirName;
-                        lbl_title.Content = $"{Dictionary.EncryptionArray_Encrypting}..";
+                        Title = @$"{Dictionary.Encryption_Title} " + safeDirName;
+                        lbl_title.Content = $"{Dictionary.Encryption_Encrypting}..";
                         txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
                         txtblock_currentFile.Text = safeFileName + Path.GetExtension(source);
                         pb_current.Value = 0;
-                        lbl_percentage.Content = $"{Dictionary.EncryptionArray_EncryptingFile} {FilesEncrypted} {Dictionary.EncryptionArray_EncryptingFileOf} {EncryptionData.Sources.Count}";
-                        lbl_speed.Content = $"{Dictionary.EncryptionArray_Speed}: --";
+                        lbl_percentage.Content = $"{Dictionary.Encryption_EncryptingFile} {FilesEncrypted} {Dictionary.Encryption_EncryptingFileOf} {EncryptionData.Sources.Count}";
+                        lbl_speed.Content = $"{Dictionary.Encryption_Speed}: --";
                     });
                     if (new FileInfo(source).Length > 1000000) //10000000
                     {
@@ -239,14 +239,14 @@ namespace CryptoGUIAvalonia
                         FileInfo finf = new(EncryptionData.DestinationFileName);
                         Dispatcher.UIThread.InvokeAsync(() =>
                         {
-                            lbl_percentage.Content = $"{Dictionary.EncryptionArray_EncryptingFile} {FilesEncrypted} {Dictionary.EncryptionArray_EncryptingFileOf} {EncryptionData.Sources.Count} {Math.Round(pb_current.Value / pb_current.Maximum * 100, 0)}%";
+                            lbl_percentage.Content = $"{Dictionary.Encryption_EncryptingFile} {FilesEncrypted} {Dictionary.Encryption_EncryptingFileOf} {EncryptionData.Sources.Count} {Math.Round(pb_current.Value / pb_current.Maximum * 100, 0)}%";
                             pb_current.Value = Math.Round((double)finf.Length / 1048576, 0);
                             if (pb_current.Value != pb_current.Maximum) return;
 
                             CalculateSpeed = false;
-                            lbl_speed.Content = $"{Dictionary.EncryptionArray_Speed}: --";
-                            lbl_percentage.Content = $"{Dictionary.EncryptionArray_EncryptingFile} {FilesEncrypted} {Dictionary.EncryptionArray_EncryptingFileOf} {EncryptionData.Sources.Count} {Dictionary.EncryptionArray_Finalizing}";
-                            lbl_title.Content = $"{Dictionary.EncryptionArray_FinishingUp}...";
+                            lbl_speed.Content = $"{Dictionary.Encryption_Speed}: --";
+                            lbl_percentage.Content = $"{Dictionary.Encryption_EncryptingFile} {FilesEncrypted} {Dictionary.Encryption_EncryptingFileOf} {EncryptionData.Sources.Count} {Dictionary.Encryption_Finalizing}";
+                            lbl_title.Content = $"{Dictionary.Encryption_FinishingUp}...";
                             runloop = false;
                         });
                     }
@@ -273,7 +273,7 @@ namespace CryptoGUIAvalonia
                 {
                     var sizeDiff =
                         pb_current.Value / SpeedCalculator_Increment;
-                    lbl_speed.Content = $"{Dictionary.EncryptionArray_Speed}: {Math.Round(sizeDiff * 5, 1)} MB/s";
+                    lbl_speed.Content = $"{Dictionary.Encryption_Speed}: {Math.Round(sizeDiff * 5, 1)} MB/s";
                 });
 
                 Thread.Sleep(200);
@@ -292,29 +292,22 @@ namespace CryptoGUIAvalonia
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    if (lbl_title.Content == Dictionary.EncryptionArray_Encrypting)
-                        lbl_title.Content = $"{Dictionary.EncryptionArray_Encrypting}.";
-
-                    if (lbl_title.Content == $"{Dictionary.EncryptionArray_Encrypting}.")
-                        lbl_title.Content = $"{Dictionary.EncryptionArray_Encrypting}..";
-
-                    if (lbl_title.Content == $"{Dictionary.EncryptionArray_Encrypting}..")
-                        lbl_title.Content = $"{Dictionary.EncryptionArray_Encrypting}...";
-
-                    if (lbl_title.Content == $"{Dictionary.EncryptionArray_Encrypting}...")
-                        lbl_title.Content = Dictionary.EncryptionArray_Encrypting;
-
-                    if (lbl_title.Content == Dictionary.EncryptionArray_FinishingUp)
-                        lbl_title.Content = $"{Dictionary.EncryptionArray_FinishingUp}.";
-
-                    if (lbl_title.Content == $"{Dictionary.EncryptionArray_FinishingUp}.")
-                        lbl_title.Content = $"{Dictionary.EncryptionArray_FinishingUp}..";
-
-                    if (lbl_title.Content == $"{Dictionary.EncryptionArray_FinishingUp}..")
-                        lbl_title.Content = $"{Dictionary.EncryptionArray_FinishingUp}...";
-
-                    if (lbl_title.Content == $"{Dictionary.EncryptionArray_FinishingUp}...")
-                        lbl_title.Content = Dictionary.EncryptionArray_FinishingUp;
+                    if (lbl_title.Content.ToString() == Dictionary.Encryption_Encrypting)
+                        lbl_title.Content = $"{Dictionary.Encryption_Encrypting}.";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_Encrypting}.")
+                        lbl_title.Content = $"{Dictionary.Encryption_Encrypting}..";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_Encrypting}..")
+                        lbl_title.Content = $"{Dictionary.Encryption_Encrypting}...";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_Encrypting}...")
+                        lbl_title.Content = Dictionary.Encryption_Encrypting;
+                    else if (lbl_title.Content.ToString() == Dictionary.Encryption_FinishingUp)
+                        lbl_title.Content = $"{Dictionary.Encryption_FinishingUp}.";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_FinishingUp}.")
+                        lbl_title.Content = $"{Dictionary.Encryption_FinishingUp}..";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_FinishingUp}..")
+                        lbl_title.Content = $"{Dictionary.Encryption_FinishingUp}...";
+                    else if (lbl_title.Content.ToString() == $"{Dictionary.Encryption_FinishingUp}...")
+                        lbl_title.Content = Dictionary.Encryption_FinishingUp;
                 });
                 Thread.Sleep(200);
             } while (UpdateGui);
@@ -325,8 +318,8 @@ namespace CryptoGUIAvalonia
             FilesEncrypted = 1; //Set it as one so we normalize "Count"
             UpdateGui = true;
             ExecuteAsync_GuiUpdater();
-            lbl_destination.Content = $"{Dictionary.EncryptionArray_Destination}:";
-            Title = $"{Dictionary.EncryptionArray_Encrypting}...";
+            lbl_destination.Content = $"{Dictionary.Encryption_Destination}:";
+            Title = $"{Dictionary.Encryption_Encrypting}...";
             pb_total.Maximum = EncryptionData.Sources.Count;
             ExecuteAsync_Worker();
         }

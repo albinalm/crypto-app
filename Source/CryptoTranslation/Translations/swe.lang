@@ -28,15 +28,15 @@ PasswordDialogue_Title==Privateer - Ange lösenord
 PasswordDialogue_Key==⚩ Nyckel:
 
 
-EncryptionArray_Encrypting==Krypterar
-EncryptionArray_Destination==Plats
-EncryptionArray_Speed==Hastighet
-EncryptionArray_Title==Krypterar filer till:
-EncryptionArray_EncryptingFile==Krypterar fil
-EncryptionArray_EncryptingFileOf==av
-EncryptionArray_Finalizing==Slutför
-EncryptionArray_FinishingUp==Städar upp
-
+Encryption_Encrypting==Krypterar
+Encryption_Destination==Plats
+Encryption_Speed==Hastighet
+Encryption_Title==Krypterar filer till:
+Encryption_EncryptingFile==Krypterar fil
+Encryption_EncryptingFileOf==av
+Encryption_Finalizing==Slutför
+Encryption_FinishingUp==Städar upp
+Encryption_Source==Källa:
 
 
 DecryptionArray_Decrypting==Dekrypterar
