@@ -11,7 +11,7 @@
             <ColumnDefinition Width="373*" />
         </Grid.ColumnDefinitions>
         <Label Content="Key file: " HorizontalAlignment="Left" Margin="21,46,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="txt_key" HorizontalAlignment="Left" Margin="114,50,0,0" Text="" TextWrapping="Wrap"
+        <TextBox x:Name="txt_key" HorizontalAlignment="Left" Margin="114,50,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="350" Background="#FFDEDEDE" Grid.ColumnSpan="2" />
         <Label Content="Data value: " HorizontalAlignment="Left" Margin="23,0,0,116" VerticalAlignment="Bottom" />
         <TextBox x:Name="txt_keyData" HorizontalAlignment="Left" Margin="114,0,0,48" TextWrapping="Wrap"
@@ -24,7 +24,6 @@
                  VerticalAlignment="Top" Width="350" Background="#FFDEDEDE" Height="36" Grid.ColumnSpan="2" />
         <Label Content="Security management" HorizontalAlignment="Left" Margin="23,6,0,0" VerticalAlignment="Top"
                FontSize="15" FontWeight="Bold" Grid.ColumnSpan="2" />
-        <Button x:Name="btn_view_data" Content="Click to view data" Grid.Column="1" HorizontalAlignment="Left" Margin="119,173,0,0" VerticalAlignment="Top" Height="24" Width="110" Click="btn_view_data_Click"/>
-
+        <Button x:Name="btn_view_data" Content="Click to view data" Grid.Column="1" HorizontalAlignment="Left" Margin="119,173,0,0" VerticalAlignment="Top" Height="24" Width="110" Click="btn_view_data_Click" />
     </Grid>
 </Window>

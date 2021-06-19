@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoAPI", "Source\CryptoA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoGUI", "Source\CryptoGUI\CryptoGUI.csproj", "{C33E5855-EEC3-4E23-8196-B73A9B6161BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoGUIAvalonia", "Source\CryptoGUIAvalonia\CryptoGUIAvalonia.csproj", "{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoGUIAvalonia", "Source\CryptoGUIAvalonia\CryptoGUIAvalonia.csproj", "{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoDolphinLauncher", "Source\Linux\Dolphin\CryptoDolphinLauncher\CryptoDolphinLauncher.csproj", "{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoDolphinFileWriter", "Source\Linux\Dolphin\CryptoDolphinFileWriter\CryptoDolphinFileWriter.csproj", "{10870846-6B52-4B14-A74A-3365A3A361BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +25,20 @@ Global
 		{70E43B6A-AD6E-409D-AE4A-6A9494062C5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70E43B6A-AD6E-409D-AE4A-6A9494062C5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C33E5855-EEC3-4E23-8196-B73A9B6161BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C33E5855-EEC3-4E23-8196-B73A9B6161BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C33E5855-EEC3-4E23-8196-B73A9B6161BB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{C33E5855-EEC3-4E23-8196-B73A9B6161BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C33E5855-EEC3-4E23-8196-B73A9B6161BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10870846-6B52-4B14-A74A-3365A3A361BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10870846-6B52-4B14-A74A-3365A3A361BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10870846-6B52-4B14-A74A-3365A3A361BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10870846-6B52-4B14-A74A-3365A3A361BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

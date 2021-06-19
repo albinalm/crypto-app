@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
+        x:Class="CryptoGUIAvalonia.Encryptor"
+        Title="CryptoGUIAvalonia" Height="245" Width="505" CanResize="False" WindowStartupLocation="CenterScreen">
+	<Grid Margin="10,0,10,9">
+		<ProgressBar x:Name="pb_progress" HorizontalAlignment="Stretch" Height="15" Margin="0,0,0,0"
+					   VerticalAlignment="Bottom" Foreground="Red" />
+		<Label x:Name="lbl_speed" Content="Speed: 2,5MB/s" HorizontalAlignment="Right" Margin="0,0,6,18"
+               VerticalAlignment="Bottom" RenderTransformOrigin="0.684,-0.079" />
+		<Label x:Name="lbl_source" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
+               RenderTransformOrigin="0.684,-0.079" Margin="10,46,0,0" FontWeight="Bold" FontStyle="Normal"
+               FontFamily="Segoe UI Semibold" FontSize="14" />
+		<Label x:Name="lbl_title" Content="Encrypting..." HorizontalAlignment="Left" VerticalAlignment="Top"
+               RenderTransformOrigin="0.684,-0.079" Margin="10,9,0,0" FontWeight="Bold" FontStyle="Normal"
+               FontSize="17" FontFamily="Segoe UI Semibold" />
+		<Label x:Name="lbl_source_path" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
+               RenderTransformOrigin="0.684,-0.079" Margin="10,64,0,0" FontWeight="Normal" FontStyle="Normal"
+               FontFamily="Segoe UI Light" />
+		<Label x:Name="lbl_destination" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
+               RenderTransformOrigin="0.684,-0.079" Margin="10,87,0,0" FontWeight="Bold" FontStyle="Normal"
+               FontFamily="Segoe UI Semibold" FontSize="14" />
+		<Label x:Name="lbl_destination_path" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
+               RenderTransformOrigin="0.684,-0.079" Margin="10,105,0,0" FontWeight="Normal" FontStyle="Normal"
+               FontFamily="Segoe UI Light" />
+		<Image x:Name="img_icon" HorizontalAlignment="Right" Margin="0,2,0,0"
+               VerticalAlignment="Top" Width="222" Height="95" Stretch="Uniform" />
+		<Label x:Name="lbl_percentage" Content="0%" HorizontalAlignment="Left" Margin="0,0,0,18"
+               VerticalAlignment="Bottom" RenderTransformOrigin="0.684,-0.079" />
+	</Grid>
+</Window>

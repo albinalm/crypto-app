@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
+        x:Class="CryptoGUIAvalonia.EncryptorArray"
+        Title="CryptoGUIAvalonia" Height="245" Width="505" CanResize="False" WindowStartupLocation="CenterScreen">
+	<Grid Margin="10,0,10,9" RenderTransformOrigin="0.502,0.308">
+		<ProgressBar x:Name="pb_current" Height="8" Margin="0,187,0,0" VerticalAlignment="Bottom" Foreground="Red" />
+		<Label x:Name="lbl_title" Content="Encrypting..." HorizontalAlignment="Left" VerticalAlignment="Top"
+               RenderTransformOrigin="0.684,-0.079" Margin="10,18,0,0" FontWeight="Light" FontStyle="Normal"
+               FontSize="17" FontFamily="Segoe UI Semibold" />
+		<Label x:Name="lbl_destination" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
+               RenderTransformOrigin="0.684,-0.079" Margin="10,55,0,0" FontWeight="UltraLight" FontStyle="Normal"
+               FontFamily="Segoe UI Semibold" FontSize="14" />
+		<Label x:Name="lbl_destination_path" Content="From:To:" HorizontalAlignment="Left" VerticalAlignment="Top"
+               RenderTransformOrigin="0.684,-0.079" Margin="10,72,0,0" FontWeight="Normal" FontStyle="Normal"
+               FontFamily="Segoe UI Light" Width="300">
+			<TextBlock x:Name="txtblock_destination_path" TextTrimming="CharacterEllipsis"></TextBlock>
+		</Label>
+		<Image x:Name="img_icon" HorizontalAlignment="Right" Margin="0,2,0,0"
+               VerticalAlignment="Top" Width="222" Height="87" Stretch="Uniform" />
+
+		<Label x:Name="lbl_percentage" Content="0%" HorizontalAlignment="Left" Margin="0,0,0,39"
+               VerticalAlignment="Bottom" RenderTransformOrigin="0.684,-0.079" />
+		<ProgressBar x:Name="pb_total" Height="16" Margin="0,165,0,23" VerticalAlignment="Bottom" Foreground="Red" />
+		<Label x:Name="lbl_currentFile" Content="Current file: " HorizontalAlignment="Left" Margin="-2,0,0,6"
+               VerticalAlignment="Bottom" FontSize="10" Width="300">
+			<TextBlock x:Name="txtblock_currentFile" TextTrimming="CharacterEllipsis"></TextBlock>
+		</Label>
+		<Label x:Name="lbl_speed" Content="Speed: 2,5MB/s" HorizontalAlignment="Right" Margin="0,0,0,6"
+               VerticalAlignment="Bottom" RenderTransformOrigin="0.684,-0.079" FontSize="10" />
+	</Grid>
+</Window>
