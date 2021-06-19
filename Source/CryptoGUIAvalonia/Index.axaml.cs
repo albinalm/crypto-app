@@ -71,6 +71,8 @@ namespace CryptoGUIAvalonia
             this.LayoutUpdated += OnLayoutUpdated;
             this.Closing += OnClosing;
             Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
+            if (File.Exists(Environment.CurrentDirectory + @"/update.zip"))
+                File.Delete(Environment.CurrentDirectory + @"/update.zip");
             lbl_validation = this.Get<Label>("lbl_validation");
             lbl_details = this.Get<Label>("lbl_details");
             lbl_enterkey = this.Get<Label>("lbl_enterkey");
@@ -87,6 +89,7 @@ namespace CryptoGUIAvalonia
             btn_settings.PointerEnter += Btn_settingsOnPointerEnter;
             btn_settings.PointerLeave += Btn_settingsOnPointerLeave;
             btn_settings.PointerReleased += Btn_settingsOnPointerReleased;
+
             lbl_checkingforupdates = this.Get<Label>("lbl_checkingforupdates");
             btn_update = this.Get<Button>("btn_update");
             txt_passMargin = txt_pass.Margin;
@@ -96,8 +99,39 @@ namespace CryptoGUIAvalonia
             lbl_details.LayoutUpdated += Lbl_details_LayoutUpdated;
             lbl_enterkey.LayoutUpdated += Lbl_enterkey_LayoutUpdated;
             lbl_checkingforupdates.LayoutUpdated += Lbl_checkingforupdates_LayoutUpdated;
+            btn_update.Click += Btn_update_Click;
             InitializeTranslation();
             UpdateUI();
+        }
+
+        private void Btn_update_Click(object? sender, RoutedEventArgs e)
+        {
+            btn_loadkey.IsEnabled = false;
+            btn_newkey.IsEnabled = false;
+            btn_validatekey.IsEnabled = false;
+            btn_update.IsVisible = false;
+            lbl_keydetails.Foreground = Brush.Parse("Gray");
+            lbl_keydate.Foreground = Brush.Parse("Gray");
+            lbl_keylocation.Foreground = Brush.Parse("Gray");
+            lbl_keyfound.Foreground = Brush.Parse("Gray");
+            lbl_validation.Foreground = Brush.Parse("Gray");
+            lbl_checkingforupdates.Content = Dictionary.Index_DownloadingUpdate;
+            ExecuteAsync_DownloadingGUIUpdate();
+            ExecuteAsync_UpdateApp();
+        }
+
+        private void ExecuteAsync_UpdateApp()
+        {
+            var thread = new Thread(new ThreadStart(UpdateApp));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void ExecuteAsync_DownloadingGUIUpdate()
+        {
+            var thread = new Thread(new ThreadStart(DownloadingGUIUpdate));
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         private void InitializeTranslation()
@@ -117,17 +151,42 @@ namespace CryptoGUIAvalonia
 
         private void UpdateApp()
         {
-            using (var client = new WebClient())
-            {
-                client.DownloadFile("https://github.com/albinalm/crypto-app/raw/main/Updating/archive.zip", Environment.CurrentDirectory + @"/update.zip");
-            }
             if (Environment.OSVersion.ToString().Contains("Windows"))
             {
-                Process.Start(Environment.CurrentDirectory + @"/updater.exe");
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile("https://github.com/albinalm/crypto-app/raw/main/Updating/archive_windows.zip", Environment.CurrentDirectory + @"/update.zip");
+                }
+                Process.Start(Environment.CurrentDirectory + @"/CryptoUpdater.exe");
+                Environment.Exit(0);
             }
             else if (Environment.OSVersion.ToString().Contains("Unix"))
             {
-                Process.Start(Environment.CurrentDirectory + @"/updater");
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile("https://github.com/albinalm/crypto-app/raw/main/Updating/archive_linux.zip", Environment.CurrentDirectory + @"/update.zip");
+                }
+                Process.Start(Environment.CurrentDirectory + @"/CryptoUpdater.exe");
+                Environment.Exit(0);
+            }
+        }
+
+        private void DownloadingGUIUpdate()
+        {
+            while (true)
+            {
+                Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    if (lbl_checkingforupdates.Content.ToString() == Dictionary.Index_DownloadingUpdate)
+                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}.";
+                    else if (lbl_checkingforupdates.Content.ToString() == $"{Dictionary.Index_DownloadingUpdate}.")
+                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}..";
+                    else if (lbl_checkingforupdates.Content.ToString() == $"{Dictionary.Index_DownloadingUpdate}..")
+                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}...";
+                    else if (lbl_checkingforupdates.Content.ToString() == $"{Dictionary.Index_DownloadingUpdate}...")
+                        lbl_checkingforupdates.Content = Dictionary.Index_DownloadingUpdate;
+                });
+                Thread.Sleep(200);
             }
         }
 
@@ -260,15 +319,23 @@ namespace CryptoGUIAvalonia
                     {
                         var currentRevision = Assembly.GetEntryAssembly()?.GetName().Version;
                         client.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
-                        var liveVersion = Version.Parse(client.DownloadString("https://raw.githubusercontent.com/albinalm/crypto-app/main/Updating/version.ini"));
-                        if (currentRevision != liveVersion)
+                        var result = client.DownloadString("https://raw.githubusercontent.com/albinalm/crypto-app/main/Updating/version.ini");
+                        if (!result.Contains("NoVersion"))
                         {
-                            btn_update.IsVisible = true;
-                            lbl_checkingforupdates.Content = Dictionary.Index_UpdateAvailable;
-                            lbl_checkingforupdates.Foreground = Brush.Parse("Green");
-                            MinHeight = 485;
-                            MaxHeight = 550;
-                            txt_passMargin = new Thickness(0, 0, 0, 70);
+                            var liveVersion = Version.Parse(result);
+                            if (currentRevision != liveVersion)
+                            {
+                                btn_update.IsVisible = true;
+                                lbl_checkingforupdates.Content = Dictionary.Index_UpdateAvailable;
+                                lbl_checkingforupdates.Foreground = Brush.Parse("Green");
+                                MinHeight = 485;
+                                MaxHeight = 550;
+                                txt_passMargin = new Thickness(0, 0, 0, 70);
+                            }
+                            else
+                            {
+                                lbl_checkingforupdates.IsVisible = false;
+                            }
                         }
                         else
                         {
@@ -276,7 +343,7 @@ namespace CryptoGUIAvalonia
                         }
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
                     lbl_checkingforupdates.Content = Dictionary.Index_UpdateFailed;
                     MinHeight = 485;
@@ -333,7 +400,6 @@ namespace CryptoGUIAvalonia
                     }
                     else
                     {
-                        this.Title = $"Height: {Height} Expected: {MaxHeight}";
                     }
                 }
             }
@@ -371,7 +437,6 @@ namespace CryptoGUIAvalonia
                     }
                     else
                     {
-                        this.Title = $"Height: {Height} Expected: {MaxHeight}";
                     }
                 }
                 else
@@ -392,7 +457,6 @@ namespace CryptoGUIAvalonia
                     }
                     else
                     {
-                        this.Title = $"Height: {Height} Expected: {MaxHeight}";
                     }
                 }
             }
@@ -565,7 +629,6 @@ namespace CryptoGUIAvalonia
             }
             else
             {
-                this.Title = $"Height: {Height} Expected: {MaxHeight}";
             }
             Mode = "ValidateKey";
         }

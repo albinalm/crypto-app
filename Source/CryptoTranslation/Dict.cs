@@ -27,6 +27,7 @@ namespace CryptoTranslation
         public string Index_ValidateKeyPasswordLabel { get; set; }
         public string Index_EnterToAccept { get; set; }
         public string Index_Title { get; set; }
+        public string Index_DownloadingUpdate { get; set; }
 
         #endregion Index
 

@@ -19,7 +19,7 @@ Index_LoadKeyPasswordLabel==Vänligen ange lösenordet för nyckeln:
 Index_ValidateKeyPasswordLabel==Vänligen ange lösenord för att validera nyckeln:
 Index_EnterToAccept==Tryck enter för att fortsätta
 Index_Title==Privateer - Konfiguration
-
+Index_DownloadingUpdate==↓ Laddar ner uppdatering
 
 
 PasswordDialogue_IncorrectPassword==⚠ Felaktigt lösenord
