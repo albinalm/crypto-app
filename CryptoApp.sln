@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoDolphinLauncher", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoDolphinFileWriter", "Source\Linux\Dolphin\CryptoDolphinFileWriter\CryptoDolphinFileWriter.csproj", "{10870846-6B52-4B14-A74A-3365A3A361BF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoTranslation", "Source\CryptoTranslation\CryptoTranslation.csproj", "{6D71A728-2CEC-40C0-92E4-B54D3BE9C9F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{10870846-6B52-4B14-A74A-3365A3A361BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10870846-6B52-4B14-A74A-3365A3A361BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10870846-6B52-4B14-A74A-3365A3A361BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D71A728-2CEC-40C0-92E4-B54D3BE9C9F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D71A728-2CEC-40C0-92E4-B54D3BE9C9F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D71A728-2CEC-40C0-92E4-B54D3BE9C9F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D71A728-2CEC-40C0-92E4-B54D3BE9C9F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

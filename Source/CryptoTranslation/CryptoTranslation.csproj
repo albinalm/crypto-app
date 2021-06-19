@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Translations\eng.lang" />
+    <None Remove="Translations\swe.lang" />
+    <EmbeddedResource Include="Translations\eng.lang" />
+    <EmbeddedResource Include="Translations\swe.lang" />
+  </ItemGroup>
+</Project>

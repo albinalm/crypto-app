@@ -1,0 +1,21 @@
+﻿Index_KeyDetails==Nyckeldetaljer:
+Index_KeyDate==Skapad:
+Index_KeyLocation==Plats:
+Index_KeyFound==✓ Nyckel hittades
+Index_KeyNotFound==× Nyckel hittades inte
+Index_KeyNoExist==× Ingen sparad nyckel hittades
+Index_NoValidation==⚠ Ingen validering har gjorts
+Index_ValidationSuccess==✓ Validering lyckades
+Index_ValidationFailed==× Validering misslyckades
+Index_LoadKeyButton==Läs in nyckel
+Index_ValidateKeyButton==Validera nyckel
+Index_NewKeyButton==Lägg till nyckel
+Index_UpdateButton==Uppdatera
+Index_UpdateAvailable==↑ En uppdatering finns tillänglig
+Index_UpdateFailed==⚠ Ett fel uppstod vid försök att leta efter uppdateringar
+Index_NotSetText==ej inställd
+Index_NewKeyPasswordLabel==Välj ett lösenord för den nya nyckeln:
+Index_LoadKeyPasswordLabel==Vänligen ange lösenordet för nyckeln:
+Index_ValidateKeyPasswordLabel==Vänligen ange lösenord för att validera nyckeln:
+Index_EnterToAccept==Tryck enter för att fortsätta
+Index_Title==Privateer - Konfiguration

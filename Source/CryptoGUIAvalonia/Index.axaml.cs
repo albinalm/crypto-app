@@ -20,18 +20,22 @@ using CryptoAPI.ORM;
 using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
 using Ionic.Zip;
 using Ionic.Zlib;
+using CryptoTranslation;
 
 namespace CryptoGUIAvalonia
 {
     public class Index : Window
     {
+        private Dict Dictionary;
         private Label lbl_validation;
+
         private Label lbl_details;
         private Label lbl_enterkey;
         private Label lbl_keyfound;
         private Label lbl_keydate;
         private Label lbl_keylocation;
         private Label lbl_checkingforupdates;
+        private Label lbl_keydetails;
         private TextBox txt_pass;
         private Button btn_newkey;
         private Button btn_loadkey;
@@ -73,6 +77,7 @@ namespace CryptoGUIAvalonia
             lbl_keyfound = this.Get<Label>("lbl_keyfound");
             lbl_keydate = this.Get<Label>("lbl_keydate");
             lbl_keylocation = this.Get<Label>("lbl_keylocation");
+            lbl_keydetails = this.Get<Label>("lbl_keydetails");
             txt_pass = this.Get<TextBox>("txt_pass");
             btn_newkey = this.Get<Button>("btn_newkey");
             btn_loadkey = this.Get<Button>("btn_loadkey");
@@ -84,14 +89,30 @@ namespace CryptoGUIAvalonia
             btn_settings.PointerReleased += Btn_settingsOnPointerReleased;
             lbl_checkingforupdates = this.Get<Label>("lbl_checkingforupdates");
             btn_update = this.Get<Button>("btn_update");
-
             txt_passMargin = txt_pass.Margin;
+
             this.PointerPressed += OnPointerPressed;
             Height = MaxHeight;
             lbl_details.LayoutUpdated += Lbl_details_LayoutUpdated;
             lbl_enterkey.LayoutUpdated += Lbl_enterkey_LayoutUpdated;
             lbl_checkingforupdates.LayoutUpdated += Lbl_checkingforupdates_LayoutUpdated;
+            InitializeTranslation();
             UpdateUI();
+        }
+
+        private void InitializeTranslation()
+        {
+            var language = System.Globalization.CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName;
+            var engine = new TranslationEngine();
+            Dictionary = engine.InitializeLanguage(TranslationEngine.Languages.Contains(language) ? language : "eng");
+            btn_loadkey.Content = Dictionary.Index_LoadKeyButton;
+            btn_newkey.Content = Dictionary.Index_NewKeyButton;
+            btn_update.Content = Dictionary.Index_UpdateButton;
+            btn_validatekey.Content = Dictionary.Index_ValidateKeyButton;
+            lbl_keydetails.Content = Dictionary.Index_KeyDetails;
+            lbl_validation.Content = Dictionary.Index_NoValidation;
+            lbl_enterkey.Content = Dictionary.Index_EnterToAccept;
+            this.Title = Dictionary.Index_Title;
         }
 
         private void Lbl_checkingforupdates_LayoutUpdated(object? sender, EventArgs e)
@@ -99,7 +120,7 @@ namespace CryptoGUIAvalonia
             double marginLeft = lbl_checkingforupdates.Bounds.Width + 10;
 
             btn_update.Margin = Thickness.Parse($"{ marginLeft},0,0,3");
-            this.Title = btn_update.Margin.ToString();
+            //this.Title = btn_update.Margin.ToString();
         }
 
         private void Lbl_enterkey_LayoutUpdated(object? sender, EventArgs e)
@@ -180,30 +201,30 @@ namespace CryptoGUIAvalonia
                 var keyReader = new StreamReader(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini");
                 var keyPath = keyReader.ReadLine();
                 keyReader.Close();
-                lbl_keylocation.Content = $"Expected location: {keyPath}";
-                lbl_keydate.Content = "Created: --";
+                lbl_keylocation.Content = $"{Dictionary.Index_KeyLocation} {keyPath}";
+                lbl_keydate.Content = $"{Dictionary.Index_KeyDate} --";
                 lbl_keylocation.Foreground = Brushes.Black;
                 if (File.Exists(keyPath))
                 {
-                    lbl_keydate.Content = $"Created: {new FileInfo(keyPath).CreationTime.ToString("g")}";
-                    lbl_keyfound.Content = "✓ Key found";
+                    lbl_keydate.Content = $"{Dictionary.Index_KeyDate} {new FileInfo(keyPath).CreationTime.ToString("g")}";
+                    lbl_keyfound.Content = Dictionary.Index_KeyFound;
                     lbl_keyfound.Foreground = Brushes.Green;
                     ValidateKey_FileName = keyPath;
                 }
                 else
                 {
-                    lbl_keydate.Content = "Created: --";
-                    lbl_keyfound.Content = "× Key missing";
+                    lbl_keydate.Content = $"{Dictionary.Index_KeyDate} --";
+                    lbl_keyfound.Content = Dictionary.Index_KeyNotFound;
                     lbl_keyfound.Foreground = Brushes.Red;
                     btn_validatekey.IsEnabled = false;
                 }
             }
             else
             {
-                lbl_keydate.Content = "Created: --";
-                lbl_keylocation.Content = $"Expected location: Not set";
+                lbl_keydate.Content = $"{Dictionary.Index_KeyDate} --";
+                lbl_keylocation.Content = $"Expected location: {Dictionary.Index_NotSet}";
                 lbl_keylocation.Foreground = Brushes.Red;
-                lbl_keyfound.Content = "× No key";
+                lbl_keyfound.Content = Dictionary.Index_KeyNotFound;
                 lbl_keyfound.Foreground = Brushes.Red;
                 btn_validatekey.IsEnabled = false;
             }
@@ -227,7 +248,7 @@ namespace CryptoGUIAvalonia
                         if (currentRevision != liveVersion)
                         {
                             btn_update.IsVisible = true;
-                            lbl_checkingforupdates.Content = "↑ An update is available";
+                            lbl_checkingforupdates.Content = Dictionary.Index_UpdateAvailable;
                             lbl_checkingforupdates.Foreground = Brush.Parse("Green");
                             MinHeight = 485;
                             MaxHeight = 550;
@@ -241,7 +262,7 @@ namespace CryptoGUIAvalonia
                 }
                 catch
                 {
-                    lbl_checkingforupdates.Content = "⚠ An error occurred while checking for updates";
+                    lbl_checkingforupdates.Content = Dictionary.Index_UpdateFailed;
                     MinHeight = 485;
                     MaxHeight = 550;
                     txt_passMargin = new Thickness(0, 0, 0, 70);
@@ -250,35 +271,12 @@ namespace CryptoGUIAvalonia
             });
         }
 
-        private void UpdateLabelRefresh()
-        {
-            do
-            {
-                Dispatcher.UIThread.Post(() =>
-                {
-                    lbl_checkingforupdates.Content = lbl_checkingforupdates.Content.ToString() switch
-                    {
-                        "Checking for updates" => "Checking for updates.",
-                        "Checking for updates." => "Checking for updates..",
-                        "Checking for updates.." => "Checking for updates...",
-                        "Checking for updates..." => "Checking for updates",
-                        "Downloading update" => "Downloading update.",
-                        "Downloading update." => "Downloading update..",
-                        "Downloading update.." => "Downloading update...",
-                        "Downloading update..." => "Downloading update",
-                        _ => lbl_checkingforupdates.Content
-                    };
-                });
-                Thread.Sleep(200);
-            } while (UpdateLabelGUIRefresh);
-        }
-
         private void btn_newKey_click(object sender, RoutedEventArgs e)
         {
             btn_loadkey.IsEnabled = true;
             btn_validatekey.IsEnabled = true;
             btn_newkey.IsEnabled = false;
-            lbl_details.Content = "Pick a password for the new key:";
+            lbl_details.Content = $"{Dictionary.Index_NewKeyPasswordLabel}:";
             Mode = "NewKey";
             if (Height == MinHeight)
             {
@@ -329,7 +327,7 @@ namespace CryptoGUIAvalonia
                 if (File.ReadAllLines(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval")[0] ==
                     Cryptography.Encryption.HashPassword(password))
                 {
-                    lbl_validation.Content = "✓ Validation successful";
+                    lbl_validation.Content = Dictionary.Index_ValidationSuccess;
                     lbl_validation.Foreground = Brushes.Green;
                     if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
@@ -362,7 +360,7 @@ namespace CryptoGUIAvalonia
                 }
                 else
                 {
-                    lbl_validation.Content = "× Validation failed";
+                    lbl_validation.Content = Dictionary.Index_ValidationFailed;
                     lbl_validation.Foreground = Brushes.Red;
                     if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
@@ -502,7 +500,7 @@ namespace CryptoGUIAvalonia
             btn_loadkey.IsEnabled = false;
             btn_newkey.IsEnabled = true;
             btn_validatekey.IsEnabled = true;
-            lbl_details.Content = "Enter password to load key:";
+            lbl_details.Content = Dictionary.Index_LoadKeyPasswordLabel;
 
             LoadKey();
         }
@@ -542,7 +540,7 @@ namespace CryptoGUIAvalonia
             btn_loadkey.IsEnabled = true;
             btn_validatekey.IsEnabled = false;
             btn_newkey.IsEnabled = true;
-            lbl_details.Content = "Enter password to validate key:";
+            lbl_details.Content = Dictionary.Index_ValidateKeyPasswordLabel;
 
             if (Height == MinHeight)
             {

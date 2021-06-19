@@ -9,7 +9,7 @@
 	<Grid Margin="0,0,0,0">
 		<Image x:Name="img_icon" HorizontalAlignment="Center" Margin="0,40,0,0"
 		       VerticalAlignment="Top" Width="350" Height="150" Stretch="Uniform" />
-		<Label Content="Key details:" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,200,0,0" FontSize="20"></Label>
+		<Label Name="lbl_keydetails" Content="Key details:" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,200,0,0" FontSize="20"></Label>
 		<Label Name="lbl_keydate" Content="Created: 2021/06/12 14:43" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,230,0,0" FontWeight="Light" FontSize="12"></Label>
 		<Label Name="lbl_keylocation" Content="Expected location: null" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,250,0,0" FontWeight="Light" FontSize="12"></Label>
 		<Label Name="lbl_keyfound" Content="✓ Key found" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,280,0,0" Foreground="Green" FontWeight="Bold" FontSize="12"></Label>
@@ -25,7 +25,7 @@
 		          KeyDown="Txt_pass_OnKeyDown">
 		</TextBox>
 
-		<Button Name="btn_update" Content="Update" HorizontalAlignment="Left" Margin="140,0,0,3" VerticalAlignment="Bottom" Height="25" Width="70" FontSize="12" IsVisible="false" HorizontalContentAlignment="Center"></Button>
+		<Button Name="btn_update" Content="Update" HorizontalAlignment="Left" Margin="140,0,0,3" VerticalAlignment="Bottom" Height="25" Width="80" FontSize="12" IsVisible="false" HorizontalContentAlignment="Center"></Button>
 		<Label Name="lbl_checkingforupdates" Content="Checking for updates..." FontSize="12" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold"></Label>
 	</Grid>
 </Window>
