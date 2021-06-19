@@ -30,22 +30,23 @@ PasswordDialogue_Title==Privateer - Enter password
 PasswordDialogue_Key==⚩ Key:
 
 
-EncryptionArray_Encrypting==Encrypting
-EncryptionArray_Destination==Destination
-EncryptionArray_Speed==Speed
-EncryptionArray_Title==Encrypting files to:
-EncryptionArray_EncryptingFile==Encrypting file
-EncryptionArray_EncryptingFileOf==of
-EncryptionArray_Finalizing==Finalizing
-EncryptionArray_FinishingUp==Finishing up
+Encryption_Encrypting==Encrypting
+Encryption_Destination==Destination
+Encryption_Speed==Speed
+Encryption_Title==Encrypting files to:
+Encryption_EncryptingFile==Encrypting file
+Encryption_EncryptingFileOf==of
+Encryption_Finalizing==Finalizing
+Encryption_FinishingUp==Finishing up
 Encryption_Source==Source:
 
 
-DecryptionArray_Decrypting==Decrypting
-DecryptionArray_Destination==Destination
-DecryptionArray_Speed==Speed
-DecryptionArray_Title==Decrypting files to:
-DecryptionArray_DecryptingFile==Decrypting file
-DecryptionArray_DecryptingFileOf==of
-DecryptionArray_Finalizing==Finalizing
-DecryptionArray_FinishingUp==Finishing up
+Decryption_Decrypting==Decrypting
+Decryption_Destination==Destination
+Decryption_Speed==Speed
+Decryption_Title==Decrypting files to:
+Decryption_DecryptingFile==Decrypting file
+Decryption_DecryptingFileOf==of
+Decryption_Finalizing==Finalizing
+Decryption_FinishingUp==Finishing up
+Encryption_Source==Source:

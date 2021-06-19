@@ -39,11 +39,12 @@ Encryption_FinishingUp==Städar upp
 Encryption_Source==Källa:
 
 
-DecryptionArray_Decrypting==Dekrypterar
-DecryptionArray_Destination==Plats
-DecryptionArray_Speed==Hastighet
-DecryptionArray_Title==Dekrypterar filer till:
-DecryptionArray_DecryptingFile==Dekrypterar fil
-DecryptionArray_DecryptingFileOf==av
-DecryptionArray_Finalizing==Slutför
-DecryptionArray_FinishingUp==Städar upp
+Decryption_Decrypting==Dekrypterar
+Decryption_Destination==Plats
+Decryption_Speed==Hastighet
+Decryption_Title==Dekrypterar filer till:
+Decryption_DecryptingFile==Dekrypterar fil
+Decryption_DecryptingFileOf==av
+Decryption_Finalizing==Slutför
+Decryption_FinishingUp==Städar upp
+Decryption_Source==Källa:

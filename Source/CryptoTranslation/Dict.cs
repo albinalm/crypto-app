@@ -39,7 +39,7 @@ namespace CryptoTranslation
 
         #endregion PasswordDialogue
 
-        #region EncryptionArray
+        #region Encryption
 
         public string Encryption_Encrypting { get; set; }
         public string Encryption_Destination { get; set; }
@@ -51,20 +51,21 @@ namespace CryptoTranslation
         public string Encryption_FinishingUp { get; set; }
         public string Encryption_Source { get; set; }
 
-        #endregion EncryptionArray
+        #endregion Encryption
 
-        #region DecryptionArray
+        #region Decryption
 
-        public string DecryptionArray_Decrypting { get; set; }
-        public string DecryptionArray_Destination { get; set; }
-        public string DecryptionArray_Speed { get; set; }
-        public string DecryptionArray_Title { get; set; }
-        public string DecryptionArray_DecryptingFile { get; set; }
-        public string DecryptionArray_DecryptingFileOf { get; set; }
-        public string DecryptionArray_Finalizing { get; set; }
-        public string DecryptionArray_FinishingUp { get; set; }
+        public string Decryption_Decrypting { get; set; }
+        public string Decryption_Destination { get; set; }
+        public string Decryption_Speed { get; set; }
+        public string Decryption_Title { get; set; }
+        public string Decryption_DecryptingFile { get; set; }
+        public string Decryption_DecryptingFileOf { get; set; }
+        public string Decryption_Finalizing { get; set; }
+        public string Decryption_FinishingUp { get; set; }
+        public string Decryption_Source { get; set; }
 
-        #endregion DecryptionArray
+        #endregion Decryption
 
         public string GetPropertyValue(string input)
         {
