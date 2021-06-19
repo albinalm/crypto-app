@@ -7,6 +7,9 @@
 		<Deterministic>false</Deterministic>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <OutputPath>H:\Projekt\NET\crypto-app\Source\Windows\Build\</OutputPath>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.0" />
 		<PackageReference Include="Avalonia.Desktop" Version="0.10.0" />

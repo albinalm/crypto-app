@@ -115,6 +115,22 @@ namespace CryptoGUIAvalonia
             this.Title = Dictionary.Index_Title;
         }
 
+        private void UpdateApp()
+        {
+            using (var client = new WebClient())
+            {
+                client.DownloadFile("https://github.com/albinalm/crypto-app/raw/main/Updating/archive.zip", Environment.CurrentDirectory + @"/update.zip");
+            }
+            if (Environment.OSVersion.ToString().Contains("Windows"))
+            {
+                Process.Start(Environment.CurrentDirectory + @"/updater.exe");
+            }
+            else if (Environment.OSVersion.ToString().Contains("Unix"))
+            {
+                Process.Start(Environment.CurrentDirectory + @"/updater");
+            }
+        }
+
         private void Lbl_checkingforupdates_LayoutUpdated(object? sender, EventArgs e)
         {
             double marginLeft = lbl_checkingforupdates.Bounds.Width + 10;
