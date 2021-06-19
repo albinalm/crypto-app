@@ -12,16 +12,20 @@ using Avalonia.Media.Imaging;
 using CryptoAPI.ORM;
 using CryptoGUIAvalonia.GUI;
 using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
+using CryptoTranslation;
 
 namespace CryptoGUIAvalonia
 {
     public class PasswordDialogue : Window
     {
+        private Dict Dictionary;
         private string _inputHash;
         public bool Valid = false;
         public string OutputPw = "";
-        private Label lbl_incorrectpassword { get; set; }
-        private TextBox txt_pw { get; set; }
+        private Label lbl_incorrectpassword;
+        private Label lbl_key;
+        private Label lbl_password;
+        private TextBox txt_pw;
 
         private void InitializeComponent()
         {
@@ -44,13 +48,27 @@ namespace CryptoGUIAvalonia
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo01.png");
             Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
-            var keyReader = new StreamReader(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini");
-            this.Get<Label>("lbl_key").Content = $"Key: {Path.GetFileName(keyReader.ReadLine())}";
+            lbl_key = this.Get<Label>("lbl_key");
+            lbl_password = this.Get<Label>("lbl_password");
+
             lbl_incorrectpassword = this.Get<Label>("lbl_incorrectpassword");
             txt_pw.KeyDown += Txt_pwOnKeyDown;
-            keyReader.Close();
             txt_pw.GotFocus += Txt_pw_GotFocus;
             this.Closing += PasswordDialogue_Closing;
+            InitializeTranslation();
+        }
+
+        private void InitializeTranslation()
+        {
+            var language = System.Globalization.CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName;
+            var engine = new TranslationEngine();
+            Dictionary = engine.InitializeLanguage(TranslationEngine.Languages.Contains(language) ? language : "eng");
+            lbl_incorrectpassword.Content = Dictionary.PasswordDialogue_IncorrectPassword;
+            lbl_password.Content = Dictionary.PasswordDialogue_PasswordLabel;
+            var keyReader = new StreamReader(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini");
+            lbl_key.Content = $"{Dictionary.PasswordDialogue_Key} {Path.GetFileName(keyReader.ReadLine())}";
+            keyReader.Close();
+            this.Title = Dictionary.PasswordDialogue_Title;
         }
 
         private void Txt_pwOnKeyDown(object? sender, KeyEventArgs e)
@@ -76,7 +94,7 @@ namespace CryptoGUIAvalonia
 
         private void btn_confirm_Click(object sender, RoutedEventArgs e)
         {
-         Validate();
+            Validate();
         }
 
         private void Validate()

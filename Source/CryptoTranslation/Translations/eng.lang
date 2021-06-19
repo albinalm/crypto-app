@@ -19,3 +19,12 @@ Index_LoadKeyPasswordLabel==Enter password to load key:
 Index_ValidateKeyPasswordLabel==Enter password to validate key:
 Index_EnterToAccept==Press enter to accept
 Index_Title==Privateer - Configuration
+
+
+
+
+
+PasswordDialogue_IncorrectPassword==⚠ Incorrect password
+PasswordDialogue_PasswordLabel==Please enter your password:
+PasswordDialogue_Title==Privateer - Enter password
+PasswordDialogue_Key==⚩ Key:

@@ -4,6 +4,8 @@ namespace CryptoTranslation
 {
     public record Dict
     {
+        #region Index
+
         public string Index_KeyDetails { get; set; }
         public string Index_KeyDate { get; set; }
         public string Index_KeyLocation { get; set; }
@@ -25,6 +27,18 @@ namespace CryptoTranslation
         public string Index_ValidateKeyPasswordLabel { get; set; }
         public string Index_EnterToAccept { get; set; }
         public string Index_Title { get; set; }
+
+        #endregion Index
+
+        #region PasswordDialogue
+
+        public string PasswordDialogue_IncorrectPassword { get; set; }
+        public string PasswordDialogue_PasswordLabel { get; set; }
+        public string PasswordDialogue_Title { get; set; }
+        public string PasswordDialogue_Key { get; set; }
+
+        #endregion PasswordDialogue
+
         public string GetPropertyValue(string input)
         {
             return GetType().GetProperty(input)?.GetValue(this, null)?.ToString();
