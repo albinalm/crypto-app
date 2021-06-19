@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM.
 [assembly: AssemblyCompany("CodeIndite")]
 [assembly: AssemblyConfiguration("Debug")]
-[assembly: AssemblyInformationalVersion("0.1.*")]
+[assembly: AssemblyInformationalVersion("0.1")]
 [assembly: AssemblyProduct("Privateer")]
 [assembly: AssemblyTitle("Privateer")]
 [assembly: AssemblyVersion("0.1.*")]

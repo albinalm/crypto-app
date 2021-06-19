@@ -2,7 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -34,14 +36,18 @@ namespace CryptoGUIAvalonia
         private Button btn_newkey;
         private Button btn_loadkey;
         private Button btn_validatekey;
+        private Button btn_update;
         private Image btn_settings;
-        private Border pnl_overlay;
-        private CheckBox chk_autoupdates;
+        private Thickness txt_passMargin;
         private string Mode = "";
         private string LoadKey_FileName = "";
         private string ValidateKey_FileName = "";
         private bool isResizing = false;
         private bool isMaxMode = false;
+        private string UpdateLabelTextMode = "Checking";
+        private bool UpdateLabelGUIRefresh = false;
+        private int MinHeight = 450;
+        private int MaxHeight = 485;
 
         private void InitializeComponent()
         {
@@ -76,12 +82,40 @@ namespace CryptoGUIAvalonia
             btn_settings.PointerEnter += Btn_settingsOnPointerEnter;
             btn_settings.PointerLeave += Btn_settingsOnPointerLeave;
             btn_settings.PointerReleased += Btn_settingsOnPointerReleased;
-            pnl_overlay = this.Get<Border>("pnl_overlay");
-            chk_autoupdates = this.Get<CheckBox>("chk_autoupdates");
             lbl_checkingforupdates = this.Get<Label>("lbl_checkingforupdates");
+            btn_update = this.Get<Button>("btn_update");
+
+            txt_passMargin = txt_pass.Margin;
             this.PointerPressed += OnPointerPressed;
-            Height = 451;
+            Height = MaxHeight;
+            lbl_details.LayoutUpdated += Lbl_details_LayoutUpdated;
+            lbl_enterkey.LayoutUpdated += Lbl_enterkey_LayoutUpdated;
+            lbl_checkingforupdates.LayoutUpdated += Lbl_checkingforupdates_LayoutUpdated;
             UpdateUI();
+        }
+
+        private void Lbl_checkingforupdates_LayoutUpdated(object? sender, EventArgs e)
+        {
+            double marginLeft = lbl_checkingforupdates.Bounds.Width + 10;
+
+            btn_update.Margin = Thickness.Parse($"{ marginLeft},0,0,3");
+            this.Title = btn_update.Margin.ToString();
+        }
+
+        private void Lbl_enterkey_LayoutUpdated(object? sender, EventArgs e)
+        {
+            double marginRight = (Width - txt_pass.Width) - lbl_enterkey.Bounds.Width + 100;
+            double marginBottom = (txt_pass.Height) + txt_passMargin.Bottom - txt_pass.Bounds.Height;
+            //  lbl_enterkeyMargin = new Thickness(0, 0, 273, 37);
+
+            lbl_enterkey.Margin = Thickness.Parse($"0,0,{marginRight},{marginBottom}");
+        }
+
+        private void Lbl_details_LayoutUpdated(object? sender, EventArgs e)
+        {
+            double marginRight = (Width - txt_pass.Width) - lbl_details.Bounds.Width + 100;
+            double marginBottom = (txt_pass.Height) + lbl_details.Bounds.Height + txt_passMargin.Bottom;
+            lbl_details.Margin = Thickness.Parse($"0,0,{marginRight},{marginBottom}");
         }
 
         private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -128,12 +162,12 @@ namespace CryptoGUIAvalonia
             {
                 if (!isMaxMode)
                 {
-                    Height = 450;
+                    Height = MinHeight;
                     Width = 700;
                 }
                 else
                 {
-                    Height = 485;
+                    Height = MaxHeight;
                     Width = 700;
                 }
             }
@@ -180,14 +214,63 @@ namespace CryptoGUIAvalonia
 
         private void CheckForUpdates()
         {
-            Thread.Sleep(3000);
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                pnl_overlay.IsVisible = false;
-                lbl_checkingforupdates.IsVisible = false;
-                chk_autoupdates.IsVisible = true;
-                var revision = Assembly.GetEntryAssembly()?.GetName().Version;
+                //   lbl_checkingforupdates.IsVisible = false;
+                try
+                {
+                    using (var client = new WebClient())
+                    {
+                        var currentRevision = Assembly.GetEntryAssembly()?.GetName().Version;
+                        client.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                        var liveVersion = Version.Parse(client.DownloadString("https://raw.githubusercontent.com/albinalm/crypto-app/main/Updating/version.ini"));
+                        if (currentRevision != liveVersion)
+                        {
+                            btn_update.IsVisible = true;
+                            lbl_checkingforupdates.Content = "↑ An update is available";
+                            lbl_checkingforupdates.Foreground = Brush.Parse("Green");
+                            MinHeight = 485;
+                            MaxHeight = 550;
+                            txt_passMargin = new Thickness(0, 0, 0, 70);
+                        }
+                        else
+                        {
+                            lbl_checkingforupdates.IsVisible = false;
+                        }
+                    }
+                }
+                catch
+                {
+                    lbl_checkingforupdates.Content = "⚠ An error occurred while checking for updates";
+                    MinHeight = 485;
+                    MaxHeight = 550;
+                    txt_passMargin = new Thickness(0, 0, 0, 70);
+                    lbl_checkingforupdates.Foreground = Brush.Parse("Red");
+                }
             });
+        }
+
+        private void UpdateLabelRefresh()
+        {
+            do
+            {
+                Dispatcher.UIThread.Post(() =>
+                {
+                    lbl_checkingforupdates.Content = lbl_checkingforupdates.Content.ToString() switch
+                    {
+                        "Checking for updates" => "Checking for updates.",
+                        "Checking for updates." => "Checking for updates..",
+                        "Checking for updates.." => "Checking for updates...",
+                        "Checking for updates..." => "Checking for updates",
+                        "Downloading update" => "Downloading update.",
+                        "Downloading update." => "Downloading update..",
+                        "Downloading update.." => "Downloading update...",
+                        "Downloading update..." => "Downloading update",
+                        _ => lbl_checkingforupdates.Content
+                    };
+                });
+                Thread.Sleep(200);
+            } while (UpdateLabelGUIRefresh);
         }
 
         private void btn_newKey_click(object sender, RoutedEventArgs e)
@@ -195,10 +278,9 @@ namespace CryptoGUIAvalonia
             btn_loadkey.IsEnabled = true;
             btn_validatekey.IsEnabled = true;
             btn_newkey.IsEnabled = false;
-            lbl_details.Content = "Pick a password: ";
-            lbl_details.Margin = Thickness.Parse("0,0,300,57");
+            lbl_details.Content = "Pick a password for the new key:";
             Mode = "NewKey";
-            if (Height < 455)
+            if (Height == MinHeight)
             {
                 var thread = new Thread(new ThreadStart(AnimateDownwards));
                 thread.Start();
@@ -227,10 +309,17 @@ namespace CryptoGUIAvalonia
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
                     if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
-                    if (Height > 455)
+                    if (Height == MaxHeight)
                     {
+                        lbl_details.IsVisible = false;
+                        lbl_enterkey.IsVisible = false;
+                        txt_pass.IsVisible = false;
                         var thread = new Thread(new ThreadStart(AnimateUpwards));
                         thread.Start();
+                    }
+                    else
+                    {
+                        this.Title = $"Height: {Height} Expected: {MaxHeight}";
                     }
                 }
             }
@@ -258,10 +347,17 @@ namespace CryptoGUIAvalonia
                     hashWriter.Flush();
                     hashWriter.Close();
                     UpdateUI();
-                    if (Height > 455)
+                    if (Height == MaxHeight)
                     {
+                        lbl_details.IsVisible = false;
+                        lbl_enterkey.IsVisible = false;
+                        txt_pass.IsVisible = false;
                         var thread = new Thread(new ThreadStart(AnimateUpwards));
                         thread.Start();
+                    }
+                    else
+                    {
+                        this.Title = $"Height: {Height} Expected: {MaxHeight}";
                     }
                 }
                 else
@@ -272,10 +368,17 @@ namespace CryptoGUIAvalonia
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
                     if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "data.ekey");
-                    if (Height > 455)
+                    if (Height == MaxHeight)
                     {
+                        lbl_details.IsVisible = false;
+                        lbl_enterkey.IsVisible = false;
+                        txt_pass.IsVisible = false;
                         var thread = new Thread(new ThreadStart(AnimateUpwards));
                         thread.Start();
+                    }
+                    else
+                    {
+                        this.Title = $"Height: {Height} Expected: {MaxHeight}";
                     }
                 }
             }
@@ -308,6 +411,9 @@ namespace CryptoGUIAvalonia
             }
             File.Delete($"{Path.GetDirectoryName(fileRes)}{Path.DirectorySeparatorChar}data.ekey");
             File.Delete($"{Path.GetDirectoryName(fileRes)}{Path.DirectorySeparatorChar}conf.eval");
+            lbl_details.IsVisible = false;
+            lbl_enterkey.IsVisible = false;
+            txt_pass.IsVisible = false;
             var thread = new Thread(new ThreadStart(AnimateUpwards));
             thread.Start();
             ValidateKey(fileRes, password);
@@ -321,9 +427,9 @@ namespace CryptoGUIAvalonia
             {
                 Dispatcher.UIThread.Post(() =>
                 {
-                    if (this.Height > 484)
+                    if (this.Height >= MaxHeight)
                         fullSize = true;
-                    this.Height++;
+                    this.Height += 2;
                 });
 
                 Thread.Sleep(1);
@@ -333,7 +439,8 @@ namespace CryptoGUIAvalonia
                 lbl_details.IsVisible = true;
                 lbl_enterkey.IsVisible = true;
                 txt_pass.IsVisible = true;
-                Height = 485;
+                txt_pass.Margin = txt_passMargin;
+                Height = MaxHeight;
             });
             isMaxMode = true;
             isResizing = false;
@@ -347,20 +454,17 @@ namespace CryptoGUIAvalonia
             {
                 Dispatcher.UIThread.Post(() =>
                 {
-                    if (this.Height < 451)
+                    if (this.Height <= MinHeight)
                         fullSize = true;
-                    this.Height--;
+                    this.Height -= 2;
                 });
 
                 Thread.Sleep(1);
             } while (!fullSize);
             Dispatcher.UIThread.Post(() =>
             {
-                lbl_details.IsVisible = false;
-                lbl_enterkey.IsVisible = false;
-                txt_pass.IsVisible = false;
                 btn_loadkey.IsEnabled = true;
-                Height = 450;
+                Height = MinHeight;
                 btn_newkey.IsEnabled = true;
                 btn_validatekey.IsEnabled = true;
             });
@@ -399,7 +503,7 @@ namespace CryptoGUIAvalonia
             btn_newkey.IsEnabled = true;
             btn_validatekey.IsEnabled = true;
             lbl_details.Content = "Enter password to load key:";
-            lbl_details.Margin = Thickness.Parse("0,0,245,57");
+
             LoadKey();
         }
 
@@ -439,11 +543,15 @@ namespace CryptoGUIAvalonia
             btn_validatekey.IsEnabled = false;
             btn_newkey.IsEnabled = true;
             lbl_details.Content = "Enter password to validate key:";
-            lbl_details.Margin = Thickness.Parse("0,0,225,57");
-            if (Height < 455)
+
+            if (Height == MinHeight)
             {
                 var thread = new Thread(new ThreadStart(AnimateDownwards));
                 thread.Start();
+            }
+            else
+            {
+                this.Title = $"Height: {Height} Expected: {MaxHeight}";
             }
             Mode = "ValidateKey";
         }
