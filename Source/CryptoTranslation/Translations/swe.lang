@@ -26,3 +26,24 @@ PasswordDialogue_IncorrectPassword==⚠ Felaktigt lösenord
 PasswordDialogue_PasswordLabel==Vänligen ange ditt lösenord:
 PasswordDialogue_Title==Privateer - Ange lösenord
 PasswordDialogue_Key==⚩ Nyckel:
+
+
+EncryptionArray_Encrypting==Krypterar
+EncryptionArray_Destination==Plats
+EncryptionArray_Speed==Hastighet
+EncryptionArray_Title==Krypterar filer till:
+EncryptionArray_EncryptingFile==Krypterar fil
+EncryptionArray_EncryptingFileOf==av
+EncryptionArray_Finalizing==Slutför
+EncryptionArray_FinishingUp==Städar upp
+
+
+
+DecryptionArray_Decrypting==Dekrypterar
+DecryptionArray_Destination==Plats
+DecryptionArray_Speed==Hastighet
+DecryptionArray_Title==Dekrypterar filer till:
+DecryptionArray_DecryptingFile==Dekrypterar fil
+DecryptionArray_DecryptingFileOf==av
+DecryptionArray_Finalizing==Slutför
+DecryptionArray_FinishingUp==Städar upp

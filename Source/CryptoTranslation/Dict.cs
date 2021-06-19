@@ -39,6 +39,32 @@ namespace CryptoTranslation
 
         #endregion PasswordDialogue
 
+        #region EncryptionArray
+
+        public string EncryptionArray_Encrypting { get; set; }
+        public string EncryptionArray_Destination { get; set; }
+        public string EncryptionArray_Speed { get; set; }
+        public string EncryptionArray_Title { get; set; }
+        public string EncryptionArray_EncryptingFile { get; set; }
+        public string EncryptionArray_EncryptingFileOf { get; set; }
+        public string EncryptionArray_Finalizing { get; set; }
+        public string EncryptionArray_FinishingUp { get; set; }
+
+        #endregion EncryptionArray
+
+        #region DecryptionArray
+
+        public string DecryptionArray_Decrypting { get; set; }
+        public string DecryptionArray_Destination { get; set; }
+        public string DecryptionArray_Speed { get; set; }
+        public string DecryptionArray_Title { get; set; }
+        public string DecryptionArray_DecryptingFile { get; set; }
+        public string DecryptionArray_DecryptingFileOf { get; set; }
+        public string DecryptionArray_Finalizing { get; set; }
+        public string DecryptionArray_FinishingUp { get; set; }
+
+        #endregion DecryptionArray
+
         public string GetPropertyValue(string input)
         {
             return GetType().GetProperty(input)?.GetValue(this, null)?.ToString();
