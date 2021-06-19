@@ -13,11 +13,13 @@ using Avalonia.Threading;
 using CryptoAPI.ORM;
 using CryptoGUI.DataModel;
 using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
+using CryptoTranslation;
 
 namespace CryptoGUIAvalonia
 {
     public class DecryptorArray : Window
     {
+        private Dict Dictionary;
         private int FilesDecrypted;
         private int SpeedCalculator_Increment;
         private string CurrentFileSource = "";
@@ -50,6 +52,7 @@ namespace CryptoGUIAvalonia
             //logoImage.Source = "/Resources/logo02.png";
             logoImage.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo02.png");
             Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
+            InitializeTranslation();
             this.Closing += OnClosing;
 
             #region UI Declarations
@@ -69,6 +72,13 @@ namespace CryptoGUIAvalonia
 
             _TrackProgress = new Thread(new ThreadStart(TrackProgress)) { IsBackground = true };
             Startup();
+        }
+
+        private void InitializeTranslation()
+        {
+            var language = System.Globalization.CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName;
+            var engine = new TranslationEngine();
+            Dictionary = engine.InitializeLanguage(TranslationEngine.Languages.Contains(language) ? language : "eng");
         }
 
         private void OnClosing(object? sender, CancelEventArgs e)
@@ -113,13 +123,13 @@ namespace CryptoGUIAvalonia
                             DecryptionData.DestinationFileName = $"{subdir}_decrypted{restPath}";
                             Dispatcher.UIThread.InvokeAsync(() =>
                             {
-                                Title = @"Decrypting files to: " + subdir;
-                                lbl_title.Content = "Decrypting..";
+                                Title = @$"{Dictionary.DecryptionArray_Title} " + subdir;
+                                lbl_title.Content = $"{Dictionary.DecryptionArray_Decrypting}..";
                                 txtblock_destination_path.Text = DecryptionData.DestinationFileName;
                                 txtblock_currentFile.Text = DecryptionData.DestinationFileName;
                                 pb_current.Value = 0;
-                                lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count}";
-                                lbl_speed.Content = "Speed: --";
+                                lbl_percentage.Content = $"{Dictionary.DecryptionArray_DecryptingFile} {FilesDecrypted} {Dictionary.DecryptionArray_DecryptingFileOf} {DecryptionData.Sources.Count}";
+                                lbl_speed.Content = $"{Dictionary.DecryptionArray_Speed}: --";
                             });
                             if (new FileInfo(source).Length > 1000000) //10000000
                             {
@@ -148,13 +158,13 @@ namespace CryptoGUIAvalonia
                                                                  fileCount + Path.GetExtension(source);
                         Dispatcher.UIThread.InvokeAsync(() =>
                         {
-                            Title = @"Decrypting files to: " + safeDirName;
-                            lbl_title.Content = "Decrypting..";
+                            Title = @$"{Dictionary.DecryptionArray_Title} " + safeDirName;
+                            lbl_title.Content = $"{Dictionary.DecryptionArray_Decrypting}..";
                             txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
                             txtblock_currentFile.Text = DecryptionData.DestinationFileName;
                             pb_current.Value = 0;
-                            lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count}";
-                            lbl_speed.Content = "Speed: --";
+                            lbl_percentage.Content = $"{Dictionary.DecryptionArray_DecryptingFile} {FilesDecrypted} {Dictionary.DecryptionArray_DecryptingFileOf} {DecryptionData.Sources.Count}";
+                            lbl_speed.Content = $"{Dictionary.DecryptionArray_Speed}: --";
                         });
                         if (new FileInfo(source).Length > 1000000) //10000000
                         {
@@ -182,13 +192,13 @@ namespace CryptoGUIAvalonia
                                                              fileCount + Path.GetExtension(source);
                     Dispatcher.UIThread.InvokeAsync(() =>
                     {
-                        Title = @"Decrypting files to: " + safeDirName;
-                        lbl_title.Content = "Decrypting..";
+                        Title = @$"{Dictionary.DecryptionArray_Title} " + safeDirName;
+                        lbl_title.Content = $"{Dictionary.DecryptionArray_Decrypting}..";
                         txtblock_destination_path.Text = $"{safeDirName}{Path.DirectorySeparatorChar}{safeFileName}{Path.GetExtension(source)}";
                         txtblock_currentFile.Text = DecryptionData.DestinationFileName;
                         pb_current.Value = 0;
-                        lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count}";
-                        lbl_speed.Content = "Speed: --";
+                        lbl_percentage.Content = $"{Dictionary.DecryptionArray_DecryptingFile} {FilesDecrypted} {Dictionary.DecryptionArray_DecryptingFileOf} {DecryptionData.Sources.Count}";
+                        lbl_speed.Content = $"{Dictionary.DecryptionArray_Speed}: --";
                     });
                     if (new FileInfo(source).Length > 1000000) //10000000
                     {
@@ -222,14 +232,15 @@ namespace CryptoGUIAvalonia
                         FileInfo finf = new(DecryptionData.DestinationFileName);
                         Dispatcher.UIThread.InvokeAsync(() =>
                         {
-                            lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count} {Math.Round(pb_current.Value / pb_current.Maximum * 100, 0)}%";
+                            lbl_percentage.Content = $"{Dictionary.DecryptionArray_DecryptingFile} {FilesDecrypted} {Dictionary.DecryptionArray_DecryptingFileOf} {DecryptionData.Sources.Count} {Math.Round(pb_current.Value / pb_current.Maximum * 100, 0)}%";
+
                             pb_current.Value = Math.Round((double)finf.Length / 1048576, 0);
                             if (pb_current.Value != pb_current.Maximum) return;
 
                             CalculateSpeed = false;
-                            lbl_speed.Content = "Speed: --";
-                            lbl_percentage.Content = $"Decrypting file {FilesDecrypted} of {DecryptionData.Sources.Count} Finalizing...";
-                            lbl_title.Content = "Finishing up...";
+                            lbl_speed.Content = $"{Dictionary.DecryptionArray_Speed}: --";
+                            lbl_percentage.Content = $"{Dictionary.DecryptionArray_DecryptingFile} {FilesDecrypted} {Dictionary.DecryptionArray_DecryptingFileOf} {DecryptionData.Sources.Count} {Dictionary.DecryptionArray_Finalizing}";
+                            lbl_title.Content = $"{Dictionary.DecryptionArray_FinishingUp}...";
                             runloop = false;
                         });
                     }
@@ -256,7 +267,7 @@ namespace CryptoGUIAvalonia
                 {
                     var sizeDiff =
                         pb_current.Value / SpeedCalculator_Increment;
-                    lbl_speed.Content = $"Speed: {Math.Round(sizeDiff * 5, 1)} MB/s";
+                    lbl_speed.Content = $"{Dictionary.DecryptionArray_Speed}: {Math.Round(sizeDiff * 5, 1)} MB/s";
                 });
 
                 Thread.Sleep(200);
@@ -275,18 +286,29 @@ namespace CryptoGUIAvalonia
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    lbl_title.Content = lbl_title.Content.ToString() switch
-                    {
-                        "Decrypting" => "Decrypting.",
-                        "Decrypting." => "Decrypting..",
-                        "Decrypting.." => "Decrypting...",
-                        "Decrypting..." => "Decrypting",
-                        "Finishing up" => "Finishing up.",
-                        "Finishing up." => "Finishing up..",
-                        "Finishing up.." => "Finishing up...",
-                        "Finishing up..." => "Finishing up",
-                        _ => lbl_title.Content
-                    };
+                    if (lbl_title.Content == Dictionary.DecryptionArray_Decrypting)
+                        lbl_title.Content = $"{Dictionary.DecryptionArray_Decrypting}.";
+
+                    if (lbl_title.Content == $"{Dictionary.DecryptionArray_Decrypting}.")
+                        lbl_title.Content = $"{Dictionary.DecryptionArray_Decrypting}..";
+
+                    if (lbl_title.Content == $"{Dictionary.DecryptionArray_Decrypting}..")
+                        lbl_title.Content = $"{Dictionary.DecryptionArray_Decrypting}...";
+
+                    if (lbl_title.Content == $"{Dictionary.DecryptionArray_Decrypting}...")
+                        lbl_title.Content = Dictionary.DecryptionArray_Decrypting;
+
+                    if (lbl_title.Content == Dictionary.DecryptionArray_FinishingUp)
+                        lbl_title.Content = $"{Dictionary.DecryptionArray_FinishingUp}.";
+
+                    if (lbl_title.Content == $"{Dictionary.DecryptionArray_FinishingUp}.")
+                        lbl_title.Content = $"{Dictionary.DecryptionArray_FinishingUp}..";
+
+                    if (lbl_title.Content == $"{Dictionary.DecryptionArray_FinishingUp}..")
+                        lbl_title.Content = $"{Dictionary.DecryptionArray_FinishingUp}...";
+
+                    if (lbl_title.Content == $"{Dictionary.DecryptionArray_FinishingUp}...")
+                        lbl_title.Content = Dictionary.DecryptionArray_FinishingUp;
                 });
                 Thread.Sleep(200);
             } while (UpdateGui);
@@ -297,8 +319,8 @@ namespace CryptoGUIAvalonia
             FilesDecrypted = 1; //Set it as one so we normalize "Count"
             UpdateGui = true;
             ExecuteAsync_GuiUpdater();
-            lbl_destination.Content = "Destination:";
-            Title = @"Decrypting...";
+            lbl_destination.Content = $"{Dictionary.DecryptionArray_Destination}:";
+            Title = $"{Dictionary.DecryptionArray_Decrypting}...";
             pb_total.Maximum = DecryptionData.Sources.Count;
             ExecuteAsync_Worker();
         }
