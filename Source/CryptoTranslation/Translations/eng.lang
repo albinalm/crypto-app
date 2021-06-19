@@ -13,7 +13,7 @@ Index_NewKeyButton==Add new key
 Index_UpdateButton==Update
 Index_UpdateAvailable==↑ An update is available
 Index_UpdateFailed==⚠ An error occurred while checking for updates
-Index_NotSetText==not set
+Index_NotSet==not set
 Index_NewKeyPasswordLabel==Pick a password for the new key:
 Index_LoadKeyPasswordLabel==Enter password to load key:
 Index_ValidateKeyPasswordLabel==Enter password to validate key:
