@@ -5,8 +5,8 @@ Index_KeyFound==✓ Nyckel hittades
 Index_KeyNotFound==× Ingen nyckel hittades
 Index_KeyNoExist==× Ingen sparad nyckel hittades
 Index_NoValidation==⚠ Ingen validering har gjorts
-Index_ValidationSuccess==✓ Validering lyckades
-Index_ValidationFailed==× Validering misslyckades
+Index_ValidationSuccess==✓ Nyckelvalidering lyckades
+Index_ValidationFailed==× Nyckelvalidering misslyckades
 Index_LoadKeyButton==Läs in nyckel
 Index_ValidateKeyButton==Validera nyckel
 Index_NewKeyButton==Lägg till nyckel
@@ -26,6 +26,9 @@ PasswordDialogue_IncorrectPassword==⚠ Felaktigt lösenord
 PasswordDialogue_PasswordLabel==Vänligen ange ditt lösenord:
 PasswordDialogue_Title==Privateer - Ange lösenord
 PasswordDialogue_Key==⚩ Nyckel:
+PasswordDialogue_NoKeyDetected==⚠ Din primära nyckel hittades inte
+PasswordDialogue_ValidationSuccess==✓ Nyckelvalidering lyckades
+PasswordDialogue_ValidationFailed==× Nyckelvalidering misslyckades
 
 
 Encryption_Encrypting==Krypterar
@@ -48,3 +51,8 @@ Decryption_DecryptingFileOf==av
 Decryption_Finalizing==Slutför
 Decryption_FinishingUp==Städar upp
 Decryption_Source==Källa:
+
+
+General_FileDialogFilter==Krypteringsnyckel
+General_OpenFileDialogTitle==Välj nyckel
+General_SaveFileDialogTitle==Välj vart du vill spara din nyckel

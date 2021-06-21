@@ -37,6 +37,9 @@ namespace CryptoTranslation
         public string PasswordDialogue_PasswordLabel { get; set; }
         public string PasswordDialogue_Title { get; set; }
         public string PasswordDialogue_Key { get; set; }
+        public string PasswordDialogue_NoKeyDetected { get; set; }
+        public string PasswordDialogue_ValidationSuccess { get; set; }
+        public string PasswordDialogue_ValidationFailed { get; set; }
 
         #endregion PasswordDialogue
 
@@ -68,6 +71,12 @@ namespace CryptoTranslation
 
         #endregion Decryption
 
+        #region General
+        public string General_FileDialogFilter { get; set; }
+        
+        public string General_OpenFileDialogTitle { get; set; }
+        public string General_SaveFileDialogTitle { get; set; }
+        #endregion General
         public string GetPropertyValue(string input)
         {
             return GetType().GetProperty(input)?.GetValue(this, null)?.ToString();

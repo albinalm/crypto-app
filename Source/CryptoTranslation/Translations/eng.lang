@@ -28,6 +28,11 @@ PasswordDialogue_IncorrectPassword==⚠ Incorrect password
 PasswordDialogue_PasswordLabel==Please enter your password:
 PasswordDialogue_Title==Privateer - Enter password
 PasswordDialogue_Key==⚩ Key:
+PasswordDialogue_NoKeyDetected==⚠ Primary key not found
+PasswordDialogue_ValidationSuccess==✓ Validation successful
+PasswordDialogue_ValidationFailed==× Validation failed
+
+
 
 
 Encryption_Encrypting==Encrypting
@@ -49,4 +54,11 @@ Decryption_DecryptingFile==Decrypting file
 Decryption_DecryptingFileOf==of
 Decryption_Finalizing==Finalizing
 Decryption_FinishingUp==Finishing up
-Encryption_Source==Source:
+Decryption_Source==Source:
+
+
+General_FileDialogFilter==Encryption key file
+General_OpenFileDialogTitle==Pick your key
+General_SaveFileDialogTitle==Choose where to save your key
+
+

@@ -8,7 +8,7 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <OutputPath>H:\Projekt\NET\crypto-app\Source\Windows\Build\</OutputPath>
+	  <OutputPath>/home/albin/RiderProjects/crypto-app/Source/Linux/Debug/</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.0" />

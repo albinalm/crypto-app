@@ -379,10 +379,9 @@ namespace CryptoGUIAvalonia
             var zipFailed = false;
             using (ZipFile zip = ZipFile.Read(path))
             {
-                zip.Encryption = EncryptionAlgorithm.WinZipAes256;
+            
                 zip.CompressionLevel = CompressionLevel.None;
-                zip.Password = password;
-
+                
                 try
                 {
                     zip.ExtractAll(Environment.CurrentDirectory, ExtractExistingFileAction.OverwriteSilently);
@@ -390,7 +389,7 @@ namespace CryptoGUIAvalonia
                 catch
                 {
                     zipFailed = true;
-                    lbl_validation.Content = "× Validation failed";
+                    lbl_validation.Content = Dictionary.Index_ValidationFailed;
                     lbl_validation.Foreground = Brushes.Red;
                     if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval"))
                         File.Delete(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "conf.eval");
@@ -473,22 +472,23 @@ namespace CryptoGUIAvalonia
             var dlg = new SaveFileDialog();
             var filter = new FileDialogFilter
             {
-                Name = "Encryption package",
+                Name = Dictionary.General_FileDialogFilter
             };
             filter.Extensions.Add("epak");
             dlg.Filters.Add(filter);
+            dlg.Title = Dictionary.General_SaveFileDialogTitle;
             var _dlg = await dlg.ShowAsync(this);
             var result = false;
             var fileRes = "";
             fileRes = _dlg;
+            if (!fileRes.EndsWith(".epak"))
+                fileRes += ".epak";
             File.WriteAllBytes($"{Path.GetDirectoryName(fileRes)}{Path.DirectorySeparatorChar}data.ekey",
                 Cryptography.GenerateEncryptionKey(password));
             File.WriteAllText($"{Path.GetDirectoryName(fileRes)}{Path.DirectorySeparatorChar}conf.eval", Cryptography.Encryption.HashPassword(password));
             using (ZipFile zip = new ZipFile())
             {
-                zip.Encryption = EncryptionAlgorithm.WinZipAes256;
                 zip.CompressionLevel = CompressionLevel.None;
-                zip.Password = password;
                 zip.AddFile($"{Path.GetDirectoryName(fileRes)}{Path.DirectorySeparatorChar}data.ekey", "");
                 zip.AddFile($"{Path.GetDirectoryName(fileRes)}{Path.DirectorySeparatorChar}conf.eval", "");
                 zip.Save(fileRes);
@@ -596,10 +596,11 @@ namespace CryptoGUIAvalonia
             var dlg = new OpenFileDialog();
             var filter = new FileDialogFilter
             {
-                Name = "Encryption key file",
+                Name = Dictionary.General_FileDialogFilter,
             };
             filter.Extensions.Add("epak");
             dlg.Filters.Add(filter);
+            dlg.Title = Dictionary.General_OpenFileDialogTitle;
             var _dlg = dlg.ShowAsync(this);
             var result = false;
             var fileRes = "";
