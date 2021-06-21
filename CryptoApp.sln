@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoTranslation", "Source
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoUpdater", "Source\CryptoUpdater\CryptoUpdater.csproj", "{A5171D96-D6B3-425E-BD7A-73C8E317AA65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstaller", "Source\CryptoInstaller\CryptoInstaller.csproj", "{F7914909-E4E2-4DE6-82CC-DAFD87AE8EB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstallerLinux", "Source\CryptoInstallerLinux\CryptoInstallerLinux.csproj", "{F7914909-E4E2-4DE6-82CC-DAFD87AE8EB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstallerWindows", "Source\CryptoInstallerWindows\CryptoInstallerWindows.csproj", "{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{F7914909-E4E2-4DE6-82CC-DAFD87AE8EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7914909-E4E2-4DE6-82CC-DAFD87AE8EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7914909-E4E2-4DE6-82CC-DAFD87AE8EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

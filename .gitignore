@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 /Source/CryptoGUIAvalonia_encrypted
 /Source/Windows/Build/net5.0
+
+install.zip

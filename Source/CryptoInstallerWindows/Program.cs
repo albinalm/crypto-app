@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 
-namespace CryptoInstaller
+namespace CryptoInstallerWindows
 {
     class Program
     {

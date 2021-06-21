@@ -4,7 +4,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace CryptoInstaller
+namespace CryptoInstallerWindows
 {
     public class App : Application
     {
