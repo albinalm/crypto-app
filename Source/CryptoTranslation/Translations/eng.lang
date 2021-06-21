@@ -2,8 +2,8 @@
 Index_KeyDate==Created:
 Index_KeyLocation==Expected location:
 Index_KeyFound==✓ Key found
-Index_KeyNotFound==× Key missing
-Index_KeyNoExist==× No key
+Index_KeyNotFound==× Primary key not found
+Index_KeyNoExist==× No saved key exist
 Index_NoValidation==⚠ No validation has been done
 Index_ValidationSuccess==✓ Validation successful
 Index_ValidationFailed==× Validation failed

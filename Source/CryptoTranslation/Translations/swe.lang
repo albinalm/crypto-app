@@ -2,7 +2,7 @@
 Index_KeyDate==Skapad:
 Index_KeyLocation==Plats:
 Index_KeyFound==✓ Nyckel hittades
-Index_KeyNotFound==× Ingen nyckel hittades
+Index_KeyNotFound==× Primär nyckel hittades inte
 Index_KeyNoExist==× Ingen sparad nyckel hittades
 Index_NoValidation==⚠ Ingen validering har gjorts
 Index_ValidationSuccess==✓ Nyckelvalidering lyckades

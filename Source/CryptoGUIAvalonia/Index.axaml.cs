@@ -305,7 +305,7 @@ namespace CryptoGUIAvalonia
                 lbl_keydate.Content = $"{Dictionary.Index_KeyDate} --";
                 lbl_keylocation.Content = $"Expected location: {Dictionary.Index_NotSet}";
                 lbl_keylocation.Foreground = Brushes.Red;
-                lbl_keyfound.Content = Dictionary.Index_KeyNotFound;
+                lbl_keyfound.Content = Dictionary.Index_KeyNoExist;
                 lbl_keyfound.Foreground = Brushes.Red;
                 btn_validatekey.IsEnabled = false;
             }
