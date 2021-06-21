@@ -166,25 +166,31 @@ namespace CryptoGUIAvalonia
                 {
                     client.DownloadFile("https://github.com/albinalm/crypto-app/raw/main/Updating/archive_linux.zip", Environment.CurrentDirectory + @"/update.zip");
                 }
-                Process.Start(Environment.CurrentDirectory + @"/CryptoUpdater.exe");
+                Process.Start(Environment.CurrentDirectory + @"/CryptoUpdater");
                 Environment.Exit(0);
             }
         }
 
         private void DownloadingGUIUpdate()
         {
+            double downloadLength = 0;
             while (true)
             {
+                if (File.Exists(Environment.CurrentDirectory + @"/update.zip"))
+                    downloadLength = new FileInfo(Environment.CurrentDirectory + @"/update.zip").Length;
+            
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    if (lbl_checkingforupdates.Content.ToString() == Dictionary.Index_DownloadingUpdate)
-                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}.";
-                    else if (lbl_checkingforupdates.Content.ToString() == $"{Dictionary.Index_DownloadingUpdate}.")
-                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}..";
-                    else if (lbl_checkingforupdates.Content.ToString() == $"{Dictionary.Index_DownloadingUpdate}..")
-                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}...";
-                    else if (lbl_checkingforupdates.Content.ToString() == $"{Dictionary.Index_DownloadingUpdate}...")
-                        lbl_checkingforupdates.Content = Dictionary.Index_DownloadingUpdate;
+                    if(lbl_checkingforupdates.Content.ToString() == Dictionary.Index_DownloadingUpdate)
+                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}    | {Math.Round(downloadLength / 1048576, 2)} MB";
+                    else if (lbl_checkingforupdates.Content.ToString().Split("|")[0] == $"{Dictionary.Index_DownloadingUpdate}    ")
+                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}.   | {Math.Round(downloadLength / 1048576, 2)} MB";
+                    else if (lbl_checkingforupdates.Content.ToString().Split("|")[0] == $"{Dictionary.Index_DownloadingUpdate}.   ")
+                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}..  | {Math.Round(downloadLength / 1048576, 2)} MB";
+                    else if (lbl_checkingforupdates.Content.ToString().Split("|")[0] == $"{Dictionary.Index_DownloadingUpdate}..  ")
+                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}... | {Math.Round(downloadLength / 1048576, 2)} MB";
+                    else if (lbl_checkingforupdates.Content.ToString().Split("|")[0] == $"{Dictionary.Index_DownloadingUpdate}... ")
+                        lbl_checkingforupdates.Content = $"{Dictionary.Index_DownloadingUpdate}    | {Math.Round(downloadLength / 1048576, 2)} MB";
                 });
                 Thread.Sleep(200);
             }
