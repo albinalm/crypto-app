@@ -12,7 +12,7 @@ namespace CryptoUpdater
         private static void Main(string[] args)
         {
             Thread.Sleep(1000);
-            using (ZipFile zip = ZipFile.Read(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"/update.zip"))
+            using (ZipFile zip = ZipFile.Read(System.AppContext.BaseDirectory + @"/update.zip"))
             {
                 zip.ExtractAll(Environment.CurrentDirectory, ExtractExistingFileAction.OverwriteSilently);
             }
