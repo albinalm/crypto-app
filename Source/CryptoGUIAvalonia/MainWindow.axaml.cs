@@ -1,17 +1,14 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using CryptoAPI.ORM;
 using CryptoGUI.DataModel;
-using CryptoGUIAvalonia.GUI;
 using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using Ionic.Zip;
 using Ionic.Zlib;

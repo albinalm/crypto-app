@@ -1,11 +1,6 @@
-using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CryptoGUIAvalonia.GUI.Dialogues.MessageBox
 {

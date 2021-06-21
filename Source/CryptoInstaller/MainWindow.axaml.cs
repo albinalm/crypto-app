@@ -1,29 +1,26 @@
-using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media.Imaging;
 
-namespace CryptoGUIAvalonia
+namespace CryptoInstaller
 {
-    public class SettingsDialogue : Window
+    public class MainWindow : Window
     {
-
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
         }
 
-        public SettingsDialogue()
+        public MainWindow()
         {
+
             InitializeComponent();
+
 #if DEBUG
             this.AttachDevTools();
 #endif
-            Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
-         
-        }
 
+        }
 
     }
 }

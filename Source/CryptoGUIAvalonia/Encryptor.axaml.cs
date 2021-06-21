@@ -3,16 +3,13 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CryptoAPI.ORM;
 using CryptoGUI.DataModel;
-using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
 using CryptoTranslation;
 
 namespace CryptoGUIAvalonia

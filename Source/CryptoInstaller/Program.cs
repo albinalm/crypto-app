@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 
-namespace CryptoGUIAvalonia
+namespace CryptoInstaller
 {
     class Program
     {
@@ -9,7 +9,7 @@ namespace CryptoGUIAvalonia
         // yet and stuff might break.
         public static void Main(string[] args)
         {
-            ApplicationDataHolder.args = args;
+        
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
         }

@@ -1,7 +1,5 @@
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -10,10 +8,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Threading;
 using CryptoAPI.ORM;
-using CryptoGUIAvalonia.GUI;
-using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
 using CryptoTranslation;
 using Ionic.Zip;
 using Ionic.Zlib;

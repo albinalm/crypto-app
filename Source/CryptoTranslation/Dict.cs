@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace CryptoTranslation
+﻿namespace CryptoTranslation
 {
     public record Dict
     {
