@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="InstallData" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="InstallData\libMonoPosixHelper.so" />
       <EmbeddedResource Include="InstallData\libMonoPosixHelper.so" />
       <None Remove="InstallData\libSkiaSharp.so" />
@@ -18,6 +14,10 @@
       <EmbeddedResource Include="InstallData\libHarfBuzzSharp.so" />
       <None Remove="InstallData\CryptoInstallerLinux.app" />
       <None Remove="InstallData\CryptoInstallerLinux" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="InstallData\CryptoInstallerLinux" />
     </ItemGroup>
 
 </Project>

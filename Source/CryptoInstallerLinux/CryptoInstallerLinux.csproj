@@ -31,15 +31,20 @@
 		<EmbeddedResource Include="Resources\icon.png" />
 		<None Remove="Resources\gnome.png" />
 		<EmbeddedResource Include="Resources\gnome.png" />
-		<None Remove="Resources\example.png" />
-		<EmbeddedResource Include="Resources\example.png" />
 		<None Remove="InstallData\core.zip" />
-		<EmbeddedResource Include="InstallData\core.zip" />
 		<None Remove="InstallData\dolphin.zip" />
-		<EmbeddedResource Include="InstallData\dolphin.zip" />
+		<None Remove="Resources\example_swe.png" />
+		<EmbeddedResource Include="Resources\example_swe.png" />
+		<None Remove="Resources\example_eng.png" />
+		<EmbeddedResource Include="Resources\example_eng.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="InstallData\install.zip" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="InstallData\core.zip" />
+	  <EmbeddedResource Include="InstallData\dolphin.zip" />
 	</ItemGroup>
 </Project>

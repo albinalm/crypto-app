@@ -31,7 +31,7 @@ PasswordDialogue_Key==⚩ Key:
 PasswordDialogue_NoKeyDetected==⚠ Primary key not found
 PasswordDialogue_ValidationSuccess==✓ Validation successful
 PasswordDialogue_ValidationFailed==× Validation failed
-
+PasswordDialogue_ChangeKeyText==Choose another key
 
 
 

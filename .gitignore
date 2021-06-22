@@ -350,5 +350,5 @@ MigrationBackup/
 .ionide/
 /Source/CryptoGUIAvalonia_encrypted
 /Source/Windows/Build/net5.0
-
+/Source/CryptoInstallerLinuxExtractor/InstallData/
 InstallData/

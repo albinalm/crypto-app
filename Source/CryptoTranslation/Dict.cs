@@ -38,7 +38,7 @@
         public string PasswordDialogue_NoKeyDetected { get; set; }
         public string PasswordDialogue_ValidationSuccess { get; set; }
         public string PasswordDialogue_ValidationFailed { get; set; }
-
+        public string PasswordDialogue_ChangeKeyText { get; set; }
         #endregion PasswordDialogue
 
         #region Encryption

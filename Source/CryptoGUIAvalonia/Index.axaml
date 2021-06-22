@@ -27,5 +27,6 @@
 
 		<Button Name="btn_update" Content="Update" HorizontalAlignment="Left" Margin="140,0,0,3" VerticalAlignment="Bottom" Height="25" Width="80" FontSize="12" IsVisible="false" HorizontalContentAlignment="Center"></Button>
 		<Label Name="lbl_checkingforupdates" Content="Checking for updates..." FontSize="12" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold"></Label>
+		<Label Name="lbl_version" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="8" />
 	</Grid>
 </Window>

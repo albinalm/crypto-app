@@ -26,7 +26,7 @@ namespace CryptoGUIAvalonia
         private Label lbl_password;
         private string keyPath = "";
         private TextBox txt_pw;
-   
+        private Button btn_changekey;
         private bool isResizing = false;
         private void InitializeComponent()
         {
@@ -51,7 +51,7 @@ namespace CryptoGUIAvalonia
             Icon = new WindowIcon(new Bitmap(Environment.CurrentDirectory + "/Resources/icon.png"));
             lbl_key = this.Get<Label>("lbl_key");
             lbl_password = this.Get<Label>("lbl_password");
-       
+            btn_changekey = this.Get<Button>("btn_changekey");
             lbl_incorrectpassword = this.Get<Label>("lbl_incorrectpassword");
             txt_pw.KeyDown += Txt_pwOnKeyDown;
             txt_pw.GotFocus += Txt_pw_GotFocus;
@@ -66,6 +66,7 @@ namespace CryptoGUIAvalonia
             Dictionary = engine.InitializeLanguage(TranslationEngine.Languages.Contains(language) ? language : "eng");
             lbl_incorrectpassword.Content = Dictionary.PasswordDialogue_IncorrectPassword;
             lbl_password.Content = Dictionary.PasswordDialogue_PasswordLabel;
+            btn_changekey.Content = Dictionary.PasswordDialogue_ChangeKeyText;
             if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini"))
             {
                 var keyReader = new StreamReader(Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.ini");

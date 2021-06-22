@@ -45,7 +45,7 @@
 			       VerticalAlignment="Top" Width="350" Height="150" Stretch="Uniform" />
 			<Label Name="lbl_help" Opacity="0" Content="You can access Privateer by right clicking anywhere in your file explorer!" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,330,0,0" FontSize="20" FontWeight="ExtraLight"></Label>
 			<Image x:Name="img_example" Opacity="0" HorizontalAlignment="Center" Margin="0,385,0,0"
-			       VerticalAlignment="Top" Width="250" Height="300" Stretch="None" />
+			       VerticalAlignment="Top" Width="370" Height="300" Stretch="None" />
 			<CheckBox Name="chk_start" Opacity="0" IsChecked="True" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,140" Content="Open Privateer when installer ends"></CheckBox>
 			<Button Opacity="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Finish" Width="320" Height="30" Margin="0,0,0,70" Name="btn_finish" Click="Btn_finish_OnClick"></Button>			
 			

@@ -29,6 +29,7 @@ PasswordDialogue_Key==⚩ Nyckel:
 PasswordDialogue_NoKeyDetected==⚠ Din primära nyckel hittades inte
 PasswordDialogue_ValidationSuccess==✓ Nyckelvalidering lyckades
 PasswordDialogue_ValidationFailed==× Nyckelvalidering misslyckades
+PasswordDialogue_ChangeKeyText==Välj en annan nyckel
 
 
 Encryption_Encrypting==Krypterar

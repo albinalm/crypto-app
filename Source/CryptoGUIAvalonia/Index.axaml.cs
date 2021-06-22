@@ -33,6 +33,7 @@ namespace CryptoGUIAvalonia
         private Label lbl_keylocation;
         private Label lbl_checkingforupdates;
         private Label lbl_keydetails;
+        private Label lbl_version;
         private TextBox txt_pass;
         private Button btn_newkey;
         private Button btn_loadkey;
@@ -77,6 +78,7 @@ namespace CryptoGUIAvalonia
             lbl_keydate = this.Get<Label>("lbl_keydate");
             lbl_keylocation = this.Get<Label>("lbl_keylocation");
             lbl_keydetails = this.Get<Label>("lbl_keydetails");
+            lbl_version = this.Get<Label>("lbl_version");
             txt_pass = this.Get<TextBox>("txt_pass");
             btn_newkey = this.Get<Button>("btn_newkey");
             btn_loadkey = this.Get<Button>("btn_loadkey");
@@ -97,6 +99,7 @@ namespace CryptoGUIAvalonia
             lbl_enterkey.LayoutUpdated += Lbl_enterkey_LayoutUpdated;
             lbl_checkingforupdates.LayoutUpdated += Lbl_checkingforupdates_LayoutUpdated;
             btn_update.Click += Btn_update_Click;
+            lbl_version.Content = Assembly.GetEntryAssembly()?.GetName().Version?.ToString();
             InitializeTranslation();
             UpdateUI();
         }

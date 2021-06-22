@@ -44,8 +44,7 @@ namespace CryptoInstallerLinux
         private Label lbl_help;
         private Label lbl_status;
         private Label lbl_finished;
-        
-        
+
         private Border border_fm;
 
         private Button btn_next;
@@ -88,6 +87,7 @@ namespace CryptoInstallerLinux
             lbl_path = this.Get<Label>("lbl_path");
             btn_back = this.Get<Button>("btn_back");
             lbl_help = this.Get<Label>("lbl_help");
+          
             btn_install = this.Get<Button>("btn_install");
             pb_progress = this.Get<ProgressBar>("pb_progress");
             img_example = this.Get<Image>("img_example");
@@ -102,7 +102,7 @@ namespace CryptoInstallerLinux
             img_icon3.Source = ReadEmbeddedResourceImage("logo01.png");
             img_fm.Source = ReadEmbeddedResourceImage("KDE_logo.png");
             img_next.Source = ReadEmbeddedResourceImage("next.png");
-            img_example.Source = ReadEmbeddedResourceImage("example.png");
+           
             btn_next = this.Get<Button>("btn_next");
             lbl_fm = this.Get<Label>("lbl_kde");
             txt_path = this.Get<TextBox>("txt_path");
@@ -352,6 +352,7 @@ namespace CryptoInstallerLinux
         {
             var language = System.Globalization.CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName;
             var engine = new TranslationEngine();
+            
             Dictionary = engine.InitializeLanguage(TranslationEngine.Languages.Contains(language) ? language : "eng");
             lbl_welcome.Content = Dictionary.InstallerLinux_WelcomeTo;
             lbl_welcome2.Content = Dictionary.InstallerLinux_WelcomeTo;
@@ -365,7 +366,12 @@ namespace CryptoInstallerLinux
             lbl_status.Content = Dictionary.InstallerLinux_Installing;
             btn_finish.Content = Dictionary.InstallerLinux_Finish;
             chk_start.Content = Dictionary.InstallerLinux_OpenPrivateer;
+          
             lbl_finished.Content = Dictionary.InstallerLinux_FinishedInstalling;
+            if(TranslationEngine.Languages.Contains(language))
+                img_example.Source = ReadEmbeddedResourceImage("example_" + language + ".png");
+            else
+                img_example.Source = ReadEmbeddedResourceImage("example_eng" + ".png");
             ExecuteWait();
         }
         private void WindowBase_OnActivated(object? sender, EventArgs e)
