@@ -9,11 +9,14 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using CryptoTranslation;
 
 namespace CryptoInstallerLinux
 {
     public class MainWindow : Window
     {
+        private Dict Dictionary { get; set; }
+        
         private bool isResizing = false;
 
         private Panel FirstPane;
@@ -29,11 +32,15 @@ namespace CryptoInstallerLinux
         private Label lbl_question;
         private Label lbl_welcome;
         private Label lbl_welcome2;
+        private Label lbl_path;
         
         private Border border_fm;
 
         private Button btn_next;
-
+        private Button btn_back;
+        private Button btn_install;
+        
+        
         private TextBox txt_path;
         private bool kde = true;
         private void InitializeComponent()
@@ -59,7 +66,9 @@ namespace CryptoInstallerLinux
             img_next = this.Get<Image>("img_next");
             FirstPane = this.Get<Panel>("FirstPane");
             SecondPane = this.Get<Panel>("SecondPane");
-            //logoImage.Source = "/Resources/logo02.png";
+            lbl_path = this.Get<Label>("lbl_path");
+            btn_back = this.Get<Button>("btn_back");
+            btn_install = this.Get<Button>("btn_install");
             img_icon.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo01.png");
             img_icon2.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/logo01.png");
             img_fm.Source = new Bitmap(Environment.CurrentDirectory + "/Resources/KDE_logo.png");
@@ -204,9 +213,24 @@ namespace CryptoInstallerLinux
 
         }
 
+        private void InitializeTranslation()
+        {
+            var language = System.Globalization.CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName;
+            var engine = new TranslationEngine();
+            Dictionary = engine.InitializeLanguage(TranslationEngine.Languages.Contains(language) ? language : "eng");
+            lbl_welcome.Content = Dictionary.InstallerLinux_WelcomeTo;
+            lbl_welcome2.Content = Dictionary.InstallerLinux_WelcomeTo;
+            lbl_question.Content = Dictionary.InstallerLinux_WhatFMQuestion;
+            btn_next.Content = Dictionary.InstallerLinux_Next;
+            btn_back.Content = Dictionary.InstallerLinux_Back;
+            lbl_path.Content = Dictionary.InstallerLinux_WhereToInstall;
+            btn_install.Content = Dictionary.InstallerLinux_Install;
+            Title = Dictionary.InstallerLinux_Title;
+            ExecuteWait();
+        }
         private void WindowBase_OnActivated(object? sender, EventArgs e)
         {
-          ExecuteWait();
+             InitializeTranslation();
         }
 
         private void Btn_next_OnClick(object? sender, RoutedEventArgs e)

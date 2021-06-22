@@ -62,3 +62,12 @@ General_OpenFileDialogTitle==Pick your key
 General_SaveFileDialogTitle==Choose where to save your key
 
 
+
+InstallerLinux_WelcomeTo==Welcome to
+InstallerLinux_Next==Next
+InstallerLinux_Back==Back
+InstallerLinux_WhereToInstall==Select where to install Privateer:
+InstallerLinux_Install==Install
+InstallerLinux_WhatFMQuestion==What file manager are you using?
+InstallerLinux_Title==Welcome to Privateer!
+InstallerLinux_TitleInstalling==Privateer - Installing...

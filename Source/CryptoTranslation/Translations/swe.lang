@@ -56,3 +56,14 @@ Decryption_Source==Källa:
 General_FileDialogFilter==Krypteringsnyckel
 General_OpenFileDialogTitle==Välj nyckel
 General_SaveFileDialogTitle==Välj vart du vill spara din nyckel
+
+
+
+InstallerLinux_WelcomeTo==Välkommen till
+InstallerLinux_Next==Nästa
+InstallerLinux_Back==Tillbaks
+InstallerLinux_WhereToInstall==Välj vart du vill installera Privateer:
+InstallerLinux_Install==Installera
+InstallerLinux_WhatFMQuestion==Vilken filhanterare använder du?
+InstallerLinux_Title==Välkommen till Privateer!
+InstallerLinux_TitleInstalling==Privateer - Installerar...

@@ -75,6 +75,17 @@
         public string General_OpenFileDialogTitle { get; set; }
         public string General_SaveFileDialogTitle { get; set; }
         #endregion General
+
+        #region InstallerLinux
+        public string InstallerLinux_WelcomeTo { get; set; }
+        public string InstallerLinux_Next { get; set; }
+        public string InstallerLinux_Back { get; set; }
+        public string InstallerLinux_WhereToInstall { get; set; }
+        public string InstallerLinux_Install { get; set; }
+        public string InstallerLinux_WhatFMQuestion { get; set; }
+        public string InstallerLinux_Title { get; set; }
+        public string InstallerLinux_TitleInstalling { get; set; }
+        #endregion InstallerLinux
         public string GetPropertyValue(string input)
         {
             return GetType().GetProperty(input)?.GetValue(this, null)?.ToString();
