@@ -7,7 +7,7 @@
         Title="CryptoGUIAvalonia" Height="600" Width="900" WindowStartupLocation="CenterScreen" Activated="WindowBase_OnActivated">
 
 	<Grid>
-		<Panel Name="FirstPane">
+		<Panel Name="FirstPane" IsVisible="true">
 			<Label Name="lbl_welcome" Opacity="0" Content="Welcome to" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0" FontSize="25" FontWeight="ExtraLight"></Label>
 			<Image x:Name="img_icon" Opacity="0" HorizontalAlignment="Center" Margin="0,140,0,0"
 			       VerticalAlignment="Top" Width="350" Height="150" Stretch="Uniform" />
@@ -30,11 +30,25 @@
 			<Label Name="lbl_path" Content="Select where to install Privateer:" FontWeight="Light" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90,320,0,0"></Label>
 			<TextBox Name="txt_path" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90,350,0,0" Width="685"></TextBox>
 			<Button Name="btn_path" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,351,90,0" Width="30" Height="30" Content="..." Click="Btn_path_OnClick"></Button>
-			<Button Name="btn_install" Content="Install" FontSize="14" FontWeight="UltraLight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-			        HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50" Height="35" Width="100"></Button>
+			<Button Name="btn_install" Content="Install" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+			        HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50" Height="35" Width="100" Click="Btn_install_OnClick"></Button>
+		
+			<Label Name="lbl_status" IsVisible="False" Content="Installing..." HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,130" FontSize="25" FontWeight="ExtraLight"></Label>
 			<ProgressBar Name="pb_progress" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,90" Width="800" Height="20"></ProgressBar>
+			
 			<Button Name="btn_back" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
 			        Height="30" Margin="10,0,0,10" Click="Btn_back_OnClick"></Button>
+		</Panel>
+		<Panel Name="ThirdPane" IsVisible="False">
+			<Label Name="lbl_finished" Content="Finished installing" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0" FontSize="25" FontWeight="ExtraLight"></Label>
+			<Image x:Name="img_icon3" HorizontalAlignment="Center" Margin="0,140,0,0"
+			       VerticalAlignment="Top" Width="350" Height="150" Stretch="Uniform" />
+			<Label Name="lbl_help" Opacity="0" Content="You can access Privateer by right clicking anywhere in your file explorer!" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,330,0,0" FontSize="20" FontWeight="ExtraLight"></Label>
+			<Image x:Name="img_example" Opacity="0" HorizontalAlignment="Center" Margin="0,385,0,0"
+			       VerticalAlignment="Top" Width="250" Height="300" Stretch="None" />
+			<CheckBox Name="chk_start" Opacity="0" IsChecked="True" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,140" Content="Open Privateer when installer ends"></CheckBox>
+			<Button Opacity="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Finish" Width="320" Height="30" Margin="0,0,0,70" Name="btn_finish" Click="Btn_finish_OnClick"></Button>			
+			
 		</Panel>
 	</Grid>
 	

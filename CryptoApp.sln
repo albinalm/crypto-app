@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstallerLinux", "Sou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstallerWindows", "Source\CryptoInstallerWindows\CryptoInstallerWindows.csproj", "{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstallerLinuxExtractor", "Source\CryptoInstallerLinuxExtractor\CryptoInstallerLinuxExtractor.csproj", "{15397840-C75B-4809-A9AD-FFD6C4482545}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15397840-C75B-4809-A9AD-FFD6C4482545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15397840-C75B-4809-A9AD-FFD6C4482545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15397840-C75B-4809-A9AD-FFD6C4482545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15397840-C75B-4809-A9AD-FFD6C4482545}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

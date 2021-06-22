@@ -85,6 +85,15 @@
         public string InstallerLinux_WhatFMQuestion { get; set; }
         public string InstallerLinux_Title { get; set; }
         public string InstallerLinux_TitleInstalling { get; set; }
+        public string InstallerLinux_TitleFinish { get; set; }
+        public string InstallerLinux_Installing { get; set; }
+        public string InstallerLinux_OpenPrivateer { get; set; }
+        public string InstallerLinux_Finish { get; set; }
+        public string InstallerLinux_UseDescription { get; set; }
+        public string InstallerLinux_FinishedInstalling { get; set; }
+        public string InstallerLinux_ContextMenuEncrypt { get; set; }
+        public string InstallerLinux_ContextMenuDecrypt { get; set; }
+        public string InstallerLinux_ContextMenuManageKeys { get; set; }
         #endregion InstallerLinux
         public string GetPropertyValue(string input)
         {

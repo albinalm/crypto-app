@@ -26,12 +26,6 @@
 		<Compile Update="DecryptorArray.axaml.cs">
 			<DependentUpon>DecryptorArray.axaml</DependentUpon>
 		</Compile>
-		<Compile Update="Configuration.axaml.cs">
-			<DependentUpon>Configuration.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="KeyUpdateDialog.axaml.cs">
-			<DependentUpon>KeyUpdateDialog.axaml</DependentUpon>
-		</Compile>
 		<Compile Update="EncryptorArray.axaml.cs">
 			<DependentUpon>EncryptorArray.axaml</DependentUpon>
 		</Compile>

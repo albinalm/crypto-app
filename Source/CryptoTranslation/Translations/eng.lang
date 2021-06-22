@@ -71,3 +71,12 @@ InstallerLinux_Install==Install
 InstallerLinux_WhatFMQuestion==What file manager are you using?
 InstallerLinux_Title==Welcome to Privateer!
 InstallerLinux_TitleInstalling==Privateer - Installing...
+InstallerLinux_TitleFinish==Privateer - Installation finished
+InstallerLinux_Installing==Installing...
+InstallerLinux_OpenPrivateer==Open Privateer when installer ends
+InstallerLinux_Finish==Finish
+InstallerLinux_UseDescription==You can access Privateer by right clicking anywhere in your file explorer!'
+InstallerLinux_FinishedInstalling==Finished installing
+InstallerLinux_ContextMenuEncrypt==Encrypt
+InstallerLinux_ContextMenuDecrypt==Decrypt
+InstallerLinux_ContextMenuManageKeys==Manage keys

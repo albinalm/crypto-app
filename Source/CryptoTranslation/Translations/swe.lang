@@ -67,3 +67,12 @@ InstallerLinux_Install==Installera
 InstallerLinux_WhatFMQuestion==Vilken filhanterare använder du?
 InstallerLinux_Title==Välkommen till Privateer!
 InstallerLinux_TitleInstalling==Privateer - Installerar...
+InstallerLinux_TitleFinish==Privateer - Installation slutförd
+InstallerLinux_Installing==Installerar...
+InstallerLinux_OpenPrivateer==Öppna Privateer när installationsprogrammet avslutas
+InstallerLinux_Finish==Avsluta
+InstallerLinux_UseDescription==Du kan öppna Privateer genom att högerklicka någonstans i filutforskaren!
+InstallerLinux_FinishedInstalling==Färdiginstallerat!
+InstallerLinux_ContextMenuEncrypt==Kryptera
+InstallerLinux_ContextMenuDecrypt==Dekryptera
+InstallerLinux_ContextMenuManageKeys==Hantera nycklar

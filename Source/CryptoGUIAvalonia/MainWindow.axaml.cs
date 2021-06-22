@@ -125,6 +125,11 @@ namespace CryptoGUIAvalonia
                     {
                         await MessageBox.Show(this, "MainWindow is faulty! " + ex, "Error in MainWindow", MessageBox.MessageBoxButtons.Ok);
                     }
+                else if (args.Contains("CryptoApp_CommandArgs_ManageKeys"))
+                {
+                    var index = new Index();
+                    index.Show();
+                }
             }
             else if (args.Length == 3)
             {
@@ -163,6 +168,11 @@ namespace CryptoGUIAvalonia
                         var decryptor = new Decryptor();
                         decryptor.Show();
                     }
+                }
+                else if (args.Contains("CryptoApp_CommandArgs_ManageKeys"))
+                {
+                    var index = new Index();
+                    index.Show();
                 }
             }
             else

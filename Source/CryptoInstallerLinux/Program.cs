@@ -1,4 +1,6 @@
-﻿using Avalonia;
+﻿using System;
+using System.IO;
+using Avalonia;
 
 namespace CryptoInstallerLinux
 {
@@ -9,7 +11,6 @@ namespace CryptoInstallerLinux
         // yet and stuff might break.
         public static void Main(string[] args)
         {
-        
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
         }

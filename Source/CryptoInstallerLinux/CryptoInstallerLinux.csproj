@@ -15,72 +15,31 @@
 		<PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
 		<PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
 		<PackageReference Include="DotNetZip" Version="1.15.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Update="PasswordDialogue.axaml.cs">
-			<DependentUpon>PasswordDialogue.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Decryptor.axaml.cs">
-			<DependentUpon>Decryptor.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="DecryptorArray.axaml.cs">
-			<DependentUpon>DecryptorArray.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Configuration.axaml.cs">
-			<DependentUpon>Configuration.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="KeyUpdateDialog.axaml.cs">
-			<DependentUpon>KeyUpdateDialog.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="EncryptorArray.axaml.cs">
-			<DependentUpon>EncryptorArray.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="GUI\Dialogues\MessageBox\MessageBox.axaml.cs">
-			<DependentUpon>MessageBox.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Encryptor.axaml.cs">
-			<DependentUpon>Encryptor.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Index.axaml.cs">
-			<DependentUpon>Index.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="SettingsDialogue.axaml.cs">
-			<DependentUpon>SettingsDialogue.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
+		<PackageReference Include="Mono.Posix.NETStandard" Version="5.20.1-preview" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\CryptoAPI\CryptoAPI.csproj" />
 		<ProjectReference Include="..\CryptoTranslation\CryptoTranslation.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<Resource Include="Resources\external-content.duckduckgo.com.jpg" />
-		<Resource Include="Resources\logo01.png" />
-		<Resource Include="Resources\logo02.png" />
+		<EmbeddedResource Include="Resources\logo01.png" />
+		<None Remove="Resources\next.png" />
+		<EmbeddedResource Include="Resources\next.png" />
+		<None Remove="Resources\KDE_logo.png" />
+		<EmbeddedResource Include="Resources\KDE_logo.png" />
+		<None Remove="Resources\icon.png" />
+		<EmbeddedResource Include="Resources\icon.png" />
+		<None Remove="Resources\gnome.png" />
+		<EmbeddedResource Include="Resources\gnome.png" />
+		<None Remove="Resources\example.png" />
+		<EmbeddedResource Include="Resources\example.png" />
+		<None Remove="InstallData\core.zip" />
+		<EmbeddedResource Include="InstallData\core.zip" />
+		<None Remove="InstallData\dolphin.zip" />
+		<EmbeddedResource Include="InstallData\dolphin.zip" />
 	</ItemGroup>
+
 	<ItemGroup>
-		<None Update="Resources\icon.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Resources\logo01.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Resources\logo02.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Resources\icn_settings.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Resources\KDE_logo.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Resources\next.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Resources\gnome.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
+	  <None Remove="InstallData\install.zip" />
 	</ItemGroup>
 </Project>
