@@ -1,4 +1,4 @@
-﻿namespace CryptoTranslation
+﻿namespace PrivateerTranslation
 {
     public record Dict
     {

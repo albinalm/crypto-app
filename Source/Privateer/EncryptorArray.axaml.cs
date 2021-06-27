@@ -9,11 +9,11 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
-using CryptoGUI.DataModel;
-using CryptoTranslation;
+using Privateer.DataModel;
 using PrivateerAPI.ORM;
+using PrivateerTranslation;
 
-namespace CryptoGUIAvalonia
+namespace Privateer
 {
     public class EncryptorArray : Window
     {

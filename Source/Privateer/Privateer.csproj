@@ -48,8 +48,8 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\CryptoAPI\PrivateerAPI.csproj" />
-		<ProjectReference Include="..\CryptoTranslation\CryptoTranslation.csproj" />
+		<ProjectReference Include="..\PrivateerAPI\PrivateerAPI.csproj" />
+		<ProjectReference Include="..\PrivateerTranslation\PrivateerTranslation.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="Resources\external-content.duckduckgo.com.jpg" />

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CryptoGUI.DataModel
+namespace Privateer.DataModel
 {
     public static class EncryptionData
     {

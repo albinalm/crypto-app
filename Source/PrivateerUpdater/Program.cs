@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using Ionic.Zip;
 using System.IO;
 using System.Threading;
+using Ionic.Zip;
 using Mono.Unix;
 
-namespace CryptoUpdater
+namespace PrivateerUpdater
 {
     internal class Program
     {
@@ -40,8 +40,8 @@ namespace CryptoUpdater
                     errorWriter.WriteLine("Setting file permissions");
                   //  Exec("chmod 644 " + AppContext.BaseDirectory + @"/Privateer");
                   Exec(AppContext.BaseDirectory + @"/Privateer");
-                  Exec(AppContext.BaseDirectory + @"/contextmenubinaries/CryptoDolphinLauncher");
-                  Exec(AppContext.BaseDirectory + @"/contextmenubinaries/writer/CryptoDolphinFileWriter");
+                  Exec(AppContext.BaseDirectory + @"/contextmenubinaries/PrivateerDolphinLauncher");
+                  Exec(AppContext.BaseDirectory + @"/contextmenubinaries/writer/PrivateerDolphinFileWriter");
                   errorWriter.WriteLine("Starting Avalonia");
                     Process.Start(AppContext.BaseDirectory + @"/Privateer");
                    

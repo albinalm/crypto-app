@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 
-namespace CryptoInstallerWindows
+namespace PrivateerInstallerWindows
 {
     class Program
     {

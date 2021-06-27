@@ -18,7 +18,6 @@
 		<PackageReference Include="Mono.Posix.NETStandard" Version="5.20.1-preview" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\CryptoAPI\PrivateerAPI.csproj" />
 		<ProjectReference Include="..\PrivateerTranslation\PrivateerTranslation.csproj" />
 	</ItemGroup>
 	<ItemGroup>

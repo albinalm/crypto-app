@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace CryptoGUIAvalonia.GUI.Dialogues.MessageBox
+namespace Privateer.GUI.Dialogues.MessageBox
 {
     public class MessageBox : Window
     {

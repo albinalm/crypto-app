@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 
-namespace CryptoDolphinLauncher
+namespace PrivateerDolphinLauncher
 {
     class Program
     {
@@ -33,7 +33,7 @@ namespace CryptoDolphinLauncher
                 {
                     writer.WriteLine("Iterating");
                     writer.Flush();
-                    if (Process.GetProcessesByName("CryptoDolphinFileWriter").Length < 1)
+                    if (Process.GetProcessesByName("PrivateerDolphinFileWriter").Length < 1)
                     {
                         exists = true;
                     }

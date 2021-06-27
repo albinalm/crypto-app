@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace CryptoDolphinFileWriter
+namespace PrivateerDolphinFileWriter
 {
     internal class Program
     {
@@ -27,9 +27,9 @@ namespace CryptoDolphinFileWriter
             if(AppContext.BaseDirectory.EndsWith(Path.DirectorySeparatorChar))
                     Process.Start(Directory.GetParent(AppContext.BaseDirectory
                         .Remove(AppContext.BaseDirectory.Length - 1, 1))
-                        ?.FullName  + "/CryptoDolphinLauncher");
+                        ?.FullName  + "/PrivateerDolphinLauncher");
             else
-                Process.Start(Directory.GetParent(AppContext.BaseDirectory)?.FullName + "/CryptoDolphinLauncher");
+                Process.Start(Directory.GetParent(AppContext.BaseDirectory)?.FullName + "/PrivateerDolphinLauncher");
             
             Environment.Exit(0);
         }

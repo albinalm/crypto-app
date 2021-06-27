@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 
-namespace CryptoGUIAvalonia
+namespace Privateer
 {
     class Program
     {

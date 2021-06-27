@@ -79,7 +79,6 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\CryptoAPI\PrivateerAPI.csproj" />
 		<ProjectReference Include="..\PrivateerTranslation\PrivateerTranslation.csproj" />
 	</ItemGroup>
 	<ItemGroup>

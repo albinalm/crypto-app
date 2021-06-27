@@ -8,8 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Database" />
-      <Folder Include="Interfaces" />
+      <Compile Remove="Database\**" />
+      <Compile Remove="Interfaces\**" />
+      <EmbeddedResource Remove="Database\**" />
+      <EmbeddedResource Remove="Interfaces\**" />
+      <None Remove="Database\**" />
+      <None Remove="Interfaces\**" />
     </ItemGroup>
 
 </Project>

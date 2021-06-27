@@ -8,12 +8,12 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using CryptoTranslation;
 using Ionic.Zip;
 using Ionic.Zlib;
 using PrivateerAPI.ORM;
+using PrivateerTranslation;
 
-namespace CryptoGUIAvalonia
+namespace Privateer
 {
     public class PasswordDialogue : Window
     {

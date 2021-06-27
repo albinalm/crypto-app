@@ -1,7 +1,5 @@
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,11 +11,11 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
-using CryptoTranslation;
 using Ionic.Zip;
 using Mono.Unix;
+using PrivateerTranslation;
 
-namespace CryptoInstallerLinux
+namespace PrivateerInstallerLinux
 {
     public class MainWindow : Window
     {
@@ -470,8 +468,8 @@ namespace CryptoInstallerLinux
             Exec(txt_path.Text + @"/Privateer");
             if (kde)
             {
-                Exec(txt_path.Text + @"/contextmenubinaries/CryptoDolphinLauncher");
-                Exec(txt_path.Text + @"/contextmenubinaries/writer/CryptoDolphinFileWriter");
+                Exec(txt_path.Text + @"/contextmenubinaries/PrivateerDolphinLauncher");
+                Exec(txt_path.Text + @"/contextmenubinaries/writer/PrivateerDolphinFileWriter");
             }
             Environment.Exit(0);
 
@@ -501,19 +499,19 @@ namespace CryptoInstallerLinux
             writer.WriteLine("");
             writer.WriteLine("[Desktop Action encrypt]");
             writer.WriteLine("");
-            writer.WriteLine("Exec=\"" + txt_path.Text + "/contextmenubinaries/writer/CryptoDolphinFileWriter\" CryptoApp_CommandArgs_Encrypt");
+            writer.WriteLine("Exec=\"" + txt_path.Text + "/contextmenubinaries/writer/PrivateerDolphinFileWriter\" CryptoApp_CommandArgs_Encrypt");
             writer.WriteLine("Name=" + Dictionary.InstallerLinux_ContextMenuEncrypt);
             writer.WriteLine("Icon=" + txt_path.Text + @"/Resources/icon.png");
             writer.WriteLine("");
             writer.WriteLine("[Desktop Action decrypt]");
             writer.WriteLine("");
-            writer.WriteLine("Exec=\"" + txt_path.Text + "/contextmenubinaries/writer/CryptoDolphinFileWriter\" CryptoApp_CommandArgs_Decrypt");
+            writer.WriteLine("Exec=\"" + txt_path.Text + "/contextmenubinaries/writer/PrivateerDolphinFileWriter\" CryptoApp_CommandArgs_Decrypt");
             writer.WriteLine("Name=" + Dictionary.InstallerLinux_ContextMenuDecrypt);
             writer.WriteLine("Icon=" + txt_path.Text + @"/Resources/icon.png");
             writer.WriteLine("");
             writer.WriteLine("[Desktop Action manage]");
             writer.WriteLine("");
-            writer.WriteLine("Exec=\"" + txt_path.Text + "/contextmenubinaries/writer/CryptoDolphinFileWriter\" CryptoApp_CommandArgs_ManageKeys");
+            writer.WriteLine("Exec=\"" + txt_path.Text + "/contextmenubinaries/writer/PrivateerDolphinFileWriter\" CryptoApp_CommandArgs_ManageKeys");
             writer.WriteLine("Name=" + Dictionary.InstallerLinux_ContextMenuManageKeys);
             writer.WriteLine("Icon=" + txt_path.Text + @"/Resources/icon.png");
             writer.Flush();

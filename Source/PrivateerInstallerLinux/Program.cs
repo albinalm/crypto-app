@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
-using Avalonia;
+﻿using Avalonia;
 
-namespace CryptoInstallerLinux
+namespace PrivateerInstallerLinux
 {
     class Program
     {

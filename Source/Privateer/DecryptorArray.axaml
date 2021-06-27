@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="505" d:DesignHeight="245"
-        x:Class="CryptoGUIAvalonia.DecryptorArray"
+        x:Class="Privateer.DecryptorArray"
         Title="Privateer" Height="245" Width="505" CanResize="False" WindowStartupLocation="CenterScreen">
 	<Grid Margin="10,0,10,9" RenderTransformOrigin="0.502,0.308">
 		<ProgressBar x:Name="pb_current" Height="8" Margin="0,187,0,0" VerticalAlignment="Bottom" Foreground="Red" />

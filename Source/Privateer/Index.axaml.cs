@@ -16,10 +16,10 @@ using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using Ionic.Zip;
 using Ionic.Zlib;
-using CryptoTranslation;
 using PrivateerAPI.ORM;
+using PrivateerTranslation;
 
-namespace CryptoGUIAvalonia
+namespace Privateer
 {
     public class Index : Window
     {
@@ -157,7 +157,7 @@ namespace CryptoGUIAvalonia
                 {
                     client.DownloadFile("https://github.com/albinalm/crypto-app/raw/main/Updating/archive_windows.zip", Environment.CurrentDirectory + @"/update.zip");
                 }
-                Process.Start(Environment.CurrentDirectory + @"/CryptoUpdater.exe");
+                Process.Start(Environment.CurrentDirectory + @"/PrivateerUpdater.exe");
                 Environment.Exit(0);
             }
             else if (Environment.OSVersion.ToString().Contains("Unix"))
@@ -166,7 +166,7 @@ namespace CryptoGUIAvalonia
                 {
                     client.DownloadFile("https://github.com/albinalm/crypto-app/raw/main/Updating/archive_linux.zip", Environment.CurrentDirectory + @"/update.zip");
                 }
-                Process.Start(Environment.CurrentDirectory + @"/CryptoUpdater");
+                Process.Start(Environment.CurrentDirectory + @"/PrivateerUpdater");
                 Environment.Exit(0);
             }
         }

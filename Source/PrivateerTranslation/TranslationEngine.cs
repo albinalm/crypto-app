@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace CryptoTranslation
+namespace PrivateerTranslation
 {
     public class TranslationEngine
     {

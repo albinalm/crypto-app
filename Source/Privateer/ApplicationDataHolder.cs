@@ -1,4 +1,4 @@
-namespace CryptoGUIAvalonia
+namespace Privateer
 {
     public static class ApplicationDataHolder
     {

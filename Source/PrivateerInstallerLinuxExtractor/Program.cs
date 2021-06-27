@@ -2,10 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Reflection.PortableExecutable;
 using System.Threading;
 
-namespace CryptoInstallerLinuxExtractor
+namespace PrivateerInstallerLinuxExtractor
 {
     class Program
     {
@@ -16,14 +15,14 @@ namespace CryptoInstallerLinuxExtractor
                 if (!Directory.Exists(AppContext.BaseDirectory + @"/install"))
                     Directory.CreateDirectory(AppContext.BaseDirectory + @"/install");
 
-                WriteInstallFile("CryptoInstallerLinux");
+                WriteInstallFile("PrivateerInstallerLinux");
                 WriteInstallFile("libHarfBuzzSharp.so");
                 WriteInstallFile("libMonoPosixHelper.so");
                 WriteInstallFile("libSkiaSharp.so");
                 Console.WriteLine(
-                Bash("chmod u=rwx " + '"' + AppContext.BaseDirectory + @"install/CryptoInstallerLinux" + '"'));
+                Bash("chmod u=rwx " + '"' + AppContext.BaseDirectory + @"install/PrivateerInstallerLinux" + '"'));
                 var proc = new ProcessStartInfo();
-                proc.FileName = AppContext.BaseDirectory + @"/install/CryptoInstallerLinux";
+                proc.FileName = AppContext.BaseDirectory + @"/install/PrivateerInstallerLinux";
                 var p = Process.Start(proc);
                 p.WaitForExit();
                 Thread.Sleep(1000);

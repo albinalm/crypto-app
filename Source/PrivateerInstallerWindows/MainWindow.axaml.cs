@@ -1,23 +1,19 @@
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
-using CryptoTranslation;
 using Ionic.Zip;
 using IWshRuntimeLibrary;
+using PrivateerTranslation;
 
-namespace CryptoInstallerWindows
+namespace PrivateerInstallerWindows
 {
     public class MainWindow : Window
     {

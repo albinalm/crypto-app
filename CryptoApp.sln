@@ -3,23 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoAPI", "Source\CryptoAPI\CryptoAPI.csproj", "{70E43B6A-AD6E-409D-AE4A-6A9494062C5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Privateer", "Source\Privateer\Privateer.csproj", "{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoGUIAvalonia", "Source\CryptoGUIAvalonia\CryptoGUIAvalonia.csproj", "{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateerDolphinLauncher", "Source\Linux\Dolphin\PrivateerDolphinLauncher\PrivateerDolphinLauncher.csproj", "{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoDolphinLauncher", "Source\Linux\Dolphin\CryptoDolphinLauncher\CryptoDolphinLauncher.csproj", "{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateerDolphinFileWriter", "Source\Linux\Dolphin\PrivateerDolphinFileWriter\PrivateerDolphinFileWriter.csproj", "{10870846-6B52-4B14-A74A-3365A3A361BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoDolphinFileWriter", "Source\Linux\Dolphin\CryptoDolphinFileWriter\CryptoDolphinFileWriter.csproj", "{10870846-6B52-4B14-A74A-3365A3A361BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateerTranslation", "Source\PrivateerTranslation\PrivateerTranslation.csproj", "{6D71A728-2CEC-40C0-92E4-B54D3BE9C9F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoTranslation", "Source\CryptoTranslation\CryptoTranslation.csproj", "{6D71A728-2CEC-40C0-92E4-B54D3BE9C9F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateerUpdater", "Source\PrivateerUpdater\PrivateerUpdater.csproj", "{A5171D96-D6B3-425E-BD7A-73C8E317AA65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoUpdater", "Source\CryptoUpdater\CryptoUpdater.csproj", "{A5171D96-D6B3-425E-BD7A-73C8E317AA65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateerInstallerLinux", "Source\PrivateerInstallerLinux\PrivateerInstallerLinux.csproj", "{F7914909-E4E2-4DE6-82CC-DAFD87AE8EB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstallerLinux", "Source\CryptoInstallerLinux\CryptoInstallerLinux.csproj", "{F7914909-E4E2-4DE6-82CC-DAFD87AE8EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateerInstallerWindows", "Source\PrivateerInstallerWindows\PrivateerInstallerWindows.csproj", "{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstallerWindows", "Source\CryptoInstallerWindows\CryptoInstallerWindows.csproj", "{B3EEA7B9-B5D0-45C2-8C89-CF0075517AAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateerInstallerLinuxExtractor", "Source\PrivateerInstallerLinuxExtractor\PrivateerInstallerLinuxExtractor.csproj", "{15397840-C75B-4809-A9AD-FFD6C4482545}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoInstallerLinuxExtractor", "Source\CryptoInstallerLinuxExtractor\CryptoInstallerLinuxExtractor.csproj", "{15397840-C75B-4809-A9AD-FFD6C4482545}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateerAPI", "Source\PrivateerAPI\PrivateerAPI.csproj", "{59D8B180-19A7-49F8-A3FD-F042771F8BA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,16 +27,11 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70E43B6A-AD6E-409D-AE4A-6A9494062C5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70E43B6A-AD6E-409D-AE4A-6A9494062C5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70E43B6A-AD6E-409D-AE4A-6A9494062C5C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{70E43B6A-AD6E-409D-AE4A-6A9494062C5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70E43B6A-AD6E-409D-AE4A-6A9494062C5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8CE10D5-0166-4E46-8F75-9E54ACAD7D54}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44AB7467-5563-4F32-9C12-3DAAB6CA25D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,6 +60,10 @@ Global
 		{15397840-C75B-4809-A9AD-FFD6C4482545}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15397840-C75B-4809-A9AD-FFD6C4482545}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15397840-C75B-4809-A9AD-FFD6C4482545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D8B180-19A7-49F8-A3FD-F042771F8BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D8B180-19A7-49F8-A3FD-F042771F8BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D8B180-19A7-49F8-A3FD-F042771F8BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D8B180-19A7-49F8-A3FD-F042771F8BA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

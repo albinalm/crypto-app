@@ -1,19 +1,19 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using CryptoGUI.DataModel;
-using CryptoGUIAvalonia.GUI.Dialogues.MessageBox;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 using Ionic.Zip;
 using Ionic.Zlib;
+using Privateer.DataModel;
+using Privateer.GUI.Dialogues.MessageBox;
 using PrivateerAPI.ORM;
 
-namespace CryptoGUIAvalonia
+namespace Privateer
 {
     public class MainWindow : Window
     {
