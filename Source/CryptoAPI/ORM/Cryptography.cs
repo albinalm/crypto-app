@@ -3,13 +3,12 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CryptoAPI.ORM
+namespace PrivateerAPI.ORM
 {
     public static class Cryptography
     {
         private static byte[] Key { get; set; }
         private static byte[] IV { get; set; }
-
 
         /// <summary>
         ///     <para>Return a random byte value to save when reading the Key property</para>
@@ -28,7 +27,6 @@ namespace CryptoAPI.ORM
             IV = key.GetBytes(128 / 8);
             return b;
         }
-
 
         /// <summary>
         ///     <para>Input your password in raw format, and also the bytes from when you generated your Key</para>
@@ -62,12 +60,12 @@ namespace CryptoAPI.ORM
                 {
                     var chunkData = new byte[chunkSize];
                     var bytesRead = 0;
-                    while ((bytesRead = fsInput.Read(chunkData, 0, (int) chunkSize)) > 0)
+                    while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
                     {
                         if (bytesRead != chunkSize)
                             for (var x = bytesRead - 1; x < chunkSize; x++)
                                 chunkData[x] = 0;
-                        cryptoStream.Write(chunkData, 0, (int) chunkSize);
+                        cryptoStream.Write(chunkData, 0, (int)chunkSize);
                     }
                 }
 
@@ -77,7 +75,6 @@ namespace CryptoAPI.ORM
                 fsInput.Dispose();
                 cryptoStream.Dispose();
             }
-
 
             public static string HashPassword(string input)
             {
@@ -131,7 +128,7 @@ namespace CryptoAPI.ORM
                 {
                     var chunkData = new byte[chunkSize];
                     var bytesRead = 0;
-                    while ((bytesRead = fsInput.Read(chunkData, 0, (int) chunkSize)) > 0)
+                    while ((bytesRead = fsInput.Read(chunkData, 0, (int)chunkSize)) > 0)
                         cryptoStream.Write(chunkData, 0, bytesRead);
                 }
 
