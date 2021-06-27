@@ -80,3 +80,23 @@ InstallerLinux_FinishedInstalling==Finished installing
 InstallerLinux_ContextMenuEncrypt==Encrypt
 InstallerLinux_ContextMenuDecrypt==Decrypt
 InstallerLinux_ContextMenuManageKeys==Manage keys
+
+
+
+
+
+InstallerWindows_WelcomeTo==Welcome to
+InstallerWindows_Next==Next
+InstallerWindows_Back==Back
+InstallerWindows_WhereToInstall==Select where to install Privateer:
+InstallerWindows_Install==Install
+InstallerWindows_Title==Welcome to Privateer!
+InstallerWindows_TitleInstalling==Privateer - Installing...
+InstallerWindows_TitleFinish==Privateer - Installation finished
+InstallerWindows_Installing==Installing...
+InstallerWindows_OpenPrivateer==Open Privateer when installer ends
+InstallerWindows_Finish==Finish
+InstallerWindows_UseDescription==You can manage files by right clicking and choosing "Send to" in your file explorer!'
+InstallerWindows_FinishedInstalling==Finished installing
+InstallerWindows_ContextMenuEncrypt==Encrypt with Privateer
+InstallerWindows_ContextMenuDecrypt==Decrypt with Privateer

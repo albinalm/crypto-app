@@ -77,3 +77,21 @@ InstallerLinux_FinishedInstalling==Färdiginstallerat!
 InstallerLinux_ContextMenuEncrypt==Kryptera
 InstallerLinux_ContextMenuDecrypt==Dekryptera
 InstallerLinux_ContextMenuManageKeys==Hantera nycklar
+
+
+
+InstallerWindows_WelcomeTo==Välkommen till
+InstallerWindows_Next==Nästa
+InstallerWindows_Back==Tillbaks
+InstallerWindows_WhereToInstall==Välj vart du vill installera Privateer:
+InstallerWindows_Install==Installera
+InstallerWindows_Title==Välkommen till Privateer!
+InstallerWindows_TitleInstalling==Privateer - Installerar...
+InstallerWindows_TitleFinish==Privateer - Installation slutförd
+InstallerWindows_Installing==Installerar...
+InstallerWindows_OpenPrivateer==Öppna Privateer när installationsprogrammet avslutas
+InstallerWindows_Finish==Avsluta
+InstallerWindows_UseDescription==Du kan låsa & låsa upp filer genom att välja "Skicka till" i filutforskaren!
+InstallerWindows_FinishedInstalling==Färdiginstallerat!
+InstallerWindows_ContextMenuEncrypt==Kryptera med Privateer
+InstallerWindows_ContextMenuDecrypt==Dekryptera med Privateer

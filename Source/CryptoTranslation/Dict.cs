@@ -39,6 +39,7 @@
         public string PasswordDialogue_ValidationSuccess { get; set; }
         public string PasswordDialogue_ValidationFailed { get; set; }
         public string PasswordDialogue_ChangeKeyText { get; set; }
+
         #endregion PasswordDialogue
 
         #region Encryption
@@ -70,13 +71,16 @@
         #endregion Decryption
 
         #region General
+
         public string General_FileDialogFilter { get; set; }
-        
+
         public string General_OpenFileDialogTitle { get; set; }
         public string General_SaveFileDialogTitle { get; set; }
+
         #endregion General
 
         #region InstallerLinux
+
         public string InstallerLinux_WelcomeTo { get; set; }
         public string InstallerLinux_Next { get; set; }
         public string InstallerLinux_Back { get; set; }
@@ -94,7 +98,29 @@
         public string InstallerLinux_ContextMenuEncrypt { get; set; }
         public string InstallerLinux_ContextMenuDecrypt { get; set; }
         public string InstallerLinux_ContextMenuManageKeys { get; set; }
+
         #endregion InstallerLinux
+
+        #region InstallerWindows
+
+        public string InstallerWindows_WelcomeTo { get; set; }
+        public string InstallerWindows_Next { get; set; }
+        public string InstallerWindows_Back { get; set; }
+        public string InstallerWindows_WhereToInstall { get; set; }
+        public string InstallerWindows_Install { get; set; }
+        public string InstallerWindows_Title { get; set; }
+        public string InstallerWindows_TitleInstalling { get; set; }
+        public string InstallerWindows_TitleFinish { get; set; }
+        public string InstallerWindows_Installing { get; set; }
+        public string InstallerWindows_OpenPrivateer { get; set; }
+        public string InstallerWindows_Finish { get; set; }
+        public string InstallerWindows_UseDescription { get; set; }
+        public string InstallerWindows_FinishedInstalling { get; set; }
+        public string InstallerWindows_ContextMenuEncrypt { get; set; }
+        public string InstallerWindows_ContextMenuDecrypt { get; set; }
+
+        #endregion InstallerWindows
+
         public string GetPropertyValue(string input)
         {
             return GetType().GetProperty(input)?.GetValue(this, null)?.ToString();

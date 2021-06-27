@@ -6,8 +6,35 @@
 		<ApplicationIcon>icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <OutputPath>/home/albin/RiderProjects/crypto-app/Source/Linux/Debug/Installer/net5.0/</OutputPath>
+	  <OutputPath>H:\Projekt\NET\crypto-app\Source\Windows\Build\CryptoInstallerWindows\</OutputPath>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="InstallData\icon.ico" />
+	  <None Remove="InstallData\install_windows.zip" />
+	  <None Remove="Resources\example_eng.png" />
+	  <None Remove="Resources\example_swe.png" />
+	  <None Remove="Resources\logo01.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <COMReference Include="IWshRuntimeLibrary">
+	    <WrapperTool>tlbimp</WrapperTool>
+	    <VersionMinor>0</VersionMinor>
+	    <VersionMajor>1</VersionMajor>
+	    <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+	    <Lcid>0</Lcid>
+	    <Isolated>false</Isolated>
+	    <EmbedInteropTypes>true</EmbedInteropTypes>
+	  </COMReference>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="InstallData\icon.ico" />
+	  <EmbeddedResource Include="InstallData\install_windows.zip" />
+	  <EmbeddedResource Include="Resources\example_eng.png" />
+	  <EmbeddedResource Include="Resources\example_swe.png" />
+	  <EmbeddedResource Include="Resources\logo01.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.0" />
 		<PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
@@ -59,10 +86,10 @@
 		<Resource Include="Resources\logo02.png" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Update="Resources\icon.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<None Update="icon.ico">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\logo01.png">
+		<None Update="Resources\icon.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="Resources\logo02.png">

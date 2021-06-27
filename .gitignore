@@ -352,3 +352,4 @@ MigrationBackup/
 /Source/Windows/Build/net5.0
 /Source/CryptoInstallerLinuxExtractor/InstallData/
 InstallData/
+/Source/Windows/Build
