@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:varbyte.gui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="500">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="resources/fonts/raleway/Raleway-Regular.ttf #Raleway"/>
+        </Style>
+        </Window.Resources>
     <Grid>
-
+        <Image Source="resources/images/varbyte_logo_banner_cropped.png" Width="300" VerticalAlignment="Top" Margin="70"></Image>
+        <Label Content="No key found" x:Name="lblNet" Margin="5" FontFamily="resources/fonts/raleway/Raleway-Regular.ttf #Raleway"/>
+        <Button Name="BtnAddkey" Width="90" Height="20" Content="Add key">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
+    
 </Window>
