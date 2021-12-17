@@ -3,8 +3,8 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <ApplicationIcon>icon.ico</ApplicationIcon>
-        <AssemblyName>PrivateerAPI</AssemblyName>
         <RootNamespace>PrivateerAPI</RootNamespace>
+        <PackageId>varbyte.encryption</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

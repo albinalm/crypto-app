@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>PrivateerTranslation</AssemblyName>
     <RootNamespace>PrivateerTranslation</RootNamespace>
+    <PackageId>varbyte.translation</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -21,7 +21,7 @@ namespace PrivateerTranslation
             var line = "";
             var assembly = Assembly.GetExecutingAssembly();
             // var resourceName = "MyCompany.MyProduct.MyFile.txt";
-            using (var stream = assembly.GetManifestResourceStream("PrivateerTranslation.Translations." + lang + ".lang"))
+            using (var stream = assembly.GetManifestResourceStream("varbyte.translation.Translations." + lang + ".lang"))
             using (var reader = new StreamReader(stream))
             {
                 while ((line = reader.ReadLine()) != null)
