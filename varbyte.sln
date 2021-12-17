@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "varbyte.encryption", "Sourc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "varbyte.translation", "Source\varbyte.translation\varbyte.translation.csproj", "{5FF31C9A-0F3E-42B1-93A1-039B87A49051}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "varbyte.gui", "..\Source\varbyte\varbyte.gui\varbyte.gui.csproj", "{58CAD7C5-77C9-4309-A1FE-9B8B108D1D24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "varbyte.gui", "Source\varbyte.gui\varbyte.gui.csproj", "{FDA8A704-4E39-477C-9442-E63466C5D198}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +20,9 @@ Global
 		{5FF31C9A-0F3E-42B1-93A1-039B87A49051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FF31C9A-0F3E-42B1-93A1-039B87A49051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FF31C9A-0F3E-42B1-93A1-039B87A49051}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58CAD7C5-77C9-4309-A1FE-9B8B108D1D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58CAD7C5-77C9-4309-A1FE-9B8B108D1D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58CAD7C5-77C9-4309-A1FE-9B8B108D1D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58CAD7C5-77C9-4309-A1FE-9B8B108D1D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA8A704-4E39-477C-9442-E63466C5D198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA8A704-4E39-477C-9442-E63466C5D198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA8A704-4E39-477C-9442-E63466C5D198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA8A704-4E39-477C-9442-E63466C5D198}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
