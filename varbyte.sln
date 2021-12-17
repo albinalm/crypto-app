@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "varbyte.encryption", "Source\varbyte.encryption\varbyte.encryption.csproj", "{5C873BC9-355E-4237-B788-ECFD2516EEA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "varbyte.translation", "Source\varbyte.translation\varbyte.translation.csproj", "{5FF31C9A-0F3E-42B1-93A1-039B87A49051}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C873BC9-355E-4237-B788-ECFD2516EEA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C873BC9-355E-4237-B788-ECFD2516EEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C873BC9-355E-4237-B788-ECFD2516EEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C873BC9-355E-4237-B788-ECFD2516EEA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FF31C9A-0F3E-42B1-93A1-039B87A49051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FF31C9A-0F3E-42B1-93A1-039B87A49051}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FF31C9A-0F3E-42B1-93A1-039B87A49051}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FF31C9A-0F3E-42B1-93A1-039B87A49051}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
