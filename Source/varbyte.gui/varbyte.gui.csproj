@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <Folder Include="Model" />
-      <Folder Include="ViewModel" />
     </ItemGroup>
 
     <ItemGroup>
@@ -19,60 +18,67 @@
 
     <ItemGroup>
       <None Remove="View\resources\varbyte_logo_banner_cropped.png" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-Regular.ttf" />
-      <None Remove="View\resources\images\varbyte_logo_banner_cropped.png" />
-      <Resource Include="View\resources\images\varbyte_logo_banner_cropped.png" />
-      <None Remove="View\resources\fonts\roboto\Roboto-Regular.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-Bold.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-Bold.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-ExtraBold.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-ExtraBold.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-ExtraLight.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-ExtraLight.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-Heavy.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-Heavy.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-Light.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-Light.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-Medium.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-Medium.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-SemiBold.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-SemiBold.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-Thin.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-Thin.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-Black.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-Black.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-BlackItalic.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-BlackItalic.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-Bold.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-Bold.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-BoldItalic.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-BoldItalic.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-Italic.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-Italic.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-Light.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-Light.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-LightItalic.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-LightItalic.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-Medium.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-Medium.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-MediumItalic.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-MediumItalic.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-Thin.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-Thin.ttf" />
-      <None Remove="View\resources\fonts\roboto\Roboto-ThinItalic.ttf" />
-      <Resource Include="View\resources\fonts\roboto\Roboto-ThinItalic.ttf" />
-      <None Remove="View\resources\fonts\raleway\Raleway-Regular.ttf" />
-      <Resource Include="View\resources\fonts\raleway\Raleway-Regular.ttf" />
-      <None Remove="View\resources\images\varbyte_logo_banner.png" />
-      <Resource Include="View\resources\images\varbyte_logo_banner.png" />
-      <None Remove="View\resources\images\varbyte_logo_banner_cropped_small.png" />
-      <Resource Include="View\resources\images\varbyte_logo_banner_cropped_small.png" />
-      <None Remove="View\resources\images\varbyte_logo_circle.png" />
-      <Resource Include="View\resources\images\varbyte_logo_circle.png" />
-      <None Remove="View\resources\images\varbyte_logo_circle_multisize.ico" />
-      <Resource Include="View\resources\images\varbyte_logo_circle_multisize.ico" />
-      <None Remove="View\resources\images\varbyte_logo_full.png" />
-      <Resource Include="View\resources\images\varbyte_logo_full.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\fonts\roboto\Roboto-Medium.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-Medium.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-Black.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-Black.ttf" />
+      <None Remove="Resources\fonts\raleway\Raleway-ExtraLight.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-ExtraLight.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-Bold.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-Bold.ttf" />
+      <None Remove="Resources\fonts\raleway\Raleway-Bold.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-Bold.ttf" />
+      <None Remove="Resources\fonts\raleway\Raleway-Heavy.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-Heavy.ttf" />
+      <None Remove="Resources\fonts\raleway\Raleway-Thin.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-Thin.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-BoldItalic.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-BoldItalic.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-LightItalic.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-LightItalic.ttf" />
+      <None Remove="Resources\fonts\raleway\Raleway-SemiBold.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-SemiBold.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-Light.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-Light.ttf" />
+      <None Remove="Resources\images\varbyte_logo_circle_multisize.ico" />
+      <Resource Include="Resources\images\varbyte_logo_circle_multisize.ico" />
+      <None Remove="Resources\fonts\roboto\Roboto-ThinItalic.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-ThinItalic.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-BlackItalic.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-BlackItalic.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-Regular.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-Regular.ttf" />
+      <None Remove="Resources\images\varbyte_logo_circle.png" />
+      <Resource Include="Resources\images\varbyte_logo_circle.png" />
+      <None Remove="Resources\images\varbyte_logo_full.png" />
+      <Resource Include="Resources\images\varbyte_logo_full.png" />
+      <None Remove="Resources\fonts\roboto\Roboto-MediumItalic.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-MediumItalic.ttf" />
+      <None Remove="Resources\fonts\raleway\Raleway-Medium.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-Medium.ttf" />
+      <None Remove="Resources\images\varbyte_logo_banner_cropped_small.png" />
+      <Resource Include="Resources\images\varbyte_logo_banner_cropped_small.png" />
+      <None Remove="Resources\images\varbyte_logo_banner_cropped.png" />
+      <Resource Include="Resources\images\varbyte_logo_banner_cropped.png" />
+      <None Remove="Resources\fonts\raleway\Raleway-Regular.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-Regular.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-Italic.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-Italic.ttf" />
+      <None Remove="Resources\fonts\raleway\Raleway-Light.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-Light.ttf" />
+      <None Remove="Resources\fonts\roboto\Roboto-Thin.ttf" />
+      <Resource Include="Resources\fonts\roboto\Roboto-Thin.ttf" />
+      <None Remove="Resources\images\varbyte_logo_banner.png" />
+      <Resource Include="Resources\images\varbyte_logo_banner.png" />
+      <None Remove="Resources\fonts\raleway\Raleway-ExtraBold.ttf" />
+      <Resource Include="Resources\fonts\raleway\Raleway-ExtraBold.ttf" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     </ItemGroup>
 
 </Project>

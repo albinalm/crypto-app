@@ -7,9 +7,11 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using varbyte.encryption.Interfaces;
+
 namespace varbyte.encryption.ORM;
 
-public static class Cryptography
+public class Cryptography : ICryptography
 {
     private static byte[] Key { get; set; }
     private static byte[] InitializationVector { get; set; }
@@ -19,7 +21,7 @@ public static class Cryptography
     ///     <para>Also adapts returned bytes and assigns them to the Key property</para>
     ///     /**/
     /// </summary>
-    public static byte[] GenerateEncryptionKey(string password)
+    public byte[] GenerateEncryptionKey(string password)
     {
         var keyBytes = new byte[2048 * 1024]; // convert kb to byte
         var rng = new RNGCryptoServiceProvider();
@@ -32,17 +34,23 @@ public static class Cryptography
     ///     <para>Input your password in raw format, and also the bytes from when you generated your Key</para>
     ///     <para>This method will set your Key property to it's value</para>
     /// </summary>
-    public static void ReadEncryptionKey(string password, byte[] keyBytes)
+    public void ReadEncryptionKey(string password, byte[] keyBytes)
     {
         var key = new Rfc2898DeriveBytes(Encoding.ASCII.GetBytes(password), keyBytes, 1000);
         Key = key.GetBytes(256 / 8);
         InitializationVector = key.GetBytes(128 / 8);
     }
-
-    ///<para>Static Encryption-class containing methods to handle encryption</para>
-    public static class Encryption
+    public string HashPassword(string input)
     {
-        public static void EncryptFile(string inputFile, string outputFile, long chunkSize)
+        using var sha256Hash = SHA256.Create();
+        var bytes = sha256Hash.ComputeHash(
+            Encoding.UTF8.GetBytes(input + Encoding.ASCII.GetBytes(Environment.UserName)));
+        var builder = new StringBuilder();
+        foreach (var t in bytes)
+            builder.Append(t.ToString("x2"));
+        return builder.ToString();
+    }
+ public void EncryptFile(string inputFile, string outputFile, long chunkSize)
         {
             var fsOutput = File.OpenWrite(outputFile);
             var fsInput = File.OpenRead(inputFile);
@@ -75,23 +83,7 @@ public static class Cryptography
             fsInput.Dispose();
             cryptoStream.Dispose();
         }
-
-        public static string HashPassword(string input)
-        {
-            using var sha256Hash = SHA256.Create();
-            var bytes = sha256Hash.ComputeHash(
-                Encoding.UTF8.GetBytes(input + Encoding.ASCII.GetBytes(Environment.UserName)));
-            var builder = new StringBuilder();
-            foreach (var t in bytes)
-                builder.Append(t.ToString("x2"));
-            return builder.ToString();
-        }
-    }
-
-    ///<para>Static Decryption-class containing methods to handle encryption</para>
-    public static class Decryption
-    {
-        public static void DecryptFile(string inputFile, string outputFile, long chunkSize)
+ public void DecryptFile(string inputFile, string outputFile, long chunkSize)
         {
             var fsInput = File.OpenRead(inputFile);
             var fsOutput = File.OpenWrite(outputFile);
@@ -119,5 +111,4 @@ public static class Cryptography
             fsInput.Dispose();
             cryptoStream.Dispose();
         }
-    }
 }
