@@ -22,6 +22,7 @@ public partial class NewKeyDlg : Window
 
     private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
     {
+        
         if (pw_key.Password != "")
         {
             var sdlg = new SaveFileDialog();
@@ -44,5 +45,5 @@ public partial class NewKeyDlg : Window
             }
          
         }
-    }
+    }   
 }
