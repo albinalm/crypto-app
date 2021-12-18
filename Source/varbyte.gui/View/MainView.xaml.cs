@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using varbyte.encryption.Interfaces;
 using varbyte.encryption.ORM;
+using varbyte.encryption.Service;
 using varbyte.gui.View.Dialogues;
 
 namespace varbyte.gui.View
@@ -10,16 +11,16 @@ namespace varbyte.gui.View
     /// </summary>
     public partial class MainView : Window
     {
-        private readonly ICryptography _cryptography;
-        public MainView(ICryptography cryptography)
+        private readonly Services Services;
+        public MainView(Services services)
         {
-            _cryptography = cryptography;
+            Services = services;
             InitializeComponent();
         }
 
         private void BtnGeneratekey_OnClick(object sender, RoutedEventArgs e)
         {
-            var newKeyDlg = new NewKeyDlg(_cryptography);
+            var newKeyDlg = new NewKeyDlg(Services);
             var dialogResult = newKeyDlg.ShowDialog();
             switch (dialogResult)
             {

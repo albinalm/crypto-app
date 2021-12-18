@@ -3,16 +3,19 @@ using System.IO;
 using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
+using varbyte.encryption.Interfaces;
 using varbyte.encryption.Models;
 using varbyte.encryption.Models.Exceptions;
 
 namespace varbyte.encryption.ORM;
-
-public class CryptographyKeyManagement
+#pragma warning disable CS0618
+#pragma warning disable SYSLIB0023
+public class CryptographyKeyService : ICryptographyKeyService
 {
     public CryptographyKey GenerateEncryptionKey(string password)
     {
         var keyBytes = new byte[2048 * 1024]; // convert kb to byte
+
         var rng = new RNGCryptoServiceProvider();
         rng.GetBytes(keyBytes);
         var key = new Rfc2898DeriveBytes(Encoding.ASCII.GetBytes(password), keyBytes, 1000);

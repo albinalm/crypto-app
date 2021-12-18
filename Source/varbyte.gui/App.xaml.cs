@@ -6,7 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using varbyte.encryption.Interfaces;
 using varbyte.encryption.ORM;
+using varbyte.encryption.Service;
 using varbyte.gui.View;
 
 namespace varbyte.gui
@@ -26,9 +28,8 @@ namespace varbyte.gui
         private void ConfigureServices(ServiceCollection services)
         {
             services.AddSingleton<MainView>();
-            services.AddSingleton<CryptographyKeyManagement>();
-            services.AddSingleton<EncryptionService>();
-            services.AddSingleton<DecryptionService>();
+            services.AddSingleton<Services>();
+  
         }
         private void OnStartup(object sender, StartupEventArgs e)
         {
