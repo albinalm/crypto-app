@@ -9,11 +9,11 @@ using varbyte.encryption.Service;
 
 namespace varbyte.gui.View.Dialogues;
 
-public partial class NewKeyDlg : Window
+public partial class OpenKeyDlg : Window
 {
     private readonly Services Services;
 
-    public NewKeyDlg(Services services)
+    public OpenKeyDlg(Services services)
     {
         Services = services;
         InitializeComponent();

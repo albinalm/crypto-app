@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using varbyte.encryption.Interfaces;
@@ -12,6 +13,12 @@ namespace varbyte.encryption.ORM;
 #pragma warning disable SYSLIB0023
 public class CryptographyKeyService : ICryptographyKeyService
 {
+    private readonly string _configPath;
+
+    public CryptographyKeyService()
+    {
+        _configPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\app.ini";
+    }
     public CryptographyKey GenerateEncryptionKey(string password)
     {
         var keyBytes = new byte[2048 * 1024]; // convert kb to byte
@@ -53,9 +60,54 @@ public class CryptographyKeyService : ICryptographyKeyService
         return new CryptographyKey(HashPassword(password), keyData.GetBytes(128 / 8), keyData.GetBytes(256 / 8));
 
     }
-    public bool ValidateCryptographyKey(string keyPath)
+
+    public void SetPrimaryKeyPath(string keyPath)
     {
-        return true;
+        if (File.Exists(_configPath))
+        {
+            var contents = File.ReadAllLines(_configPath);
+            var found = false;
+            for (var i = 0; i < contents.Length; i++)
+            {
+                if (contents[i].StartsWith("PrimaryKey::"))
+                {
+                    found = true;
+                    contents[i] = "PrimaryKey::" + keyPath;
+                    File.WriteAllLines(_configPath, contents);
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+               var updatedContents = contents.ToList();
+               updatedContents.Add("PrimaryKey::" + keyPath);
+               File.WriteAllLines(_configPath, updatedContents);
+            }
+          
+            
+        }
+        else
+        {
+            using var configWriter = new StreamWriter(_configPath);
+            configWriter.WriteLine("PrimaryKey::" + keyPath);
+            configWriter.Flush();
+            configWriter.Close();
+        }
+    }
+
+    public string GetPrimaryKeyPath()
+    {
+        if (!File.Exists(_configPath)) return null;
+        var contents = File.ReadAllLines(_configPath);
+        foreach (var line in contents)
+        {
+            if (line.StartsWith("PrimaryKey::"))
+            {
+             return line.Split("::")[1];
+            }
+        }
+        return null;
     }
     private string HashPassword(string input)
     {

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:varbyte.gui"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="700"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Loaded="MainView_OnLoaded">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="../resources/fonts/raleway/Raleway-Regular.ttf #Raleway"/>
@@ -19,7 +20,10 @@
     <Grid>
         <Image Source="../Resources/images/varbyte_logo_banner_cropped.png" Width="300" VerticalAlignment="Top" Margin="0,90,0,0"></Image>
         <Label Content="❌ No key found" x:Name="LblKeyInfo" Margin="0, 120,0,0" FontSize="15px" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Firebrick"/>
-        <Button Name="BtnGeneratekey" Width="250" Height="25" Content="Generate key" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,90" FontFamily="../resources/fonts/raleway/Raleway-Regular.ttf #Raleway" Click="BtnGeneratekey_OnClick" Background="White" Foreground="DarkOrange" BorderBrush="DarkOrange" >
+        <Label Content="C:\Users\Albin\Desktop\key.varkey" x:Name="LblKeyPath" Margin="0, 160,0,0" FontSize="12px" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGoldenrod" Visibility="Hidden"/>
+        
+        
+        <Button Visibility="Hidden" Name="BtnGeneratekey" Width="250" Height="25" Content="Generate key" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,90" FontFamily="../resources/fonts/raleway/Raleway-Regular.ttf #Raleway" Click="BtnGeneratekey_OnClick" Background="White" Foreground="DarkOrange" BorderBrush="DarkOrange" >
             <Button.Resources>
                 <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -28,6 +32,35 @@
             </Button.Resources>
         </Button>
         
+        
+        <Button Name="BtnAddKey" Width="90" Height="25" Content="Add key" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="200,0,0,70" FontFamily="../resources/fonts/raleway/Raleway-Regular.ttf #Raleway" Background="White" Foreground="DarkOrange" BorderBrush="DarkOrange" Click="BtnGeneratekey_OnClick">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+             
+            </Button.Resources>
+        </Button>  
+        
+        
+        <Button Name="BtnLoadKey" Width="90" Height="25" Content="Load key" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,70" FontFamily="../resources/fonts/raleway/Raleway-Regular.ttf #Raleway" Background="White" Foreground="DarkOrange" BorderBrush="DarkOrange" Click="BtnLoadKey_OnClick">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+             
+            </Button.Resources>
+        </Button>  
+        
+        
+        <Button Name="BtnCheckKey" Width="90" Height="25" Content="Check key" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,200,70" FontFamily="../resources/fonts/raleway/Raleway-Regular.ttf #Raleway" Background="White" Foreground="DarkOrange" BorderBrush="DarkOrange" Click="BtnCheckKey_OnClick">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+             
+            </Button.Resources>
+        </Button>  
     </Grid>
     
 </Window>
