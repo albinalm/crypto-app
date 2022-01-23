@@ -13,4 +13,8 @@ public class PasswordIncorrectException : Exception
         : base(message, inner)
     {
     }
+
+    public PasswordIncorrectException() : base()
+    {
+    }
 }

@@ -7,17 +7,18 @@ using System.Text;
 using varbyte.encryption.Interfaces;
 using varbyte.encryption.Models;
 using varbyte.encryption.Models.Exceptions;
+using varbyte.encryption.Service;
 
 namespace varbyte.encryption.ORM;
 #pragma warning disable CS0618
 #pragma warning disable SYSLIB0023
 public class CryptographyKeyService : ICryptographyKeyService
 {
-    private readonly string _configPath;
-
+    private readonly string _baseDir;
     public CryptographyKeyService()
     {
-        _configPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\app.ini";
+        _baseDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+      
     }
     public CryptographyKey GenerateEncryptionKey(string password)
     {
@@ -36,7 +37,7 @@ public class CryptographyKeyService : ICryptographyKeyService
      if(File.Exists(destination))
          File.Delete(destination);
   
-     var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @$"\{Path.GetFileNameWithoutExtension(destination)}";
+     var path = _baseDir + @$"\{Path.GetFileNameWithoutExtension(destination)}";
      Directory.CreateDirectory(path);
      File.WriteAllBytes(path + @"\value.key", key.Key);
      File.WriteAllText(path + @"\value.val", key.PasswordHash);
@@ -46,70 +47,25 @@ public class CryptographyKeyService : ICryptographyKeyService
 
     public CryptographyKey ReadKey(string keyPath, string password)
     {
-        var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @$"\{Path.GetFileNameWithoutExtension(keyPath)}";
+       
+        var path = _baseDir + @$"\{Path.GetFileNameWithoutExtension(keyPath)}";
         if(Directory.Exists(path)) Directory.Delete(path, true);
-
         Directory.CreateDirectory(path);
+        var keyBytes = new byte[1];
+        var keyHash = "";
         ZipFile.ExtractToDirectory(keyPath, path);
-        var keyBytes = File.ReadAllBytes(path + @"\value.key");
-        var keyHash = File.ReadAllText(path + @"\value.val");
+        keyBytes = File.ReadAllBytes(path + @"\value.key");
+        keyHash = File.ReadAllText(path + @"\value.val");
         Directory.Delete(path, true);
-        if (HashPassword(password) != keyHash) throw new PasswordIncorrectException("The input password is incorrect");
-        
+      
+        if (HashPassword(password) != keyHash)  throw new PasswordIncorrectException("The input password is incorrect");
         var keyData = new Rfc2898DeriveBytes(Encoding.ASCII.GetBytes(password), keyBytes, 1000);
         return new CryptographyKey(HashPassword(password), keyData.GetBytes(128 / 8), keyData.GetBytes(256 / 8));
+        
+      
 
     }
-
-    public void SetPrimaryKeyPath(string keyPath)
-    {
-        if (File.Exists(_configPath))
-        {
-            var contents = File.ReadAllLines(_configPath);
-            var found = false;
-            for (var i = 0; i < contents.Length; i++)
-            {
-                if (contents[i].StartsWith("PrimaryKey::"))
-                {
-                    found = true;
-                    contents[i] = "PrimaryKey::" + keyPath;
-                    File.WriteAllLines(_configPath, contents);
-                    break;
-                }
-            }
-
-            if (!found)
-            {
-               var updatedContents = contents.ToList();
-               updatedContents.Add("PrimaryKey::" + keyPath);
-               File.WriteAllLines(_configPath, updatedContents);
-            }
-          
-            
-        }
-        else
-        {
-            using var configWriter = new StreamWriter(_configPath);
-            configWriter.WriteLine("PrimaryKey::" + keyPath);
-            configWriter.Flush();
-            configWriter.Close();
-        }
-    }
-
-    public string GetPrimaryKeyPath()
-    {
-        if (!File.Exists(_configPath)) return null;
-        var contents = File.ReadAllLines(_configPath);
-        foreach (var line in contents)
-        {
-            if (line.StartsWith("PrimaryKey::"))
-            {
-             return line.Split("::")[1];
-            }
-        }
-        return null;
-    }
-    private string HashPassword(string input)
+    private static string HashPassword(string input)
     {
         using var sha256Hash = SHA256.Create();
         var bytes = sha256Hash.ComputeHash(
@@ -119,4 +75,5 @@ public class CryptographyKeyService : ICryptographyKeyService
             builder.Append(t.ToString("x2"));
         return builder.ToString();
     }
+   
 }

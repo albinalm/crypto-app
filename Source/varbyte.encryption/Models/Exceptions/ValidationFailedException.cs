@@ -13,4 +13,8 @@ public class ValidationFailedException : Exception
         : base(message, inner)
     {
     }
+
+    public ValidationFailedException() : base()
+    {
+    }
 }

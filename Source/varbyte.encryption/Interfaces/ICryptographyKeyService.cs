@@ -7,6 +7,5 @@ public interface ICryptographyKeyService
     public CryptographyKey GenerateEncryptionKey(string password);
     public void WriteCryptographyKey(CryptographyKey key, string destination);
     public CryptographyKey ReadKey(string keyPath, string password);
-    public void SetPrimaryKeyPath(string configPath);
-    public string GetPrimaryKeyPath();
+
 }
